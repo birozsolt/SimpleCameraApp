@@ -1,0 +1,6 @@
+framework module Pods_SimpleCameraUITests {
+  umbrella header "Pods-SimpleCameraUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
