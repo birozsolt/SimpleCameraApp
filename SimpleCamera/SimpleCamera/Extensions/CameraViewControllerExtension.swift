@@ -84,52 +84,54 @@ extension CameraViewController: CameraViewProtocol {
     
     //swiftlint:disable force_cast
     func takePhoto() {
-        if let videoConnection = (session.outputs[0] as? AVCaptureStillImageOutput)?.connection(withMediaType: AVMediaTypeVideo) {
-            (session.outputs[0] as? AVCaptureStillImageOutput)?.captureStillImageAsynchronously(from: videoConnection, completionHandler: { (buffer, error) -> Void in
-                if let sampleBuffer = buffer {
-                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
-                    
-                    let dataProvider = CGDataProvider(data: imageData! as CFData)
-                    let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
-                    var imageOrientation: UIImageOrientation
-                    
-                    /*if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
-                     imageOrientation = UIImageOrientation.down
-                     } else {
-                     imageOrientation = UIImageOrientation.up
-                     }*/
-                    
-                    switch UIDevice.current.orientation {
-                    case .landscapeLeft: imageOrientation = UIImageOrientation.left
-                    case .landscapeRight : imageOrientation = UIImageOrientation.right
-                    case .portrait : imageOrientation = UIImageOrientation.up
-                    case .portraitUpsideDown : imageOrientation = UIImageOrientation.down
-                    default: imageOrientation = UIImageOrientation.up
+        if hasCamera {
+            if let videoConnection = (session.outputs[0] as? AVCaptureStillImageOutput)?.connection(withMediaType: AVMediaTypeVideo) {
+                (session.outputs[0] as? AVCaptureStillImageOutput)?.captureStillImageAsynchronously(from: videoConnection, completionHandler: { (buffer, error) -> Void in
+                    if let sampleBuffer = buffer {
+                        let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
+                        
+                        let dataProvider = CGDataProvider(data: imageData! as CFData)
+                        let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
+                        var imageOrientation: UIImageOrientation
+                        
+                        /*if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+                         imageOrientation = UIImageOrientation.down
+                         } else {
+                         imageOrientation = UIImageOrientation.up
+                         }*/
+                        
+                        switch UIDevice.current.orientation {
+                        case .landscapeLeft: imageOrientation = UIImageOrientation.left
+                        case .landscapeRight : imageOrientation = UIImageOrientation.right
+                        case .portrait : imageOrientation = UIImageOrientation.up
+                        case .portraitUpsideDown : imageOrientation = UIImageOrientation.down
+                        default: imageOrientation = UIImageOrientation.up
+                        }
+                        
+                        let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: imageOrientation)
+                        self.cameraView.previewView.image = image
+                        self.cameraView.previewView.clipsToBounds = true
+                        self.cameraView.previewView.isHidden = false
+                        
+                        let startingRect = self.cameraView.videoPreviewView.frame
+                        let endingRect = self.getFrameForImagePreview()
+                        self.cameraView.previewView.contentMode = .scaleAspectFit
+                        self.cameraView.previewView.frame = startingRect
+                        
+                        UIView.animate(withDuration: 0.5, delay: 0.1, options: UIViewAnimationOptions.curveLinear, animations: {
+                            self.cameraView.previewView.alpha = 1.0
+                            self.cameraView.previewView.frame = endingRect
+                        }, completion: { _ in
+                            self.cameraView.videoPreviewLayer?.isHidden = true
+                        })
                     }
-                    
-                    let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: imageOrientation)
-                    self.cameraView.previewView.image = image
-                    self.cameraView.previewView.clipsToBounds = true
-                    self.cameraView.previewView.isHidden = false
-                    
-                    let startingRect = self.cameraView.videoPreviewView.frame
-                    let endingRect = self.getFrameForImagePreview()
-                    self.cameraView.previewView.contentMode = .scaleAspectFit
-                    self.cameraView.previewView.frame = startingRect
-                    
-                    UIView.animate(withDuration: 0.5, delay: 0.1, options: UIViewAnimationOptions.curveLinear, animations: {
-                        self.cameraView.previewView.alpha = 1.0
-                        self.cameraView.previewView.frame = endingRect
-                    }, completion: { _ in
-                        self.cameraView.videoPreviewLayer?.isHidden = true
-                    })
-                }
-                if error == nil {
-                    self.error = nil
-                }
-            })
-        } else {
-            print("Video capture problem")
+                    if error == nil {
+                        self.error = nil
+                    }
+                })
+            } else {
+                print("Video capture problem")
+            }
         }
     }//swiftlint:enable force_cast
 }

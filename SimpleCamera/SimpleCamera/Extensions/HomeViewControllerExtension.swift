@@ -6,8 +6,6 @@
 //  Copyright © 2017 Biro, Zsolt. All rights reserved.
 //
 
-import Foundation
-
 extension HomeViewController : HomeViewProtocol{
     func settingsButtonTapped() {
         settingsViewController = SettingsViewController()

@@ -45,24 +45,24 @@ class CameraView: UIView {
         previewView.alpha = 0.0
         
         videoPreviewView.autoPinEdgesToSuperviewEdges()
-        videoPreviewView.clipsToBounds = true
+        //videoPreviewView.clipsToBounds = true
 
         takePhotoButton.isHidden = false
         takePhotoButton.addTarget(self, action: #selector(takePhoto), for: .touchUpInside)
         takePhotoButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20)
         takePhotoButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        takePhotoButton.autoSetDimensions(to: CGSize(width: 150, height: 50))
+        takePhotoButton.autoSetDimensions(to: CGSize(width: 50, height: 50))
         takePhotoButton.layer.cornerRadius = 25
-        takePhotoButton.backgroundColor = UIColor.darkGray
-        takePhotoButton.setTitleColor(UIColor.white, for: .normal)
-        takePhotoButton.setTitle("Cheeers!", for: .normal)
-        
+        takePhotoButton.backgroundColor = UIColor.clear
+        takePhotoButton.setImage(#imageLiteral(resourceName: "CaptureInactive"), for: .normal)
+        takePhotoButton.setImage(#imageLiteral(resourceName: "CaptureActive"), for: .highlighted)
     }
     
     func setupSubviewsForDeviceWithoutCamera() {
         takePhotoButton.isUserInteractionEnabled = false
-        self.previewView.isHidden = false
-        self.videoPreviewLayer?.isHidden = true
+        previewView.isHidden = false
+        previewView.backgroundColor = UIColor.gray
+        videoPreviewLayer?.isHidden = true
         previewView.alpha = 1.0
     }
     

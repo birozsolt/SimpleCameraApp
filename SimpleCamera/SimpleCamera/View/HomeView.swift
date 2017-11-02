@@ -39,8 +39,10 @@ class HomeView: UIView {
         backgroundView.autoPinEdgesToSuperviewEdges()
         backgroundView.backgroundColor = UIColor.brown
         
-        cameraButton.autoPinEdge(toSuperviewEdge: .top, withInset: 200)
+        cameraButton.autoAlignAxis(.horizontal, toSameAxisOf: backgroundView, withOffset: 10)
+        //cameraButton.autoPinEdge(toSuperviewEdge: .top, withInset: 200)
         cameraButton.autoSetDimensions(to: CGSize(width: 150, height: 60))
+        cameraButton.layer.cornerRadius = 30
         cameraButton.autoAlignAxis(.vertical, toSameAxisOf: backgroundView)
         cameraButton.addTarget(self, action: #selector(startCamera), for: .touchUpInside)
         cameraButton.backgroundColor = UIColor.black
@@ -49,8 +51,9 @@ class HomeView: UIView {
         
         
         
-        settingsButton.autoPinEdge(.top, to: .bottom, of: cameraButton, withOffset: 60)
+        settingsButton.autoPinEdge(.top, to: .bottom, of: cameraButton, withOffset: 40)
         settingsButton.autoSetDimensions(to: CGSize(width: 130, height: 50))
+        settingsButton.layer.cornerRadius = 25
         settingsButton.autoAlignAxis(.vertical, toSameAxisOf: backgroundView)
         settingsButton.addTarget(self, action: #selector(showSettings), for: .touchUpInside)
         settingsButton.backgroundColor = UIColor.black

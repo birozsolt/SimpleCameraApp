@@ -6,7 +6,6 @@
 //  Copyright © 2017 Biro, Zsolt. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 extension UIImageView {
