@@ -30,11 +30,9 @@ extension UIImageView {
                 
             default:
                 fatalError("method getTheFrameOfContent not implemented yet for contentMode: \(contentMode)" )
-                //return CGRect.zero
             }
         } else {
             return CGRect.zero
         }
     }
-    
 }

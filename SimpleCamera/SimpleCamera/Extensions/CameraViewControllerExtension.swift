@@ -9,66 +9,189 @@
 import UIKit
 import AVFoundation
 
-extension CameraViewController: CaptureSessionProtocol {
+extension CameraViewController {
     
-    func beginSession() {
-        session.sessionPreset = AVCaptureSessionPresetPhoto
-        do {
-            try input =  AVCaptureDeviceInput(device: captureDevice)
-        } catch let error1 as NSError {
-            error = error1
-            input = nil
+    public enum CameraPosition {
+        case front
+        case rear
+    }
+    
+    enum CameraControllerError: Swift.Error {
+        case captureSessionAlreadyRunning
+        case captureSessionIsMissing
+        case inputsAreInvalid
+        case invalidOperation
+        case noCamerasAvailable
+        case unknown
+    }
+    
+    func prepare(completionHandler: @escaping (Error?) -> Void) {
+        func createCaptureSession() {
+            self.captureSession = AVCaptureSession()
         }
         
-        if error == nil && session.canAddInput(input) {
-            session.addInput(input)
+        func configureCaptureDevices() throws {
+            let session = AVCaptureSession()
+            session.sessionPreset = AVCaptureSessionPresetPhoto
+            
+            guard let devices = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo), !devices.isEmpty else { throw CameraControllerError.noCamerasAvailable }
+            
+            for device in devices {
+                print(devices.count)
+                let device = device as! AVCaptureDevice
+                if device.position == .front {
+                    self.frontCamera = device
+                }
+                
+                if device.position == .back {
+                    self.rearCamera = device
+                    
+                    try device.lockForConfiguration()
+                    device.focusMode = .autoFocus
+                    device.unlockForConfiguration()
+                }
+            }
         }
         
-        DispatchQueue.main.async {
-            //let ratio = CGFloat(4.0 / 3.0) //resolution.width / resolution.height
-            let videoPreviewWidth = self.view.frame.width
-            let videoPreviewHeight = self.view.frame.height
-            let videoPreviewViewFrame = CGRect(x: 0,
-                                               y: 0,
-                                               width: videoPreviewWidth,
-                                               height: videoPreviewHeight)
-            let videoPreviewLayerFrame = CGRect(origin: CGPoint.zero, size: videoPreviewViewFrame.size)
+        func configureDeviceInputs() throws {
+            guard let captureSession = self.captureSession else { throw CameraControllerError.captureSessionIsMissing }
             
-            self.cameraView.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.session)
-            self.cameraView.videoPreviewView.frame = videoPreviewViewFrame
-            self.cameraView.videoPreviewLayer!.frame = videoPreviewLayerFrame
-            self.cameraView.videoPreviewLayer!.videoGravity = AVLayerVideoGravityResizeAspect
-            self.cameraView.videoPreviewView.layer.insertSublayer(self.cameraView.videoPreviewLayer!, above: self.cameraView.videoPreviewView.layer)
+            if let rearCamera = self.rearCamera {
+                self.rearCameraInput = try AVCaptureDeviceInput(device: rearCamera)
+                
+                if captureSession.canAddInput(self.rearCameraInput!) { captureSession.addInput(self.rearCameraInput!) }
+                
+                self.currentCameraPosition = .rear
+            }
+                
+            else if let frontCamera = self.frontCamera {
+                self.frontCameraInput = try AVCaptureDeviceInput(device: frontCamera)
+                
+                if captureSession.canAddInput(self.frontCameraInput!) { captureSession.addInput(self.frontCameraInput!) }
+                else { throw CameraControllerError.inputsAreInvalid }
+                
+                self.currentCameraPosition = .front
+            }
+                
+            else { throw CameraControllerError.noCamerasAvailable }
+        }
+        
+        func configurePhotoOutput() throws {
+            guard let captureSession = self.captureSession else { throw CameraControllerError.captureSessionIsMissing }
             
-            switch UIApplication.shared.statusBarOrientation {
-            case .landscapeLeft: self.changeVideoOrientation(orientation: .landscapeLeft)
-            case .landscapeRight : self.changeVideoOrientation(orientation: .landscapeRight)
-            case .portrait : self.changeVideoOrientation(orientation: .portrait)
-            case .portraitUpsideDown : self.changeVideoOrientation(orientation: .portraitUpsideDown)
-            default: self.changeVideoOrientation(orientation: .portrait)
+            self.photoOutput = AVCaptureStillImageOutput()
+            self.photoOutput!.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
+            
+            if captureSession.canAddOutput(self.photoOutput) { captureSession.addOutput(self.photoOutput) }
+            captureSession.startRunning()
+        }
+        
+        DispatchQueue(label: "prepare").async {
+            do {
+                createCaptureSession()
+                try configureCaptureDevices()
+                try configureDeviceInputs()
+                try configurePhotoOutput()
+            }
+                
+            catch {
+                DispatchQueue.main.async {
+                    completionHandler(error)
+                }
+                
+                return
             }
             
-            self.startSession()
+            DispatchQueue.main.async {
+                completionHandler(nil)
+            }
         }
+    }
+    
+    func displayPreview() throws {
+        guard let captureSession = self.captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
+        
+        cameraView.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        cameraView.videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        
+        switch UIApplication.shared.statusBarOrientation {
+        case .landscapeLeft: self.changeVideoOrientation(orientation: .landscapeLeft)
+        case .landscapeRight : self.changeVideoOrientation(orientation: .landscapeRight)
+        case .portrait : self.changeVideoOrientation(orientation: .portrait)
+        case .portraitUpsideDown : self.changeVideoOrientation(orientation: .portraitUpsideDown)
+        default: self.changeVideoOrientation(orientation: .portrait)
+        }
+        
+        cameraView.videoPreviewLayer?.frame = cameraView.previewView.frame
+        cameraView.videoPreviewView.layer.insertSublayer(self.cameraView.videoPreviewLayer!, above: self.cameraView.videoPreviewView.layer)
+    }
+    
+    func switchCameras() throws {
+        guard let currentCameraPosition = currentCameraPosition, let captureSession = self.captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
+        
+        captureSession.beginConfiguration()
+        
+        func switchToFrontCamera() throws { }
+        func switchToRearCamera() throws { }
+        
+        switch currentCameraPosition {
+        case .front:
+            try switchToRearCamera()
+            
+        case .rear:
+            try switchToFrontCamera()
+        }
+        
+        captureSession.commitConfiguration()
+    }
+    
+    func switchToFrontCamera() throws {
+        guard let inputs = captureSession?.inputs as? [AVCaptureInput], let rearCameraInput = self.rearCameraInput, inputs.contains(rearCameraInput),
+            let frontCamera = self.frontCamera else { throw CameraControllerError.invalidOperation }
+        
+        self.frontCameraInput = try AVCaptureDeviceInput(device: frontCamera)
+        
+        captureSession?.removeInput(rearCameraInput)
+        
+        if (captureSession?.canAddInput(self.frontCameraInput!))! {
+            captureSession?.addInput(self.frontCameraInput!)
+            
+            self.currentCameraPosition = .front
+            captureDevice = frontCamera
+        }
+            
+        else { throw CameraControllerError.invalidOperation }
+    }
+    
+    func switchToRearCamera() throws {
+        guard let inputs = captureSession?.inputs as? [AVCaptureInput], let frontCameraInput = self.frontCameraInput, inputs.contains(frontCameraInput),
+            let rearCamera = self.rearCamera else { throw CameraControllerError.invalidOperation }
+        
+        self.rearCameraInput = try AVCaptureDeviceInput(device: rearCamera)
+        
+        captureSession?.removeInput(frontCameraInput)
+        
+        if (captureSession?.canAddInput(self.rearCameraInput!))! {
+            captureSession?.addInput(self.rearCameraInput!)
+            
+            self.currentCameraPosition = .rear
+            captureDevice = rearCamera
+        }
+            
+        else { throw CameraControllerError.invalidOperation }
     }
     
     func startSession() {
         sessionQueue.async {
-            if !self.session.isRunning {
-                self.session.startRunning()
-            }
-            DispatchQueue.main.async {
-                LoadingBox.sharedInstance.unblock()
-                print("start session unblock")
-            }
+            guard let captureSession = self.captureSession, !captureSession.isRunning else { return }
+            captureSession.startRunning()
         }
     }
     
     func stopSession() {
         sessionQueue.async {
-            if self.session.isRunning {
-                self.session.stopRunning()
-            }
+            guard let captureSession = self.captureSession, captureSession.isRunning else { return }
+            captureSession.stopRunning()
         }
     }
 }
@@ -76,29 +199,32 @@ extension CameraViewController: CaptureSessionProtocol {
 // MARK: - CameraViewProtocol
 extension CameraViewController: CameraViewProtocol {
     
-    func takePhotoButtonTapped() {
-        self.takePhoto()
+    func captureButtonTapped() {
+        captureImage{ (image, error) in
+            guard let image = image else {
+                print(error ?? "Image capture error")
+                return
+            }
+            self.cameraView.previewView.image = image
+        }
     }
     
     // MARK: BUTTON HANDLER
     
     //swiftlint:disable force_cast
-    func takePhoto() {
+    func captureImage(completion: @escaping (UIImage?, Error?) -> Void) {
+        
+        guard let captureSession = captureSession, captureSession.isRunning else { completion(nil, CameraControllerError.captureSessionIsMissing); return }
+        
         if hasCamera {
-            if let videoConnection = (session.outputs[0] as? AVCaptureStillImageOutput)?.connection(withMediaType: AVMediaTypeVideo) {
-                (session.outputs[0] as? AVCaptureStillImageOutput)?.captureStillImageAsynchronously(from: videoConnection, completionHandler: { (buffer, error) -> Void in
+            if let videoConnection = (captureSession.outputs[0] as? AVCaptureStillImageOutput)?.connection(withMediaType: AVMediaTypeVideo) {
+                (captureSession.outputs[0] as? AVCaptureStillImageOutput)?.captureStillImageAsynchronously(from: videoConnection, completionHandler: { (buffer, error) -> Void in
                     if let sampleBuffer = buffer {
                         let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
                         
                         let dataProvider = CGDataProvider(data: imageData! as CFData)
                         let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
                         var imageOrientation: UIImageOrientation
-                        
-                        /*if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
-                         imageOrientation = UIImageOrientation.down
-                         } else {
-                         imageOrientation = UIImageOrientation.up
-                         }*/
                         
                         switch UIDevice.current.orientation {
                         case .landscapeLeft: imageOrientation = UIImageOrientation.left
@@ -134,4 +260,44 @@ extension CameraViewController: CameraViewProtocol {
             }
         }
     }//swiftlint:enable force_cast
+    
+    func toggleCameraButtonTapped() {
+        switch currentCameraPosition {
+        case .some(.front): cameraView.changeCameraImage(to: #imageLiteral(resourceName: "CameraRear"))
+        case .some(.rear): cameraView.changeCameraImage(to: #imageLiteral(resourceName: "CameraFront"))
+        case .none: return
+        }
+        
+        do {
+            try switchCameras()
+        }
+        catch {
+            print(error)
+        }
+    }
+    
+    func toggleFlashButtonTapped() {
+        switch flashMode {
+        case .on:
+            flashMode = .off
+            cameraView.changeFlashButtonImage(to: #imageLiteral(resourceName: "FlashOff"))
+        case .auto:
+            flashMode = .on
+            cameraView.changeFlashButtonImage(to: #imageLiteral(resourceName: "FlashOn"))
+        case .off:
+            flashMode = .auto
+            cameraView.changeFlashButtonImage(to: #imageLiteral(resourceName: "FlashAuto"))
+        }
+        
+        let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+        if (device?.hasTorch)! {
+            do {
+                try device?.lockForConfiguration()
+                device?.torchMode = flashMode
+                device?.unlockForConfiguration()
+            } catch {
+                print(error)
+            }
+        }
+    }
 }

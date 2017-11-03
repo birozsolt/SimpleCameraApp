@@ -20,7 +20,6 @@
 		39E620701FA87050007E74C6 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6206F1FA87050007E74C6 /* CameraView.swift */; };
 		39E620741FA87298007E74C6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620721FA87298007E74C6 /* CameraViewController.swift */; };
 		39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620731FA87298007E74C6 /* HomeViewController.swift */; };
-		39E6207A1FA87413007E74C6 /* CaptureSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620791FA87413007E74C6 /* CaptureSessionProtocol.swift */; };
 		39E6207C1FA87479007E74C6 /* CameraViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6207B1FA87479007E74C6 /* CameraViewControllerExtension.swift */; };
 		39E6207E1FA87498007E74C6 /* HomeViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6207D1FA87498007E74C6 /* HomeViewControllerExtension.swift */; };
 		39E620801FA88E51007E74C6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */; };
@@ -67,7 +66,6 @@
 		39E6206F1FA87050007E74C6 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraView.swift; path = View/CameraView.swift; sourceTree = "<group>"; };
 		39E620721FA87298007E74C6 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraViewController.swift; path = Controllers/CameraViewController.swift; sourceTree = "<group>"; };
 		39E620731FA87298007E74C6 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Controllers/HomeViewController.swift; sourceTree = "<group>"; };
-		39E620791FA87413007E74C6 /* CaptureSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CaptureSessionProtocol.swift; path = Protocols/CaptureSessionProtocol.swift; sourceTree = "<group>"; };
 		39E6207B1FA87479007E74C6 /* CameraViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraViewControllerExtension.swift; path = Extensions/CameraViewControllerExtension.swift; sourceTree = "<group>"; };
 		39E6207D1FA87498007E74C6 /* HomeViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewControllerExtension.swift; path = Extensions/HomeViewControllerExtension.swift; sourceTree = "<group>"; };
 		39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Controllers/SettingsViewController.swift; sourceTree = "<group>"; };
@@ -144,7 +142,6 @@
 		39CF5CBE1FA07D94006EB23C /* SimpleCamera */ = {
 			isa = PBXGroup;
 			children = (
-				39E620781FA873FA007E74C6 /* Protocols */,
 				39E620711FA87289007E74C6 /* Controllers */,
 				39E6206C1FA86FA4007E74C6 /* View */,
 				39E620661FA1E89A007E74C6 /* Globals */,
@@ -228,14 +225,6 @@
 				39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */,
 			);
 			name = Controllers;
-			sourceTree = "<group>";
-		};
-		39E620781FA873FA007E74C6 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				39E620791FA87413007E74C6 /* CaptureSessionProtocol.swift */,
-			);
-			name = Protocols;
 			sourceTree = "<group>";
 		};
 		A35250D3A5A3E7B381392104 /* Pods */ = {
@@ -556,7 +545,6 @@
 				39E620741FA87298007E74C6 /* CameraViewController.swift in Sources */,
 				39E620621FA1E878007E74C6 /* LoadingBox.swift in Sources */,
 				39E620701FA87050007E74C6 /* CameraView.swift in Sources */,
-				39E6207A1FA87413007E74C6 /* CaptureSessionProtocol.swift in Sources */,
 				39E620801FA88E51007E74C6 /* SettingsViewController.swift in Sources */,
 				39E620821FA88E9C007E74C6 /* SettingsView.swift in Sources */,
 			);

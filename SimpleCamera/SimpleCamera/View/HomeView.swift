@@ -40,7 +40,6 @@ class HomeView: UIView {
         backgroundView.backgroundColor = UIColor.brown
         
         cameraButton.autoAlignAxis(.horizontal, toSameAxisOf: backgroundView, withOffset: 10)
-        //cameraButton.autoPinEdge(toSuperviewEdge: .top, withInset: 200)
         cameraButton.autoSetDimensions(to: CGSize(width: 150, height: 60))
         cameraButton.layer.cornerRadius = 30
         cameraButton.autoAlignAxis(.vertical, toSameAxisOf: backgroundView)
