@@ -11,6 +11,7 @@
 		3910519C1FB192EF0000774D /* SakerSansBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519A1FB192EF0000774D /* SakerSansBold.ttf */; };
 		3910519D1FB192EF0000774D /* SakerSansLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519B1FB192EF0000774D /* SakerSansLight.ttf */; };
 		391051A01FB337E80000774D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3910519F1FB337E80000774D /* SettingsCell.swift */; };
+		391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391051A11FB454EF0000774D /* OrientationViewController.swift */; };
 		39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */; };
 		39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC61FA07D94006EB23C /* Assets.xcassets */; };
 		39CF5CCA1FA07D94006EB23C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC81FA07D94006EB23C /* LaunchScreen.storyboard */; };
@@ -54,6 +55,7 @@
 		3910519A1FB192EF0000774D /* SakerSansBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansBold.ttf; path = Font/SakerSansBold.ttf; sourceTree = "<group>"; };
 		3910519B1FB192EF0000774D /* SakerSansLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansLight.ttf; path = Font/SakerSansLight.ttf; sourceTree = "<group>"; };
 		3910519F1FB337E80000774D /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsCell.swift; path = Model/SettingsCell.swift; sourceTree = "<group>"; };
+		391051A11FB454EF0000774D /* OrientationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationViewController.swift; path = Controllers/OrientationViewController.swift; sourceTree = "<group>"; };
 		39CF5CBC1FA07D94006EB23C /* SimpleCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		39CF5CC61FA07D94006EB23C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				39E620721FA87298007E74C6 /* CameraViewController.swift */,
 				39E620731FA87298007E74C6 /* HomeViewController.swift */,
 				39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */,
+				391051A11FB454EF0000774D /* OrientationViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 				391051A01FB337E80000774D /* SettingsCell.swift in Sources */,
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
 				39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */,
+				391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */,
 				39E620681FA1E8AC007E74C6 /* Globals.swift in Sources */,
 				39E620741FA87298007E74C6 /* CameraViewController.swift in Sources */,
 				39E620621FA1E878007E74C6 /* LoadingBox.swift in Sources */,

@@ -11,8 +11,8 @@ import PureLayout
 
 protocol SettingsViewProtocol {
     func brightnessTapped()
-    func exposureTapped()
-    func flashTapped()
+    func exposureTapped() throws
+    func flashTapped() throws
 }
 
 class SettingsView: UIView {
@@ -53,13 +53,11 @@ class SettingsView: UIView {
         flashCell.autoPinEdge(toSuperviewEdge: .top)
         flashCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
         flashCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleFlash)))
-        flashCell.cellImage.backgroundColor = UIColor.clear
-        flashCell.cellImage.alpha = 1.0
         setupViews(for: flashCell, with: CameraSettings.Flash)
     }
     
     func setupBackground() {
-        self.backgroundColor = UIColor.lightGray
+        self.backgroundColor = UIColor.black
         self.alpha = 0.8
         self.isHidden = true
         self.layer.cornerRadius = 20
@@ -111,10 +109,20 @@ class SettingsView: UIView {
     }
     
     func adjustExposure(){
-        delegate?.exposureTapped()
+        do {
+         try delegate?.exposureTapped()
+        }
+        catch {
+            print(error)
+        }
     }
     
     func toggleFlash() {
-        delegate?.flashTapped()
+        do {
+            try delegate?.flashTapped()
+        }
+        catch {
+            print(error)
+        }
     }
 }

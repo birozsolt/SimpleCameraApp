@@ -22,15 +22,28 @@ class SettingsViewController: UIViewController {
 }
 
 extension SettingsViewController : SettingsViewProtocol {
+    
     func brightnessTapped() {
         
     }
     
-    func exposureTapped() {
+    func exposureTapped() throws{
+        guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
+            throw CameraViewController.CameraControllerError.noCamerasAvailable
+        }
         
+        let minISO = device.activeFormat.minISO
+        let maxISO = device.activeFormat.maxISO
+        let isoRange = maxISO - minISO
+        print(isoRange)
     }
     
-    func flashTapped() {
+    func flashTapped() throws {
+        
+        guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
+            throw CameraViewController.CameraControllerError.noCamerasAvailable
+        }
+        
         switch flashMode {
         case .on:
             flashMode = .off
@@ -43,12 +56,12 @@ extension SettingsViewController : SettingsViewProtocol {
             settingsView.changeFlashCellImage(to: #imageLiteral(resourceName: "FlashAuto"))
         }
         
-        let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-        if (device?.hasTorch)! {
+        
+        if device.hasTorch {
             do {
-                try device?.lockForConfiguration()
-                device?.torchMode = flashMode
-                device?.unlockForConfiguration()
+                try device.lockForConfiguration()
+                device.torchMode = flashMode
+                device.unlockForConfiguration()
             } catch {
                 print(error)
             }

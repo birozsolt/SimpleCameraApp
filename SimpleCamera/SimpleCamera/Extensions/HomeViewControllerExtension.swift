@@ -10,6 +10,6 @@ extension HomeViewController : HomeViewProtocol{
     
     func cameraButtonTapped() {
         cameraViewController = CameraViewController()
-        gNavigationViewController?.pushViewController(cameraViewController!, animated: true)
+        gNavigationViewController?.pushViewController(cameraViewController, animated: true)
     }
 }

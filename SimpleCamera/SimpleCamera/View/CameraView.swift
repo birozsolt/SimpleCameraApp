@@ -134,40 +134,21 @@ class CameraView: UIView {
     }
     
     func toggleSettings() {
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
             if !self.isSettingsOpened {
                 self.settingsViewController?.view.frame = CGRect(x: 0,
                                                  y: self.previewView.frame.size.height - 250,
                                                  width: self.previewView.frame.size.width,
                                                  height: 160)
                 self.settingsViewController?.view.isHidden = false
-                self.settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowLeft")
-                self.settingsButtonArrow.frame = CGRect(x: self.arrowFrame.origin.x + 20,
-                                                        y: self.arrowFrame.origin.y,
-                                                        width: 10,
-                                                        height: 30)
-                
-                self.settingsButtonView.frame = CGRect(x: self.settingsFrame.origin.x - 10,
-                                                        y: self.settingsFrame.origin.y,
-                                                        width: 30,
-                                                        height: 30)
-
+                self.animateSettingsButton(to: self.isSettingsOpened)
                 self.isSettingsOpened = true
             } else {
                 self.settingsViewController?.view.frame = CGRect(x: 0 - self.previewView.frame.size.width,
                                                  y: self.previewView.frame.size.height - 250,
                                                  width: self.previewView.frame.size.width,
                                                  height: 160)
-                self.settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowRight")
-                self.settingsButtonArrow.frame = CGRect(x: self.arrowFrame.origin.x,
-                                                        y: self.arrowFrame.origin.y,
-                                                        width: 10,
-                                                        height: 30)
-                
-                self.settingsButtonView.frame = CGRect(x: self.settingsFrame.origin.x + 10,
-                                                       y: self.settingsFrame.origin.y,
-                                                       width: 30,
-                                                       height: 30)
+                self.animateSettingsButton(to: self.isSettingsOpened)
                 self.isSettingsOpened = false
             }
         }) { (finished) in
@@ -178,6 +159,32 @@ class CameraView: UIView {
                 self.settingsViewController?.view.isHidden = false
                 self.settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowLeft")
             }
+        }
+    }
+    
+    func animateSettingsButton(to settingsOpened: Bool) {
+        if !settingsOpened {
+            settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowLeft")
+            settingsButtonArrow.frame = CGRect(x: arrowFrame.origin.x + 20,
+                                               y: arrowFrame.origin.y,
+                                               width: 10,
+                                               height: 30)
+            
+            settingsButtonView.frame = CGRect(x: self.settingsFrame.origin.x - 10,
+                                              y: settingsFrame.origin.y,
+                                              width: 30,
+                                              height: 30)
+        } else {
+            self.settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowRight")
+            self.settingsButtonArrow.frame = CGRect(x: self.arrowFrame.origin.x,
+                                                    y: self.arrowFrame.origin.y,
+                                                    width: 10,
+                                                    height: 30)
+            
+            self.settingsButtonView.frame = CGRect(x: self.settingsFrame.origin.x + 10,
+                                                   y: self.settingsFrame.origin.y,
+                                                   width: 30,
+                                                   height: 30)
         }
     }
 }

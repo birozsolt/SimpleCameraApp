@@ -16,7 +16,7 @@ extension CameraViewController {
         case rear
     }
     
-    enum CameraControllerError: Swift.Error {
+    public enum CameraControllerError: Swift.Error {
         case captureSessionAlreadyRunning
         case captureSessionIsMissing
         case inputsAreInvalid
@@ -136,9 +136,11 @@ extension CameraViewController {
         
         switch currentCameraPosition {
         case .front:
+            cameraView.changeCameraImage(to: #imageLiteral(resourceName: "CameraRear"))
             try switchToRearCamera()
             
         case .rear:
+            cameraView.changeCameraImage(to: #imageLiteral(resourceName: "CameraFront"))
             try switchToFrontCamera()
         }
         
@@ -189,11 +191,11 @@ extension CameraViewController: CameraViewProtocol {
         captureImage{ (image, error) in
             guard let image = image else {
                 print(error ?? "Image capture error")
-                self.cameraView.previewView.isHidden = false
-                self.cameraView.previewView.contentMode = .scaleAspectFit
-                self.cameraView.previewView.backgroundColor = UIColor.cyan
-                self.cameraView.previewView.alpha = 1.0
-                self.cameraView.videoPreviewLayer?.isHidden = true
+//                self.cameraView.previewView.isHidden = false
+//                self.cameraView.previewView.contentMode = .scaleAspectFit
+//                self.cameraView.previewView.backgroundColor = UIColor.cyan
+//                self.cameraView.previewView.alpha = 1.0
+//                self.cameraView.videoPreviewLayer?.isHidden = true
                 return
             }
             self.cameraView.previewView.image = image
@@ -252,14 +254,6 @@ extension CameraViewController: CameraViewProtocol {
     }//swiftlint:enable force_cast
     
     func toggleCameraButtonTapped() {
-        switch currentCameraPosition {
-        case .some(.front): cameraView.changeCameraImage(to: #imageLiteral(resourceName: "CameraRear"))
-            currentCameraPosition = .rear
-        case .some(.rear): cameraView.changeCameraImage(to: #imageLiteral(resourceName: "CameraFront"))
-            currentCameraPosition = .front
-        case .none: return
-        }
-        
         do {
             try switchCameras()
         }
