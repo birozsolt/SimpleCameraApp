@@ -11,7 +11,7 @@ import AVFoundation
 
 extension CameraViewController {
     
-    public enum CameraPosition {
+    enum CameraPosition {
         case front
         case rear
     }
@@ -180,20 +180,6 @@ extension CameraViewController {
             
         else { throw CameraControllerError.invalidOperation }
     }
-    
-    func startSession() {
-        sessionQueue.async {
-            guard let captureSession = self.captureSession, !captureSession.isRunning else { return }
-            captureSession.startRunning()
-        }
-    }
-    
-    func stopSession() {
-        sessionQueue.async {
-            guard let captureSession = self.captureSession, captureSession.isRunning else { return }
-            captureSession.stopRunning()
-        }
-    }
 }
 
 // MARK: - CameraViewProtocol
@@ -203,6 +189,11 @@ extension CameraViewController: CameraViewProtocol {
         captureImage{ (image, error) in
             guard let image = image else {
                 print(error ?? "Image capture error")
+                self.cameraView.previewView.isHidden = false
+                self.cameraView.previewView.contentMode = .scaleAspectFit
+                self.cameraView.previewView.backgroundColor = UIColor.cyan
+                self.cameraView.previewView.alpha = 1.0
+                self.cameraView.videoPreviewLayer?.isHidden = true
                 return
             }
             self.cameraView.previewView.image = image
@@ -235,7 +226,9 @@ extension CameraViewController: CameraViewProtocol {
                         }
                         
                         let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: imageOrientation)
-                        self.cameraView.previewView.image = image
+                        completion(image, nil)
+                        
+                        /*self.cameraView.previewView.image = image
                         self.cameraView.previewView.clipsToBounds = true
                         self.cameraView.previewView.isHidden = false
                         
@@ -249,10 +242,7 @@ extension CameraViewController: CameraViewProtocol {
                             self.cameraView.previewView.frame = endingRect
                         }, completion: { _ in
                             self.cameraView.videoPreviewLayer?.isHidden = true
-                        })
-                    }
-                    if error == nil {
-                        self.error = nil
+                        })*/
                     }
                 })
             } else {
@@ -264,7 +254,9 @@ extension CameraViewController: CameraViewProtocol {
     func toggleCameraButtonTapped() {
         switch currentCameraPosition {
         case .some(.front): cameraView.changeCameraImage(to: #imageLiteral(resourceName: "CameraRear"))
+            currentCameraPosition = .rear
         case .some(.rear): cameraView.changeCameraImage(to: #imageLiteral(resourceName: "CameraFront"))
+            currentCameraPosition = .front
         case .none: return
         }
         
@@ -273,31 +265,6 @@ extension CameraViewController: CameraViewProtocol {
         }
         catch {
             print(error)
-        }
-    }
-    
-    func toggleFlashButtonTapped() {
-        switch flashMode {
-        case .on:
-            flashMode = .off
-            cameraView.changeFlashButtonImage(to: #imageLiteral(resourceName: "FlashOff"))
-        case .auto:
-            flashMode = .on
-            cameraView.changeFlashButtonImage(to: #imageLiteral(resourceName: "FlashOn"))
-        case .off:
-            flashMode = .auto
-            cameraView.changeFlashButtonImage(to: #imageLiteral(resourceName: "FlashAuto"))
-        }
-        
-        let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-        if (device?.hasTorch)! {
-            do {
-                try device?.lockForConfiguration()
-                device?.torchMode = flashMode
-                device?.unlockForConfiguration()
-            } catch {
-                print(error)
-            }
         }
     }
 }

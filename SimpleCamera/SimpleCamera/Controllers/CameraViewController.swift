@@ -13,7 +13,6 @@ class CameraViewController: UIViewController {
     
     var cameraView = CameraView(frame: CGRect.zero)
     
-    let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil) // queue for session opbject communication.
     var captureSession : AVCaptureSession?
     var photoOutput: AVCaptureStillImageOutput?
     var captureDevice: AVCaptureDevice?
@@ -24,11 +23,8 @@ class CameraViewController: UIViewController {
     var rearCamera: AVCaptureDevice?
     var rearCameraInput: AVCaptureDeviceInput?
     
-    var input: AVCaptureDeviceInput!
-    var error: NSError?
     var hasCamera = true
     var isCameraAlreadySetUp = false
-    var flashMode = AVCaptureTorchMode.off
     var currentCameraPosition: CameraPosition?
     
     // MARK: LIFECYCLE
@@ -44,20 +40,16 @@ class CameraViewController: UIViewController {
             if let error = error {
                 print(error)
             }
-            
             try? self.displayPreview()
         })
         
         registerToNotificationCenter()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        stopSession()
+        guard let captureSession = self.captureSession, captureSession.isRunning else { return }
+        captureSession.stopRunning()
     }
     
     // MARK: SETUP OBSERVER FOR ORIENTATION CHANGE
@@ -88,15 +80,15 @@ class CameraViewController: UIViewController {
         connection.videoOrientation = orientation
     }
     
-    func getFrameForImagePreview() -> CGRect {
-        self.cameraView.previewView.frame = CGRect(x: 0,
-                                                   y: 0,
-                                                   width: self.view.frame.size.width,
-                                                   height: self.view.frame.size.height)
-        let contentFrame = self.cameraView.previewView.getTheFrameOfContent(contentMode: .scaleAspectFit)
-        return CGRect(x: (self.view.frame.size.width - contentFrame.size.width)/2,
-                      y: (self.view.frame.size.height - contentFrame.size.height)/2,
-                      width: contentFrame.size.width,
-                      height: contentFrame.size.height)
-    }
+//    func getFrameForImagePreview() -> CGRect {
+//        self.cameraView.previewView.frame = CGRect(x: 0,
+//                                                   y: 0,
+//                                                   width: self.view.frame.size.width,
+//                                                   height: self.view.frame.size.height)
+//        let contentFrame = self.cameraView.previewView.getTheFrameOfContent(contentMode: .scaleAspectFit)
+//        return CGRect(x: (self.view.frame.size.width - contentFrame.size.width)/2,
+//                      y: (self.view.frame.size.height - contentFrame.size.height)/2,
+//                      width: contentFrame.size.width,
+//                      height: contentFrame.size.height)
+//    }
 }

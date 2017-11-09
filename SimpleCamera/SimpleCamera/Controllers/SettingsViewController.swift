@@ -7,12 +7,51 @@
 //
 
 import UIKit
+import AVFoundation
 
 class SettingsViewController: UIViewController {
+    
+    var flashMode = AVCaptureTorchMode.off
     
     var settingsView = SettingsView(frame: CGRect.zero)
     
     override func loadView() {
         self.view = settingsView
+        settingsView.delegate = self
+    }
+}
+
+extension SettingsViewController : SettingsViewProtocol {
+    func brightnessTapped() {
+        
+    }
+    
+    func exposureTapped() {
+        
+    }
+    
+    func flashTapped() {
+        switch flashMode {
+        case .on:
+            flashMode = .off
+            settingsView.changeFlashCellImage(to: #imageLiteral(resourceName: "FlashOff"))
+        case .auto:
+            flashMode = .on
+            settingsView.changeFlashCellImage(to: #imageLiteral(resourceName: "FlashOn"))
+        case .off:
+            flashMode = .auto
+            settingsView.changeFlashCellImage(to: #imageLiteral(resourceName: "FlashAuto"))
+        }
+        
+        let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+        if (device?.hasTorch)! {
+            do {
+                try device?.lockForConfiguration()
+                device?.torchMode = flashMode
+                device?.unlockForConfiguration()
+            } catch {
+                print(error)
+            }
+        }
     }
 }

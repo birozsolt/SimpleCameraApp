@@ -11,7 +11,6 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var cameraViewController : CameraViewController?
-    var settingsViewController : SettingsViewController?
     var homeView = HomeView(frame: CGRect.zero)
     
     override func viewDidLoad() {

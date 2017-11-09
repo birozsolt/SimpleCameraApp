@@ -7,10 +7,6 @@
 //
 
 extension HomeViewController : HomeViewProtocol{
-    func settingsButtonTapped() {
-        settingsViewController = SettingsViewController()
-        gNavigationViewController?.pushViewController(settingsViewController!, animated: true)
-    }
     
     func cameraButtonTapped() {
         cameraViewController = CameraViewController()

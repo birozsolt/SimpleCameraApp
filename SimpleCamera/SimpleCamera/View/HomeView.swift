@@ -10,7 +10,6 @@ import UIKit
 import PureLayout
 
 protocol HomeViewProtocol {
-    func settingsButtonTapped()
     func cameraButtonTapped()
 }
 
@@ -18,14 +17,12 @@ class HomeView: UIView {
     
     public var delegate : HomeViewProtocol?
     private var backgroundView = UIImageView()
-    private var settingsButton = UIButton(type: UIButtonType.custom)
     private var cameraButton = UIButton(type: UIButtonType.custom)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.addSubview(backgroundView)
-        self.insertSubview(settingsButton, aboveSubview: backgroundView)
         self.insertSubview(cameraButton, aboveSubview: backgroundView)
         gNavigationViewController?.navigationBar.isHidden = true
         setupViews()
@@ -47,24 +44,10 @@ class HomeView: UIView {
         cameraButton.backgroundColor = UIColor.black
         cameraButton.setTitleColor(UIColor.white, for: .normal)
         cameraButton.setTitle("Camera", for: .normal)
-        
-        
-        
-        settingsButton.autoPinEdge(.top, to: .bottom, of: cameraButton, withOffset: 40)
-        settingsButton.autoSetDimensions(to: CGSize(width: 130, height: 50))
-        settingsButton.layer.cornerRadius = 25
-        settingsButton.autoAlignAxis(.vertical, toSameAxisOf: backgroundView)
-        settingsButton.addTarget(self, action: #selector(showSettings), for: .touchUpInside)
-        settingsButton.backgroundColor = UIColor.black
-        settingsButton.setTitleColor(UIColor.white, for: .normal)
-        settingsButton.setTitle("Settings", for: .normal)
+        cameraButton.titleLabel?.font = UIFont(name: getFont(font: .bold), size: 30)
     }
     
     func startCamera() {
         delegate?.cameraButtonTapped()
-    }
-    
-    func showSettings(){
-        delegate?.settingsButtonTapped()
     }
 }

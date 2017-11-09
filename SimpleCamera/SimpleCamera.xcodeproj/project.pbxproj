@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		082F111FF44680DEA1513BB4 /* Pods_SimpleCameraTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6495AB7E639FF15FF986CC10 /* Pods_SimpleCameraTests.framework */; };
+		3910519C1FB192EF0000774D /* SakerSansBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519A1FB192EF0000774D /* SakerSansBold.ttf */; };
+		3910519D1FB192EF0000774D /* SakerSansLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519B1FB192EF0000774D /* SakerSansLight.ttf */; };
+		391051A01FB337E80000774D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3910519F1FB337E80000774D /* SettingsCell.swift */; };
 		39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */; };
 		39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC61FA07D94006EB23C /* Assets.xcassets */; };
 		39CF5CCA1FA07D94006EB23C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC81FA07D94006EB23C /* LaunchScreen.storyboard */; };
@@ -48,6 +51,9 @@
 /* Begin PBXFileReference section */
 		1E0C9186FD73CFFE5B48FF26 /* Pods-SimpleCameraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCameraTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCameraTests/Pods-SimpleCameraTests.debug.xcconfig"; sourceTree = "<group>"; };
 		27734CCF4391B03118BC779F /* Pods_SimpleCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3910519A1FB192EF0000774D /* SakerSansBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansBold.ttf; path = Font/SakerSansBold.ttf; sourceTree = "<group>"; };
+		3910519B1FB192EF0000774D /* SakerSansLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansLight.ttf; path = Font/SakerSansLight.ttf; sourceTree = "<group>"; };
+		3910519F1FB337E80000774D /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsCell.swift; path = Model/SettingsCell.swift; sourceTree = "<group>"; };
 		39CF5CBC1FA07D94006EB23C /* SimpleCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		39CF5CC61FA07D94006EB23C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -117,6 +123,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		391051951FB094A60000774D /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				3910519A1FB192EF0000774D /* SakerSansBold.ttf */,
+				3910519B1FB192EF0000774D /* SakerSansLight.ttf */,
+			);
+			name = Font;
+			sourceTree = "<group>";
+		};
 		39CF5CB31FA07D94006EB23C = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +166,7 @@
 				39CF5CC61FA07D94006EB23C /* Assets.xcassets */,
 				39CF5CC81FA07D94006EB23C /* LaunchScreen.storyboard */,
 				39CF5CCB1FA07D94006EB23C /* Info.plist */,
+				391051951FB094A60000774D /* Font */,
 				39E620691FA1EA7E007E74C6 /* Assets */,
 			);
 			path = SimpleCamera;
@@ -178,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				39E620611FA1E878007E74C6 /* LoadingBox.swift */,
+				3910519F1FB337E80000774D /* SettingsCell.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -360,7 +377,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				39CF5CCA1FA07D94006EB23C /* LaunchScreen.storyboard in Resources */,
+				3910519D1FB192EF0000774D /* SakerSansLight.ttf in Resources */,
 				39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */,
+				3910519C1FB192EF0000774D /* SakerSansBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,6 +558,7 @@
 				39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */,
 				39E6207C1FA87479007E74C6 /* CameraViewControllerExtension.swift in Sources */,
 				39E620651FA1E893007E74C6 /* UIImageViewExtension.swift in Sources */,
+				391051A01FB337E80000774D /* SettingsCell.swift in Sources */,
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
 				39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */,
 				39E620681FA1E8AC007E74C6 /* Globals.swift in Sources */,

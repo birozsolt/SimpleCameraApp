@@ -10,3 +10,25 @@ import UIKit
 
 var gHomeViewController: HomeViewController?
 var gNavigationViewController : UINavigationController?
+
+enum Fonts {
+    case light
+    case bold
+}
+
+func getFont(font : Fonts) -> String {
+    switch font {
+    case .light:
+        return "Saker Sans Light PERSONAL USE"
+    case .bold:
+        return "Saker Sans Bold PERSONAL USE"
+    }
+}
+
+enum CameraSettings : String {
+    case Brightness
+    case Exposure
+    case Flash
+    
+    static var count: Int { return CameraSettings.Flash.hashValue + 1}
+}
