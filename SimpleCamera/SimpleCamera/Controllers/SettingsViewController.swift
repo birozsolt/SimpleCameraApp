@@ -11,7 +11,7 @@ import AVFoundation
 
 class SettingsViewController: UIViewController {
     
-    var flashMode = AVCaptureTorchMode.off
+    var flashMode = AVCaptureFlashMode.off
     
     var settingsView = SettingsView(frame: CGRect.zero)
     
@@ -35,6 +35,9 @@ extension SettingsViewController : SettingsViewProtocol {
         let minISO = device.activeFormat.minISO
         let maxISO = device.activeFormat.maxISO
         let isoRange = maxISO - minISO
+        device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, iso: maxISO) { (time) in
+            
+        }
         print(isoRange)
     }
     
@@ -57,10 +60,10 @@ extension SettingsViewController : SettingsViewProtocol {
         }
         
         
-        if device.hasTorch {
+        if device.hasFlash {
             do {
                 try device.lockForConfiguration()
-                device.torchMode = flashMode
+                device.flashMode = flashMode
                 device.unlockForConfiguration()
             } catch {
                 print(error)

@@ -11,14 +11,12 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var cameraViewController : CameraViewController!
-    var orientationViewController : OrientationViewController!
     
     var homeView = HomeView(frame: CGRect.zero)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        orientationViewController = OrientationViewController(something: true)
-        orientationViewController.startMotionUpdate()
+
     }
     
     override func loadView() {

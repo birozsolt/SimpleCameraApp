@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PureLayout
 
 protocol SettingsViewProtocol {
     func brightnessTapped()
@@ -17,7 +16,6 @@ protocol SettingsViewProtocol {
 
 class SettingsView: UIView {
     public var delegate : SettingsViewProtocol?
-    private var backgroundView = UIImageView()
     private var brightnessCell = SettingsCell(frame: CGRect.zero)
     private var exposureCell = SettingsCell(frame: CGRect.zero)
     private var flashCell = SettingsCell(frame: CGRect.zero)
@@ -41,19 +39,19 @@ class SettingsView: UIView {
         brightnessCell.autoPinEdge(toSuperviewEdge: .top)
         brightnessCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
         brightnessCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(adjustBrightness)))
-        setupViews(for: brightnessCell, with: CameraSettings.Brightness)
+        setupViews(for: brightnessCell, withType: CameraSettings.Brightness)
         
         exposureCell.autoPinEdge(.left, to: .right, of: brightnessCell, withOffset: 10)
         exposureCell.autoPinEdge(toSuperviewEdge: .top)
         exposureCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
         exposureCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(adjustExposure)))
-        setupViews(for: exposureCell, with: CameraSettings.Exposure)
+        setupViews(for: exposureCell, withType: CameraSettings.Exposure)
         
         flashCell.autoPinEdge(.left, to: .right, of: exposureCell, withOffset: 10)
         flashCell.autoPinEdge(toSuperviewEdge: .top)
         flashCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
         flashCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleFlash)))
-        setupViews(for: flashCell, with: CameraSettings.Flash)
+        setupViews(for: flashCell, withType: CameraSettings.Flash)
     }
     
     func setupBackground() {
@@ -63,7 +61,7 @@ class SettingsView: UIView {
         self.layer.cornerRadius = 20
     }
     
-    private func setupViews(for cell: SettingsCell, with option: CameraSettings){
+    private func setupViews(for cell: SettingsCell, withType type: CameraSettings){
         
         cell.cellImage.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         cell.cellImage.autoPinEdge(toSuperviewEdge: .right)
@@ -79,7 +77,7 @@ class SettingsView: UIView {
         cell.cellLabel.textColor = UIColor.white
         cell.cellLabel.textAlignment = .center
         
-        switch option {
+        switch type {
         case .Brightness:
             cell.cellImage.image = #imageLiteral(resourceName: "Brightness")
             cell.cellLabel.text = CameraSettings.Brightness.rawValue

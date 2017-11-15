@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PureLayout
 
 protocol HomeViewProtocol {
     func cameraButtonTapped()

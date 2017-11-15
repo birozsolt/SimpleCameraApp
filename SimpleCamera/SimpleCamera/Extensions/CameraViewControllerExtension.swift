@@ -188,16 +188,27 @@ extension CameraViewController {
 extension CameraViewController: CameraViewProtocol {
     
     func captureButtonTapped() {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+            if self.cameraView.isSettingsOpened {
+                self.cameraView.hideSettings()
+                self.cameraView.isSettingsOpened = false
+            }
+        }) { (finished) in
+            self.cameraView.settingsViewController.view.isHidden = true
+            self.cameraView.changeArrowImage(to:#imageLiteral(resourceName: "ArrowRight"))
+        }
+
         captureImage{ (image, error) in
             guard let image = image else {
                 print(error ?? "Image capture error")
-//                self.cameraView.previewView.isHidden = false
-//                self.cameraView.previewView.contentMode = .scaleAspectFit
-//                self.cameraView.previewView.backgroundColor = UIColor.cyan
-//                self.cameraView.previewView.alpha = 1.0
-//                self.cameraView.videoPreviewLayer?.isHidden = true
                 return
             }
+            self.cameraView.previewView.isHidden = false
+            self.cameraView.previewView.contentMode = .scaleAspectFit
+            self.cameraView.previewView.backgroundColor = UIColor.black
+            self.cameraView.previewView.alpha = 1.0
+            self.cameraView.videoPreviewLayer?.isHidden = true
+
             self.cameraView.previewView.image = image
         }
     }
@@ -217,7 +228,9 @@ extension CameraViewController: CameraViewProtocol {
                         
                         let dataProvider = CGDataProvider(data: imageData! as CFData)
                         let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
-                        var imageOrientation: UIImageOrientation
+                        
+                        let image = self.fixOrientationOfImage(image: UIImage(cgImage: cgImageRef!))
+                        /*var imageOrientation: UIImageOrientation
                         
                         switch UIDevice.current.orientation {
                         case .landscapeLeft: imageOrientation = UIImageOrientation.left
@@ -227,24 +240,8 @@ extension CameraViewController: CameraViewProtocol {
                         default: imageOrientation = UIImageOrientation.up
                         }
                         
-                        let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: imageOrientation)
+                        let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: imageOrientation)*/
                         completion(image, nil)
-                        
-                        /*self.cameraView.previewView.image = image
-                        self.cameraView.previewView.clipsToBounds = true
-                        self.cameraView.previewView.isHidden = false
-                        
-                        let startingRect = self.cameraView.videoPreviewView.frame
-                        let endingRect = self.getFrameForImagePreview()
-                        self.cameraView.previewView.contentMode = .scaleAspectFit
-                        self.cameraView.previewView.frame = startingRect
-                        
-                        UIView.animate(withDuration: 0.5, delay: 0.1, options: UIViewAnimationOptions.curveLinear, animations: {
-                            self.cameraView.previewView.alpha = 1.0
-                            self.cameraView.previewView.frame = endingRect
-                        }, completion: { _ in
-                            self.cameraView.videoPreviewLayer?.isHidden = true
-                        })*/
                     }
                 })
             } else {
@@ -261,4 +258,62 @@ extension CameraViewController: CameraViewProtocol {
             print(error)
         }
     }
+
+    func fixOrientationOfImage(image: UIImage) -> UIImage? {
+        if image.imageOrientation == .up {
+            return image
+        }
+        
+        // We need to calculate the proper transformation to make the image upright.
+        // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+        var transform = CGAffineTransform.identity
+        
+        switch image.imageOrientation {
+        case .down, .downMirrored:
+            transform = transform.translatedBy(x: image.size.width, y: image.size.height)
+            transform = transform.rotated(by: CGFloat(Double.pi))
+        case .left, .leftMirrored:
+            transform = transform.translatedBy(x: image.size.width, y: 0)
+            transform = transform.rotated(by:  CGFloat(Double.pi / 2))
+        case .right, .rightMirrored:
+            transform = transform.translatedBy(x: 0, y: image.size.height)
+            transform = transform.rotated(by:  -CGFloat(Double.pi / 2))
+        default:
+            break
+        }
+        
+        switch image.imageOrientation {
+        case .upMirrored, .downMirrored:
+            transform = transform.translatedBy(x: image.size.width, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+        case .leftMirrored, .rightMirrored:
+            transform = transform.translatedBy(x: image.size.height, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+        default:
+            break
+        }
+        
+        // Now we draw the underlying CGImage into a new context, applying the transform
+        // calculated above.
+        guard let context = CGContext(data: nil, width: Int(image.size.width), height: Int(image.size.height), bitsPerComponent: image.cgImage!.bitsPerComponent, bytesPerRow: 0, space: image.cgImage!.colorSpace!, bitmapInfo: image.cgImage!.bitmapInfo.rawValue) else {
+            return nil
+        }
+        
+        context.concatenate(transform)
+        
+        switch image.imageOrientation {
+        case .left, .leftMirrored, .right, .rightMirrored:
+            context.draw(image.cgImage!, in: CGRect(x: 0, y: 0, width: image.size.height, height: image.size.width))
+        default:
+            context.draw(image.cgImage!, in: CGRect(origin: .zero, size: image.size))
+        }
+        
+        // And now we just create a new UIImage from the drawing context
+        guard let CGImage = context.makeImage() else {
+            return nil
+        }
+        
+        return UIImage(cgImage: CGImage)
+    }
+    
 }

@@ -22,7 +22,9 @@ class CameraView: UIView {
     public var previewView = UIImageView()
     public var videoPreviewView = UIView()
     public var videoPreviewLayer: AVCaptureVideoPreviewLayer?
-    public var settingsViewController : SettingsViewController?
+    public var settingsViewController = SettingsViewController()
+    public var orientationViewController = OrientationViewController()
+    
     
     private var captureButton = UIButton(type: UIButtonType.custom)
     private var toggleCameraButton = UIButton(type: UIButtonType.custom)
@@ -39,15 +41,13 @@ class CameraView: UIView {
         super.init(frame: frame)
         self.addSubview(previewView)
         
-        settingsViewController = SettingsViewController()
-        
         self.insertSubview(captureButton, aboveSubview: previewView)
         self.insertSubview(toggleCameraButton, aboveSubview: previewView)
         self.insertSubview(toggleSettingsButton, aboveSubview: previewView)
-        self.insertSubview((settingsViewController?.view)!, aboveSubview: previewView)
+        self.insertSubview(settingsViewController.view, aboveSubview: previewView)
+        self.insertSubview(orientationViewController.view, aboveSubview: previewView)
         
         self.insertSubview(videoPreviewView, belowSubview: previewView)
-        
         setupViews()
     }
     
@@ -64,6 +64,8 @@ class CameraView: UIView {
         videoPreviewView.autoPinEdgesToSuperviewEdges()
         
         setupSettingsView()
+        
+        setupOrientationView()
         
         captureButton.isHidden = false
         captureButton.addTarget(self, action: #selector(capturePhoto), for: .touchUpInside)
@@ -115,13 +117,23 @@ class CameraView: UIView {
     }
     
     func setupSettingsView() {
-        settingsViewController?.view.autoPinEdge(toSuperviewEdge: .left)
-        settingsViewController?.view.autoPinEdge(.bottom, to: .top, of: captureButton, withOffset: -20)
-        settingsViewController?.view.autoSetDimensions(to: CGSize(width: self.previewView.frame.size.width, height: 160))
+        settingsViewController.view.autoPinEdge(toSuperviewEdge: .left)
+        settingsViewController.view.autoPinEdge(.bottom, to: .top, of: captureButton, withOffset: -20)
+        settingsViewController.view.autoSetDimensions(to: CGSize(width: self.previewView.frame.size.width, height: 160))
+    }
+    
+    func setupOrientationView(){
+        orientationViewController.view.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+        orientationViewController.view.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        orientationViewController.view.autoSetDimensions(to: CGSize(width: 100 , height: 100))
     }
     
     func changeCameraImage(to image: UIImage){
         toggleCameraButton.setImage(image, for: .normal)
+    }
+    
+    func changeArrowImage(to image: UIImage){
+        settingsButtonArrow.image = image
     }
     
     // MARK: - Button handlers
@@ -136,30 +148,39 @@ class CameraView: UIView {
     func toggleSettings() {
         UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
             if !self.isSettingsOpened {
-                self.settingsViewController?.view.frame = CGRect(x: 0,
-                                                 y: self.previewView.frame.size.height - 250,
-                                                 width: self.previewView.frame.size.width,
-                                                 height: 160)
-                self.settingsViewController?.view.isHidden = false
-                self.animateSettingsButton(to: self.isSettingsOpened)
+                self.showSettings()
                 self.isSettingsOpened = true
             } else {
-                self.settingsViewController?.view.frame = CGRect(x: 0 - self.previewView.frame.size.width,
-                                                 y: self.previewView.frame.size.height - 250,
-                                                 width: self.previewView.frame.size.width,
-                                                 height: 160)
-                self.animateSettingsButton(to: self.isSettingsOpened)
+                self.hideSettings()
                 self.isSettingsOpened = false
             }
         }) { (finished) in
             if !self.isSettingsOpened {
-                self.settingsViewController?.view.isHidden = true
-                self.settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowRight")
+                self.settingsViewController.view.isHidden = true
+                self.changeArrowImage(to: #imageLiteral(resourceName: "ArrowRight"))
             } else {
-                self.settingsViewController?.view.isHidden = false
-                self.settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowLeft")
+                self.settingsViewController.view.isHidden = false
+                self.changeArrowImage(to: #imageLiteral(resourceName: "ArrowLeft"))
             }
         }
+    }
+    
+    func showSettings(){
+        settingsViewController.view.frame = CGRect(x: 0,
+                                                    y: previewView.frame.size.height - 250,
+                                                    width: previewView.frame.size.width,
+                                                    height: 160)
+        settingsViewController.view.isHidden = false
+        animateSettingsButton(to: isSettingsOpened)
+    }
+    
+    func hideSettings(){
+        settingsViewController.view.frame = CGRect(x: 0 - previewView.frame.size.width,
+                                                    y: previewView.frame.size.height - 250,
+                                                    width: previewView.frame.size.width,
+                                                    height: 160)
+        animateSettingsButton(to: isSettingsOpened)
+
     }
     
     func animateSettingsButton(to settingsOpened: Bool) {

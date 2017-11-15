@@ -12,13 +12,13 @@
 		3910519D1FB192EF0000774D /* SakerSansLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519B1FB192EF0000774D /* SakerSansLight.ttf */; };
 		391051A01FB337E80000774D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3910519F1FB337E80000774D /* SettingsCell.swift */; };
 		391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391051A11FB454EF0000774D /* OrientationViewController.swift */; };
+		39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF3C271FBC4F4F00735F24 /* OrientationView.swift */; };
 		39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */; };
 		39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC61FA07D94006EB23C /* Assets.xcassets */; };
 		39CF5CCA1FA07D94006EB23C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC81FA07D94006EB23C /* LaunchScreen.storyboard */; };
 		39CF5CD51FA07D94006EB23C /* SimpleCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CD41FA07D94006EB23C /* SimpleCameraTests.swift */; };
 		39CF5CE01FA07D94006EB23C /* SimpleCameraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CDF1FA07D94006EB23C /* SimpleCameraUITests.swift */; };
 		39E620621FA1E878007E74C6 /* LoadingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620611FA1E878007E74C6 /* LoadingBox.swift */; };
-		39E620651FA1E893007E74C6 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620641FA1E893007E74C6 /* UIImageViewExtension.swift */; };
 		39E620681FA1E8AC007E74C6 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620671FA1E8AC007E74C6 /* Globals.swift */; };
 		39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6206D1FA86FE3007E74C6 /* HomeView.swift */; };
 		39E620701FA87050007E74C6 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6206F1FA87050007E74C6 /* CameraView.swift */; };
@@ -56,6 +56,7 @@
 		3910519B1FB192EF0000774D /* SakerSansLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansLight.ttf; path = Font/SakerSansLight.ttf; sourceTree = "<group>"; };
 		3910519F1FB337E80000774D /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsCell.swift; path = Model/SettingsCell.swift; sourceTree = "<group>"; };
 		391051A11FB454EF0000774D /* OrientationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationViewController.swift; path = Controllers/OrientationViewController.swift; sourceTree = "<group>"; };
+		39AF3C271FBC4F4F00735F24 /* OrientationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationView.swift; path = View/OrientationView.swift; sourceTree = "<group>"; };
 		39CF5CBC1FA07D94006EB23C /* SimpleCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		39CF5CC61FA07D94006EB23C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,7 +69,6 @@
 		39CF5CDF1FA07D94006EB23C /* SimpleCameraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCameraUITests.swift; sourceTree = "<group>"; };
 		39CF5CE11FA07D94006EB23C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39E620611FA1E878007E74C6 /* LoadingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingBox.swift; path = Model/LoadingBox.swift; sourceTree = "<group>"; };
-		39E620641FA1E893007E74C6 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageViewExtension.swift; path = Extensions/UIImageViewExtension.swift; sourceTree = "<group>"; };
 		39E620671FA1E8AC007E74C6 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = Globals/Globals.swift; sourceTree = "<group>"; };
 		39E6206D1FA86FE3007E74C6 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = View/HomeView.swift; sourceTree = "<group>"; };
 		39E6206F1FA87050007E74C6 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraView.swift; path = View/CameraView.swift; sourceTree = "<group>"; };
@@ -205,7 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				39E6207D1FA87498007E74C6 /* HomeViewControllerExtension.swift */,
-				39E620641FA1E893007E74C6 /* UIImageViewExtension.swift */,
 				39E6207B1FA87479007E74C6 /* CameraViewControllerExtension.swift */,
 			);
 			name = Extensions;
@@ -232,6 +231,7 @@
 				39E6206F1FA87050007E74C6 /* CameraView.swift */,
 				39E6206D1FA86FE3007E74C6 /* HomeView.swift */,
 				39E620811FA88E9C007E74C6 /* SettingsView.swift */,
+				39AF3C271FBC4F4F00735F24 /* OrientationView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -560,7 +560,7 @@
 				39E6207E1FA87498007E74C6 /* HomeViewControllerExtension.swift in Sources */,
 				39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */,
 				39E6207C1FA87479007E74C6 /* CameraViewControllerExtension.swift in Sources */,
-				39E620651FA1E893007E74C6 /* UIImageViewExtension.swift in Sources */,
+				39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */,
 				391051A01FB337E80000774D /* SettingsCell.swift in Sources */,
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
 				39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */,
