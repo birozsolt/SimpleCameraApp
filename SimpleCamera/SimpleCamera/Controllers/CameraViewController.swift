@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import PureLayout
 import AVFoundation
 
 class CameraViewController: UIViewController {
     
     var cameraView = CameraView(frame: CGRect.zero)
+    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     
     var captureSession : AVCaptureSession?
     var photoOutput: AVCaptureStillImageOutput?
@@ -32,18 +34,18 @@ class CameraViewController: UIViewController {
     override func loadView() {
         self.view = cameraView
         cameraView.delegate = self
+        cameraView.orientationViewController.startMotionUpdate()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerToNotificationCenter()
-        cameraView.orientationViewController.startMotionUpdate()
         prepare(completionHandler: { (error) in
             if let error = error {
                 print(error)
             }
             try? self.displayPreview()
         })
+        registerToNotificationCenter()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -68,16 +70,15 @@ class CameraViewController: UIViewController {
     func rotated() {
         let orientation = UIDevice.current.orientation
         switch orientation {
-        case .landscapeLeft: self.changeVideoOrientation(orientation: .landscapeLeft)
-        case .landscapeRight : self.changeVideoOrientation(orientation: .landscapeRight)
+        case .landscapeLeft: self.changeVideoOrientation(orientation: .landscapeRight)
+        case .landscapeRight : self.changeVideoOrientation(orientation: .landscapeLeft)
         case .portrait : self.changeVideoOrientation(orientation: .portrait)
-        case .portraitUpsideDown : self.changeVideoOrientation(orientation: .portraitUpsideDown)
         default: self.changeVideoOrientation(orientation: .portrait)
         }
     }
     
     func changeVideoOrientation(orientation: AVCaptureVideoOrientation){
-        guard let connection = self.cameraView.videoPreviewLayer?.connection else { return }
+        guard let connection = self.videoPreviewLayer?.connection else { return }
         connection.videoOrientation = orientation
     }
 }

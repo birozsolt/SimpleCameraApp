@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol OrientationViewProtocol {
+    func moveHorizontalSlider(to direction: SliderMoves)
+    func moveVerticalSlider(to direction: SliderMoves)
+}
+
 class OrientationView: UIView {
+    
+    var delegate : OrientationViewProtocol?
     var horizontalLine = UIView()
     var horizontalSlider = UIView()
     
@@ -30,13 +37,13 @@ class OrientationView: UIView {
     
     func setupViews(){
         horizontalSlider.autoSetDimensions(to: CGSize(width: 5, height: 5))
-        horizontalSlider.autoPinEdge(toSuperviewEdge: .left)
+        horizontalSlider.autoCenterInSuperview()
         horizontalSlider.autoAlignAxis(toSuperviewAxis: .horizontal)
         horizontalSlider.backgroundColor = UIColor.orange
         
         verticalSlider.autoSetDimensions(to: CGSize(width: 5, height: 5))
         verticalSlider.autoAlignAxis(toSuperviewAxis: .vertical)
-        verticalSlider.autoPinEdge(toSuperviewEdge: .bottom)
+        verticalSlider.autoCenterInSuperview()
         verticalSlider.backgroundColor = UIColor.orange
         
         horizontalLine.autoSetDimensions(to: CGSize(width: 100, height: 5))

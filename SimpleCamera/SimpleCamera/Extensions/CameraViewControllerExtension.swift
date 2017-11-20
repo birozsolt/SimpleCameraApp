@@ -111,19 +111,18 @@ extension CameraViewController {
     func displayPreview() throws {
         guard let captureSession = self.captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
         
-        cameraView.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        cameraView.videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
         
         switch UIApplication.shared.statusBarOrientation {
-        case .landscapeLeft: self.changeVideoOrientation(orientation: .landscapeLeft)
-        case .landscapeRight : self.changeVideoOrientation(orientation: .landscapeRight)
+        case .landscapeLeft: self.changeVideoOrientation(orientation: .landscapeRight)
+        case .landscapeRight : self.changeVideoOrientation(orientation: .landscapeLeft)
         case .portrait : self.changeVideoOrientation(orientation: .portrait)
-        case .portraitUpsideDown : self.changeVideoOrientation(orientation: .portraitUpsideDown)
         default: self.changeVideoOrientation(orientation: .portrait)
         }
-        
-        cameraView.videoPreviewLayer?.frame = cameraView.previewView.frame
-        cameraView.videoPreviewView.layer.insertSublayer(self.cameraView.videoPreviewLayer!, above: self.cameraView.videoPreviewView.layer)
+        cameraView.videoPreviewView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        videoPreviewLayer?.frame = CGRect(origin: CGPoint.zero, size: cameraView.videoPreviewView.frame.size)
+        cameraView.videoPreviewView.layer.insertSublayer(videoPreviewLayer!, above: cameraView.videoPreviewView.layer)
     }
     
     func switchCameras() throws {
@@ -207,7 +206,7 @@ extension CameraViewController: CameraViewProtocol {
             self.cameraView.previewView.contentMode = .scaleAspectFit
             self.cameraView.previewView.backgroundColor = UIColor.black
             self.cameraView.previewView.alpha = 1.0
-            self.cameraView.videoPreviewLayer?.isHidden = true
+            self.videoPreviewLayer?.isHidden = true
 
             self.cameraView.previewView.image = image
         }
@@ -221,7 +220,7 @@ extension CameraViewController: CameraViewProtocol {
         guard let captureSession = captureSession, captureSession.isRunning else { completion(nil, CameraControllerError.captureSessionIsMissing); return }
         
         if hasCamera {
-            if let videoConnection = (captureSession.outputs[0] as? AVCaptureStillImageOutput)?.connection(withMediaType: AVMediaTypeVideo) {
+            if let videoConnection = (captureSession.outputs[0] as? AVCaptureStillImageOutput)?.connection(withMediaType: AVMediaTypeVideo){
                 (captureSession.outputs[0] as? AVCaptureStillImageOutput)?.captureStillImageAsynchronously(from: videoConnection, completionHandler: { (buffer, error) -> Void in
                     if let sampleBuffer = buffer {
                         let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
@@ -229,18 +228,7 @@ extension CameraViewController: CameraViewProtocol {
                         let dataProvider = CGDataProvider(data: imageData! as CFData)
                         let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
                         
-                        let image = self.fixOrientationOfImage(image: UIImage(cgImage: cgImageRef!))
-                        /*var imageOrientation: UIImageOrientation
-                        
-                        switch UIDevice.current.orientation {
-                        case .landscapeLeft: imageOrientation = UIImageOrientation.left
-                        case .landscapeRight : imageOrientation = UIImageOrientation.right
-                        case .portrait : imageOrientation = UIImageOrientation.up
-                        case .portraitUpsideDown : imageOrientation = UIImageOrientation.down
-                        default: imageOrientation = UIImageOrientation.up
-                        }
-                        
-                        let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: imageOrientation)*/
+                        let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right) //self.cropImage(image: UIImage(cgImage: cgImageRef!), toRect: self.cameraView.previewView.bounds)
                         completion(image, nil)
                     }
                 })
@@ -258,62 +246,39 @@ extension CameraViewController: CameraViewProtocol {
             print(error)
         }
     }
-
-    func fixOrientationOfImage(image: UIImage) -> UIImage? {
-        if image.imageOrientation == .up {
-            return image
-        }
-        
-        // We need to calculate the proper transformation to make the image upright.
-        // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
-        var transform = CGAffineTransform.identity
-        
-        switch image.imageOrientation {
-        case .down, .downMirrored:
-            transform = transform.translatedBy(x: image.size.width, y: image.size.height)
-            transform = transform.rotated(by: CGFloat(Double.pi))
-        case .left, .leftMirrored:
-            transform = transform.translatedBy(x: image.size.width, y: 0)
-            transform = transform.rotated(by:  CGFloat(Double.pi / 2))
-        case .right, .rightMirrored:
-            transform = transform.translatedBy(x: 0, y: image.size.height)
-            transform = transform.rotated(by:  -CGFloat(Double.pi / 2))
-        default:
-            break
-        }
-        
-        switch image.imageOrientation {
-        case .upMirrored, .downMirrored:
-            transform = transform.translatedBy(x: image.size.width, y: 0)
-            transform = transform.scaledBy(x: -1, y: 1)
-        case .leftMirrored, .rightMirrored:
-            transform = transform.translatedBy(x: image.size.height, y: 0)
-            transform = transform.scaledBy(x: -1, y: 1)
-        default:
-            break
-        }
-        
-        // Now we draw the underlying CGImage into a new context, applying the transform
-        // calculated above.
-        guard let context = CGContext(data: nil, width: Int(image.size.width), height: Int(image.size.height), bitsPerComponent: image.cgImage!.bitsPerComponent, bytesPerRow: 0, space: image.cgImage!.colorSpace!, bitmapInfo: image.cgImage!.bitmapInfo.rawValue) else {
-            return nil
-        }
-        
-        context.concatenate(transform)
-        
-        switch image.imageOrientation {
-        case .left, .leftMirrored, .right, .rightMirrored:
-            context.draw(image.cgImage!, in: CGRect(x: 0, y: 0, width: image.size.height, height: image.size.width))
-        default:
-            context.draw(image.cgImage!, in: CGRect(origin: .zero, size: image.size))
-        }
-        
-        // And now we just create a new UIImage from the drawing context
-        guard let CGImage = context.makeImage() else {
-            return nil
-        }
-        
-        return UIImage(cgImage: CGImage)
-    }
     
+    func cropImage(image : UIImage, toRect rect: CGRect) -> UIImage {
+        
+        func rad(_ deg : CGFloat) -> CGFloat {
+            return deg / 180 * .pi
+        }
+        
+        // determine the orientation of the image and apply a transformation to the crop rectangle to shift it to the correct position
+        var rectTransform: CGAffineTransform
+        switch (image.imageOrientation) {
+        case .left:
+            rectTransform = CGAffineTransform(rotationAngle: rad(90)).translatedBy(x: 0, y: -image.size.height)
+            break
+        case .right:
+            rectTransform = CGAffineTransform(rotationAngle: rad(-90)).translatedBy(x: -image.size.width, y: 0)
+            break
+        case .down:
+            rectTransform = CGAffineTransform(rotationAngle: rad(-180)).translatedBy(x: -image.size.width, y: -image.size.height)
+            break
+        default:
+            rectTransform = CGAffineTransform.identity;
+        }
+        
+        // adjust the transformation scale based on the image scale
+        //rectTransform = rectTransform.scaledBy(x: image.scale, y: image.scale);
+        
+        // apply the transformation to the rect to create a new, shifted rect
+        let transformedCropSquare = rect.applying(rectTransform)
+        // use the rect to crop the image
+        let imageRef = image.cgImage!.cropping(to: transformedCropSquare)
+        // create a new UIImage and set the scale and orientation appropriately
+        let result = UIImage(cgImage: imageRef!, scale: image.scale, orientation: image.imageOrientation)
+        
+        return result
+    }
 }

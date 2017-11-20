@@ -35,8 +35,12 @@ extension SettingsViewController : SettingsViewProtocol {
         let minISO = device.activeFormat.minISO
         let maxISO = device.activeFormat.maxISO
         let isoRange = maxISO - minISO
-        device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, iso: maxISO) { (time) in
-            
+        do {
+            try device.lockForConfiguration()
+            device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, iso: maxISO) { (time) in
+            }
+        } catch {
+                print(error)
         }
         print(isoRange)
     }

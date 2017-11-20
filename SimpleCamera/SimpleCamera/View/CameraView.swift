@@ -5,8 +5,6 @@
 //  Created by Biro, Zsolt on 25/10/2017.
 //  Copyright © 2017 Biro, Zsolt. All rights reserved.
 //
-
-import AVFoundation
 import UIKit
 import PureLayout
 
@@ -21,7 +19,6 @@ class CameraView: UIView {
     
     public var previewView = UIImageView()
     public var videoPreviewView = UIView()
-    public var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     public var settingsViewController = SettingsViewController()
     public var orientationViewController = OrientationViewController()
     
@@ -164,6 +161,8 @@ class CameraView: UIView {
             }
         }
     }
+    
+    // MARK: - Setting animation functions
     
     func showSettings(){
         settingsViewController.view.frame = CGRect(x: 0,
