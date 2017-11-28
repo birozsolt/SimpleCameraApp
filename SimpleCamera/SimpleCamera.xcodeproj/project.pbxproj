@@ -10,15 +10,17 @@
 		082F111FF44680DEA1513BB4 /* Pods_SimpleCameraTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6495AB7E639FF15FF986CC10 /* Pods_SimpleCameraTests.framework */; };
 		3910519C1FB192EF0000774D /* SakerSansBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519A1FB192EF0000774D /* SakerSansBold.ttf */; };
 		3910519D1FB192EF0000774D /* SakerSansLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519B1FB192EF0000774D /* SakerSansLight.ttf */; };
-		391051A01FB337E80000774D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3910519F1FB337E80000774D /* SettingsCell.swift */; };
 		391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391051A11FB454EF0000774D /* OrientationViewController.swift */; };
+		39A41D9B1FCD5CAA002921B8 /* LoadingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D981FCD5CAA002921B8 /* LoadingBox.swift */; };
+		39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D991FCD5CAA002921B8 /* SettingsCell.swift */; };
+		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
+		39A41D9F1FCD5CE0002921B8 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoViewController.swift */; };
 		39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF3C271FBC4F4F00735F24 /* OrientationView.swift */; };
 		39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */; };
 		39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC61FA07D94006EB23C /* Assets.xcassets */; };
 		39CF5CCA1FA07D94006EB23C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC81FA07D94006EB23C /* LaunchScreen.storyboard */; };
 		39CF5CD51FA07D94006EB23C /* SimpleCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CD41FA07D94006EB23C /* SimpleCameraTests.swift */; };
 		39CF5CE01FA07D94006EB23C /* SimpleCameraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CDF1FA07D94006EB23C /* SimpleCameraUITests.swift */; };
-		39E620621FA1E878007E74C6 /* LoadingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620611FA1E878007E74C6 /* LoadingBox.swift */; };
 		39E620681FA1E8AC007E74C6 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620671FA1E8AC007E74C6 /* Globals.swift */; };
 		39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6206D1FA86FE3007E74C6 /* HomeView.swift */; };
 		39E620701FA87050007E74C6 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6206F1FA87050007E74C6 /* CameraView.swift */; };
@@ -54,8 +56,11 @@
 		27734CCF4391B03118BC779F /* Pods_SimpleCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3910519A1FB192EF0000774D /* SakerSansBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansBold.ttf; path = Font/SakerSansBold.ttf; sourceTree = "<group>"; };
 		3910519B1FB192EF0000774D /* SakerSansLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansLight.ttf; path = Font/SakerSansLight.ttf; sourceTree = "<group>"; };
-		3910519F1FB337E80000774D /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsCell.swift; path = Model/SettingsCell.swift; sourceTree = "<group>"; };
 		391051A11FB454EF0000774D /* OrientationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationViewController.swift; path = Controllers/OrientationViewController.swift; sourceTree = "<group>"; };
+		39A41D981FCD5CAA002921B8 /* LoadingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingBox.swift; path = Components/LoadingBox.swift; sourceTree = "<group>"; };
+		39A41D991FCD5CAA002921B8 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsCell.swift; path = Components/SettingsCell.swift; sourceTree = "<group>"; };
+		39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeLapseBuilder.swift; path = Components/TimeLapseBuilder.swift; sourceTree = "<group>"; };
+		39A41D9E1FCD5CE0002921B8 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoViewController.swift; path = Controllers/VideoViewController.swift; sourceTree = "<group>"; };
 		39AF3C271FBC4F4F00735F24 /* OrientationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationView.swift; path = View/OrientationView.swift; sourceTree = "<group>"; };
 		39CF5CBC1FA07D94006EB23C /* SimpleCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,7 +73,6 @@
 		39CF5CDB1FA07D94006EB23C /* SimpleCameraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleCameraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CDF1FA07D94006EB23C /* SimpleCameraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCameraUITests.swift; sourceTree = "<group>"; };
 		39CF5CE11FA07D94006EB23C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		39E620611FA1E878007E74C6 /* LoadingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingBox.swift; path = Model/LoadingBox.swift; sourceTree = "<group>"; };
 		39E620671FA1E8AC007E74C6 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = Globals/Globals.swift; sourceTree = "<group>"; };
 		39E6206D1FA86FE3007E74C6 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = View/HomeView.swift; sourceTree = "<group>"; };
 		39E6206F1FA87050007E74C6 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraView.swift; path = View/CameraView.swift; sourceTree = "<group>"; };
@@ -134,6 +138,16 @@
 			name = Font;
 			sourceTree = "<group>";
 		};
+		39A41D971FCD5C22002921B8 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				39A41D981FCD5CAA002921B8 /* LoadingBox.swift */,
+				39A41D991FCD5CAA002921B8 /* SettingsCell.swift */,
+				39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
 		39CF5CB31FA07D94006EB23C = {
 			isa = PBXGroup;
 			children = (
@@ -159,11 +173,11 @@
 		39CF5CBE1FA07D94006EB23C /* SimpleCamera */ = {
 			isa = PBXGroup;
 			children = (
+				39A41D971FCD5C22002921B8 /* Components */,
 				39E620711FA87289007E74C6 /* Controllers */,
 				39E6206C1FA86FA4007E74C6 /* View */,
 				39E620661FA1E89A007E74C6 /* Globals */,
 				39E620631FA1E87D007E74C6 /* Extensions */,
-				39E620601FA1E86E007E74C6 /* Model */,
 				39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */,
 				39CF5CC61FA07D94006EB23C /* Assets.xcassets */,
 				39CF5CC81FA07D94006EB23C /* LaunchScreen.storyboard */,
@@ -190,15 +204,6 @@
 				39CF5CE11FA07D94006EB23C /* Info.plist */,
 			);
 			path = SimpleCameraUITests;
-			sourceTree = "<group>";
-		};
-		39E620601FA1E86E007E74C6 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				39E620611FA1E878007E74C6 /* LoadingBox.swift */,
-				3910519F1FB337E80000774D /* SettingsCell.swift */,
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		39E620631FA1E87D007E74C6 /* Extensions */ = {
@@ -243,6 +248,7 @@
 				39E620731FA87298007E74C6 /* HomeViewController.swift */,
 				39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */,
 				391051A11FB454EF0000774D /* OrientationViewController.swift */,
+				39A41D9E1FCD5CE0002921B8 /* VideoViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -559,15 +565,17 @@
 			files = (
 				39E6207E1FA87498007E74C6 /* HomeViewControllerExtension.swift in Sources */,
 				39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */,
+				39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */,
+				39A41D9B1FCD5CAA002921B8 /* LoadingBox.swift in Sources */,
+				39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */,
 				39E6207C1FA87479007E74C6 /* CameraViewControllerExtension.swift in Sources */,
 				39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */,
-				391051A01FB337E80000774D /* SettingsCell.swift in Sources */,
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
 				39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */,
 				391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */,
+				39A41D9F1FCD5CE0002921B8 /* VideoViewController.swift in Sources */,
 				39E620681FA1E8AC007E74C6 /* Globals.swift in Sources */,
 				39E620741FA87298007E74C6 /* CameraViewController.swift in Sources */,
-				39E620621FA1E878007E74C6 /* LoadingBox.swift in Sources */,
 				39E620701FA87050007E74C6 /* CameraView.swift in Sources */,
 				39E620801FA88E51007E74C6 /* SettingsViewController.swift in Sources */,
 				39E620821FA88E9C007E74C6 /* SettingsView.swift in Sources */,

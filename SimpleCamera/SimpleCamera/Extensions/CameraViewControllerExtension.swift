@@ -202,13 +202,15 @@ extension CameraViewController: CameraViewProtocol {
                 print(error ?? "Image capture error")
                 return
             }
+            self.imageArray.append(image)
+            /*
             self.cameraView.previewView.isHidden = false
             self.cameraView.previewView.contentMode = .scaleAspectFit
             self.cameraView.previewView.backgroundColor = UIColor.black
             self.cameraView.previewView.alpha = 1.0
             self.videoPreviewLayer?.isHidden = true
 
-            self.cameraView.previewView.image = image
+            self.cameraView.previewView.image = image*/
         }
     }
     

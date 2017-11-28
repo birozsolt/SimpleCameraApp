@@ -25,14 +25,6 @@ func getFont(font : Fonts) -> String {
     }
 }
 
-enum CameraSettings : String {
-    case Brightness
-    case Exposure
-    case Flash
-    
-    static var count: Int { return CameraSettings.Flash.hashValue + 1}
-}
-
 extension Double {
     var toDegrees: Double {
         return 180 / .pi * self

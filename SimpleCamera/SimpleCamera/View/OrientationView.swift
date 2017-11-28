@@ -8,26 +8,20 @@
 
 import UIKit
 
-protocol OrientationViewProtocol {
-    func moveHorizontalSlider(to direction: SliderMoves)
-    func moveVerticalSlider(to direction: SliderMoves)
+enum SliderValue {
+    case increase
+    case decrease
 }
 
 class OrientationView: UIView {
     
-    var delegate : OrientationViewProtocol?
-    var horizontalLine = UIView()
-    var horizontalSlider = UIView()
-    
-    var verticalLine = UIView()
-    var verticalSlider = UIView()
+    var horizontalSlider = UISlider()
+    var verticalSlider = UISlider()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(horizontalLine)
-        horizontalLine.addSubview(horizontalSlider)
-        self.addSubview(verticalLine)
-        verticalLine.addSubview(verticalSlider)
+        self.addSubview(horizontalSlider)
+        self.addSubview(verticalSlider)
         setupViews()
     }
     
@@ -36,26 +30,53 @@ class OrientationView: UIView {
     }
     
     func setupViews(){
-        horizontalSlider.autoSetDimensions(to: CGSize(width: 5, height: 5))
-        horizontalSlider.autoCenterInSuperview()
-        horizontalSlider.autoAlignAxis(toSuperviewAxis: .horizontal)
-        horizontalSlider.backgroundColor = UIColor.orange
         
-        verticalSlider.autoSetDimensions(to: CGSize(width: 5, height: 5))
+        verticalSlider.autoSetDimensions(to: CGSize(width: 5, height: 100))
         verticalSlider.autoAlignAxis(toSuperviewAxis: .vertical)
         verticalSlider.autoCenterInSuperview()
-        verticalSlider.backgroundColor = UIColor.orange
+        verticalSlider.maximumValue = 100
+        verticalSlider.minimumValue = 0
+        verticalSlider.tintColor = UIColor.black
+        verticalSlider.backgroundColor = UIColor.black
+        verticalSlider.setValue(50, animated: true)
+        verticalSlider.isUserInteractionEnabled = false
+        verticalSlider.setThumbImage(#imageLiteral(resourceName: "SliderThumbImage"), for: .normal)
         
-        horizontalLine.autoSetDimensions(to: CGSize(width: 100, height: 5))
-        horizontalLine.autoCenterInSuperview()
-        horizontalLine.autoAlignAxis(toSuperviewAxis: .horizontal)
-        horizontalLine.backgroundColor = UIColor.black
-        horizontalLine.alpha = 0.6
-        
-        verticalLine.autoSetDimensions(to: CGSize(width: 5, height: 100))
-        verticalLine.autoCenterInSuperview()
-        verticalLine.autoAlignAxis(toSuperviewAxis: .vertical)
-        verticalLine.backgroundColor = UIColor.black
-        verticalLine.alpha = 0.6
+        horizontalSlider.autoSetDimensions(to: CGSize(width: 100, height: 5))
+        horizontalSlider.autoAlignAxis(toSuperviewAxis: .horizontal)
+        horizontalSlider.autoCenterInSuperview()
+        horizontalSlider.maximumValue = 100
+        horizontalSlider.minimumValue = 0
+        horizontalSlider.tintColor = UIColor.black
+        horizontalSlider.backgroundColor = UIColor.black
+        horizontalSlider.setValue(50, animated: true)
+        horizontalSlider.isUserInteractionEnabled = false
+        horizontalSlider.setThumbImage(#imageLiteral(resourceName: "SliderThumbImage"), for: .normal)
+    }
+    
+    func setHorizontalSlider(to value: SliderValue){
+        switch value {
+        case .increase:
+            DispatchQueue.main.async {
+                self.horizontalSlider.setValue(self.horizontalSlider.value + 5, animated: true)
+            }
+        case .decrease:
+            DispatchQueue.main.async {
+                self.horizontalSlider.setValue(self.horizontalSlider.value - 5, animated: true)
+            }
+        }
+    }
+    
+    func setVerticalSlider(to value: SliderValue){
+        switch value {
+        case .increase:
+            DispatchQueue.main.async {
+                self.verticalSlider.setValue(self.verticalSlider.value + 5, animated: true)
+            }
+        case .decrease:
+            DispatchQueue.main.async {
+                self.verticalSlider.setValue(self.verticalSlider.value - 5, animated: true)
+            }
+        }
     }
 }

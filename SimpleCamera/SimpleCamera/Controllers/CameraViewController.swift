@@ -29,6 +29,8 @@ class CameraViewController: UIViewController {
     var isCameraAlreadySetUp = false
     var currentCameraPosition: CameraPosition?
     
+    var imageArray = [UIImage]()
+    
     // MARK: LIFECYCLE
     
     override func loadView() {
