@@ -16,12 +16,9 @@ class BuildTimelapseViewController: UIViewController {
     var album: [UIImage]?
     var timeLapseBuilder: TimeLapseBuilder?
     
-    init(album: [UIImage]) {
+    convenience init(album: [UIImage]) {
+        self.init(nibName:nil, bundle:nil)
         self.album = album
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
@@ -29,12 +26,10 @@ class BuildTimelapseViewController: UIViewController {
     }
     
     func buildButtonTapped(sender: AnyObject) {
-        if let camera = camera,
-            let album = album {
-            
-            self.timeLapseBuilder = TimeLapseBuilder(photoArray: videos)
+        if let album = self.album {
+            self.timeLapseBuilder = TimeLapseBuilder(photoArray: album)
             self.timeLapseBuilder!.build(
-                { (progress: NSProgress) in
+                { (progress: Progress) in
                     NSLog("Progress: \(progress.completedUnitCount) / \(progress.totalUnitCount)")
             },
                 success: { url in
