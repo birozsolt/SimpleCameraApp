@@ -14,7 +14,7 @@
 		39A41D9B1FCD5CAA002921B8 /* LoadingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D981FCD5CAA002921B8 /* LoadingBox.swift */; };
 		39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D991FCD5CAA002921B8 /* SettingsCell.swift */; };
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
-		39A41D9F1FCD5CE0002921B8 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoViewController.swift */; };
+		39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */; };
 		39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF3C271FBC4F4F00735F24 /* OrientationView.swift */; };
 		39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */; };
 		39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC61FA07D94006EB23C /* Assets.xcassets */; };
@@ -60,7 +60,7 @@
 		39A41D981FCD5CAA002921B8 /* LoadingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingBox.swift; path = Components/LoadingBox.swift; sourceTree = "<group>"; };
 		39A41D991FCD5CAA002921B8 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsCell.swift; path = Components/SettingsCell.swift; sourceTree = "<group>"; };
 		39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeLapseBuilder.swift; path = Components/TimeLapseBuilder.swift; sourceTree = "<group>"; };
-		39A41D9E1FCD5CE0002921B8 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoViewController.swift; path = Controllers/VideoViewController.swift; sourceTree = "<group>"; };
+		39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPlayerViewController.swift; path = Controllers/VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		39AF3C271FBC4F4F00735F24 /* OrientationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationView.swift; path = View/OrientationView.swift; sourceTree = "<group>"; };
 		39CF5CBC1FA07D94006EB23C /* SimpleCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -248,7 +248,7 @@
 				39E620731FA87298007E74C6 /* HomeViewController.swift */,
 				39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */,
 				391051A11FB454EF0000774D /* OrientationViewController.swift */,
-				39A41D9E1FCD5CE0002921B8 /* VideoViewController.swift */,
+				39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -573,7 +573,7 @@
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
 				39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */,
 				391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */,
-				39A41D9F1FCD5CE0002921B8 /* VideoViewController.swift in Sources */,
+				39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */,
 				39E620681FA1E8AC007E74C6 /* Globals.swift in Sources */,
 				39E620741FA87298007E74C6 /* CameraViewController.swift in Sources */,
 				39E620701FA87050007E74C6 /* CameraView.swift in Sources */,

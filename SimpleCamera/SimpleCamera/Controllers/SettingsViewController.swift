@@ -15,6 +15,11 @@ class SettingsViewController: UIViewController {
     
     var settingsView = SettingsView(frame: CGRect.zero)
     
+    var videoViewController: VideoPlayerViewController?
+    var timeLapseBuilder: TimeLapseBuilder?
+    var videoUrl : URL?
+    var currentExposureIndex = 1
+    
     override func loadView() {
         self.view = settingsView
         settingsView.delegate = self
@@ -24,7 +29,8 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController : SettingsViewProtocol {
     
     func brightnessTapped() {
-        
+        videoViewController = VideoPlayerViewController(videoUrl: videoUrl!)
+        gNavigationViewController?.pushViewController(videoViewController!, animated: true)
     }
     
     func exposureTapped() throws{
@@ -35,14 +41,24 @@ extension SettingsViewController : SettingsViewProtocol {
         let minISO = device.activeFormat.minISO
         let maxISO = device.activeFormat.maxISO
         let isoRange = maxISO - minISO
-        do {
-            try device.lockForConfiguration()
-            device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, iso: maxISO) { (time) in
-            }
-        } catch {
+        let isoCounter = isoRange / 5
+        let midIso = minISO + isoCounter * 2
+        var isoList = [midIso, midIso + isoCounter, midIso + isoCounter * 2, midIso - isoCounter * 2, midIso - isoCounter]
+        settingsView.changeExposureCellImage()
+        if currentExposureIndex < 5 {
+            let currentIso = isoList[currentExposureIndex]
+            do {
+                try device.lockForConfiguration()
+                device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, iso: currentIso, completionHandler: nil)
+                device.unlockForConfiguration()
+            } catch {
                 print(error)
+            }
+            currentExposureIndex += 1
+        } else {
+            currentExposureIndex = 0
         }
-        print(isoRange)
+        
     }
     
     func flashTapped() throws {
@@ -63,7 +79,6 @@ extension SettingsViewController : SettingsViewProtocol {
             settingsView.changeFlashCellImage(to: #imageLiteral(resourceName: "FlashAuto"))
         }
         
-        
         if device.hasFlash {
             do {
                 try device.lockForConfiguration()
@@ -73,5 +88,23 @@ extension SettingsViewController : SettingsViewProtocol {
                 print(error)
             }
         }
+    }
+    
+    func buildTimeLapse() {
+        self.timeLapseBuilder = TimeLapseBuilder(photoArray: imageArray)
+        self.timeLapseBuilder!.build(
+            { (progress: Progress) in
+                LoadingBox.sharedInstance.block()
+                NSLog("Progress: \(progress.completedUnitCount) / \(progress.totalUnitCount)")
+        },
+            success: { url in
+                NSLog("Output written to \(url)")
+                self.videoUrl = url
+                LoadingBox.sharedInstance.unblock()
+        },
+            failure: { error in
+                NSLog("failure: \(error)")
+        }
+        )
     }
 }

@@ -25,11 +25,8 @@ class CameraViewController: UIViewController {
     var rearCamera: AVCaptureDevice?
     var rearCameraInput: AVCaptureDeviceInput?
     
-    var hasCamera = true
     var isCameraAlreadySetUp = false
     var currentCameraPosition: CameraPosition?
-    
-    var imageArray = [UIImage]()
     
     // MARK: LIFECYCLE
     
@@ -48,6 +45,12 @@ class CameraViewController: UIViewController {
             try? self.displayPreview()
         })
         registerToNotificationCenter()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let captureSession = self.captureSession, !captureSession.isRunning else { return }
+        captureSession.startRunning()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

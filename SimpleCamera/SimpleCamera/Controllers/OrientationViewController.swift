@@ -81,20 +81,20 @@ class OrientationViewController: UIViewController {
         // yaw (z-axis rotation)
         let currentYaw = asin(2 * (quat.x * quat.y + quat.w * quat.z)).toDegrees
         
-        if currentPitch.distance(to: referencePitch) > 5 {
+        if currentPitch.distance(to: referencePitch) > 10 {
             orientationView.setVerticalSlider(to: SliderValue.increase)
             referencePitch = currentPitch
-        } else if currentPitch.distance(to: referencePitch) > -5 {
+        } else if currentPitch.distance(to: referencePitch) < -10 {
             orientationView.setVerticalSlider(to: SliderValue.decrease)
             referencePitch = currentPitch
         }
         
-        if currentRoll.distance(to: referenceRoll) > 5 {
+        if currentYaw.distance(to: referenceYaw) > 10 {
             orientationView.setHorizontalSlider(to: SliderValue.increase)
-            referenceRoll = currentRoll
-        } else if currentRoll.distance(to: referenceRoll) > -5 {
+            referenceYaw = currentYaw
+        } else if currentRoll.distance(to: referenceRoll) < -10 {
             orientationView.setHorizontalSlider(to: SliderValue.decrease)
-            referenceRoll = currentRoll
+            referenceYaw = currentYaw
         }
         print("Roll: \(currentRoll), Pitch: \(currentPitch), Yaw: \(currentYaw)")
     }

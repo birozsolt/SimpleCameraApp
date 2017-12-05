@@ -13,12 +13,13 @@ protocol CameraViewProtocol {
     func toggleCameraButtonTapped()
 }
 
-enum CameraSettings : String {
+enum SettingsType : String {
     case Brightness
     case Exposure
     case Flash
+    case TimeLapse
     
-    static var count: Int { return CameraSettings.Flash.hashValue + 1}
+    static var count: Int { return SettingsType.TimeLapse.hashValue + 1}
 }
 
 class CameraView: UIView {

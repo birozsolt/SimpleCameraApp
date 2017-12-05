@@ -34,8 +34,11 @@ extension CameraViewController {
             let session = AVCaptureSession()
             session.sessionPreset = AVCaptureSessionPresetPhoto
             
-            guard let devices = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo), !devices.isEmpty else { throw CameraControllerError.noCamerasAvailable }
-            
+            guard let devices = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo), !devices.isEmpty else {
+                isCameraAlreadySetUp = false
+                throw CameraControllerError.noCamerasAvailable
+            }
+            isCameraAlreadySetUp = true
             for device in devices {
                 print(devices.count)
                 let device = device as! AVCaptureDevice
@@ -202,7 +205,7 @@ extension CameraViewController: CameraViewProtocol {
                 print(error ?? "Image capture error")
                 return
             }
-            self.imageArray.append(image)
+            imageArray.append(image)
             /*
             self.cameraView.previewView.isHidden = false
             self.cameraView.previewView.contentMode = .scaleAspectFit
@@ -221,7 +224,7 @@ extension CameraViewController: CameraViewProtocol {
         
         guard let captureSession = captureSession, captureSession.isRunning else { completion(nil, CameraControllerError.captureSessionIsMissing); return }
         
-        if hasCamera {
+        if isCameraAlreadySetUp {
             if let videoConnection = (captureSession.outputs[0] as? AVCaptureStillImageOutput)?.connection(withMediaType: AVMediaTypeVideo){
                 (captureSession.outputs[0] as? AVCaptureStillImageOutput)?.captureStillImageAsynchronously(from: videoConnection, completionHandler: { (buffer, error) -> Void in
                     if let sampleBuffer = buffer {
@@ -230,7 +233,7 @@ extension CameraViewController: CameraViewProtocol {
                         let dataProvider = CGDataProvider(data: imageData! as CFData)
                         let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
                         
-                        let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right) //self.cropImage(image: UIImage(cgImage: cgImageRef!), toRect: self.cameraView.previewView.bounds)
+                        let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right)
                         completion(image, nil)
                     }
                 })

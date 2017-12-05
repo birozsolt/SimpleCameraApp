@@ -30,3 +30,5 @@ extension Double {
         return 180 / .pi * self
     }
 }
+
+var imageArray = [UIImage]()
