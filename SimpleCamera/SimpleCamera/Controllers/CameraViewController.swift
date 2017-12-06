@@ -42,7 +42,13 @@ class CameraViewController: UIViewController {
             if let error = error {
                 print(error)
             }
-            try? self.displayPreview()
+            do {
+                try self.displayPreview()
+            } catch {
+                let alert = UIAlertController(title: "titleError".localized, message: "noCamerasAvailable".localized, preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
+                gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
+            }
         })
         registerToNotificationCenter()
     }

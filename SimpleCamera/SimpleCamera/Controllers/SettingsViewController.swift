@@ -9,6 +9,15 @@
 import UIKit
 import AVFoundation
 
+enum SettingsType : String {
+    case VideoPlayer
+    case Exposure
+    case Flash
+    case TimeLapse
+    
+    static var count: Int { return SettingsType.TimeLapse.hashValue + 1}
+}
+
 class SettingsViewController: UIViewController {
     
     var flashMode = AVCaptureFlashMode.off
@@ -28,12 +37,15 @@ class SettingsViewController: UIViewController {
 
 extension SettingsViewController : SettingsViewProtocol {
     
-    func brightnessTapped() {
-        videoViewController = VideoPlayerViewController(videoUrl: videoUrl!)
+    func videoPlayerTapped() throws {
+        guard let videoUrl = videoUrl else {
+            throw CameraViewController.CameraControllerError.invalidOperation
+        }
+        videoViewController = VideoPlayerViewController(videoUrl: videoUrl)
         gNavigationViewController?.pushViewController(videoViewController!, animated: true)
     }
     
-    func exposureTapped() throws{
+    func exposureTapped() throws {
         guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
             throw CameraViewController.CameraControllerError.noCamerasAvailable
         }
@@ -92,19 +104,19 @@ extension SettingsViewController : SettingsViewProtocol {
     
     func buildTimeLapse() {
         self.timeLapseBuilder = TimeLapseBuilder(photoArray: imageArray)
+        LoadingBox.sharedInstance.block()
         self.timeLapseBuilder!.build(
             { (progress: Progress) in
-                LoadingBox.sharedInstance.block()
                 NSLog("Progress: \(progress.completedUnitCount) / \(progress.totalUnitCount)")
         },
             success: { url in
                 NSLog("Output written to \(url)")
                 self.videoUrl = url
-                LoadingBox.sharedInstance.unblock()
         },
             failure: { error in
                 NSLog("failure: \(error)")
         }
         )
+         LoadingBox.sharedInstance.unblock()
     }
 }

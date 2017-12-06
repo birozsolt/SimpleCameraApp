@@ -10,6 +10,7 @@ import UIKit
 
 var gHomeViewController: HomeViewController?
 var gNavigationViewController : UINavigationController?
+var imageArray = [UIImage]()
 
 enum Fonts {
     case light
@@ -30,5 +31,3 @@ extension Double {
         return 180 / .pi * self
     }
 }
-
-var imageArray = [UIImage]()

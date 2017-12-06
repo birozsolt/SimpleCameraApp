@@ -15,6 +15,8 @@
 		39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D991FCD5CAA002921B8 /* SettingsCell.swift */; };
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
 		39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */; };
+		39A4E59C1FD80EE2001D374F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39A4E59B1FD80EE2001D374F /* Localizable.strings */; };
+		39A4E59E1FD80F7F001D374F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A4E59D1FD80F7F001D374F /* StringExtension.swift */; };
 		39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF3C271FBC4F4F00735F24 /* OrientationView.swift */; };
 		39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */; };
 		39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC61FA07D94006EB23C /* Assets.xcassets */; };
@@ -61,6 +63,8 @@
 		39A41D991FCD5CAA002921B8 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsCell.swift; path = Components/SettingsCell.swift; sourceTree = "<group>"; };
 		39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeLapseBuilder.swift; path = Components/TimeLapseBuilder.swift; sourceTree = "<group>"; };
 		39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPlayerViewController.swift; path = Controllers/VideoPlayerViewController.swift; sourceTree = "<group>"; };
+		39A4E59B1FD80EE2001D374F /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../Localizable.strings; sourceTree = "<group>"; };
+		39A4E59D1FD80F7F001D374F /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		39AF3C271FBC4F4F00735F24 /* OrientationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationView.swift; path = View/OrientationView.swift; sourceTree = "<group>"; };
 		39CF5CBC1FA07D94006EB23C /* SimpleCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 				39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */,
 				39CF5CC61FA07D94006EB23C /* Assets.xcassets */,
 				39CF5CC81FA07D94006EB23C /* LaunchScreen.storyboard */,
+				39A4E59B1FD80EE2001D374F /* Localizable.strings */,
 				39CF5CCB1FA07D94006EB23C /* Info.plist */,
 				391051951FB094A60000774D /* Font */,
 				39E620691FA1EA7E007E74C6 /* Assets */,
@@ -211,6 +216,7 @@
 			children = (
 				39E6207D1FA87498007E74C6 /* HomeViewControllerExtension.swift */,
 				39E6207B1FA87479007E74C6 /* CameraViewControllerExtension.swift */,
+				39A4E59D1FD80F7F001D374F /* StringExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -385,6 +391,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39A4E59C1FD80EE2001D374F /* Localizable.strings in Resources */,
 				39CF5CCA1FA07D94006EB23C /* LaunchScreen.storyboard in Resources */,
 				3910519D1FB192EF0000774D /* SakerSansLight.ttf in Resources */,
 				39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */,
@@ -571,6 +578,7 @@
 				39E6207C1FA87479007E74C6 /* CameraViewControllerExtension.swift in Sources */,
 				39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */,
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
+				39A4E59E1FD80F7F001D374F /* StringExtension.swift in Sources */,
 				39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */,
 				391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */,
 				39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */,

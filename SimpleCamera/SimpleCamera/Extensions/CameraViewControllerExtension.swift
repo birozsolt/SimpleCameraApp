@@ -16,7 +16,7 @@ extension CameraViewController {
         case rear
     }
     
-    public enum CameraControllerError: Swift.Error {
+    enum CameraControllerError: Swift.Error {
         case captureSessionAlreadyRunning
         case captureSessionIsMissing
         case inputsAreInvalid
@@ -162,9 +162,9 @@ extension CameraViewController {
             
             self.currentCameraPosition = .front
             captureDevice = frontCamera
+        } else {
+            throw CameraControllerError.invalidOperation
         }
-            
-        else { throw CameraControllerError.invalidOperation }
     }
     
     func switchToRearCamera() throws {
@@ -248,7 +248,9 @@ extension CameraViewController: CameraViewProtocol {
             try switchCameras()
         }
         catch {
-            print(error)
+            let alert = UIAlertController(title: "titleError".localized, message: "noCamerasAvailable".localized, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
+            gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
         }
     }
     

@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  SimpleCamera
+
+  Created by Biro, Zsolt on 06/12/2017.
+  Copyright © 2017 Biro, Zsolt. All rights reserved.
+*/
+
+//Alert
+titleError = "Error";
+okButton = "Ok";
+cancelButton = "Cancel";
+videoPlayerMessage = "The hyperlapse video not found";
+noCamerasAvailable = "No available camera device";

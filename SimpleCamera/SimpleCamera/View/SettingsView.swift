@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SettingsViewProtocol {
-    func brightnessTapped()
+    func videoPlayerTapped() throws
     func exposureTapped() throws
     func flashTapped() throws
     func buildTimeLapse()
@@ -18,7 +18,7 @@ protocol SettingsViewProtocol {
 class SettingsView: UIView {
     public var delegate : SettingsViewProtocol?
     
-    private var brightnessCell = SettingsCell(frame: CGRect.zero)
+    private var videoPlayerCell = SettingsCell(frame: CGRect.zero)
     private var exposureCell = SettingsCell(frame: CGRect.zero)
     private var flashCell = SettingsCell(frame: CGRect.zero)
     private var timeLapseBuildCell = SettingsCell(frame: CGRect.zero)
@@ -27,7 +27,7 @@ class SettingsView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(brightnessCell)
+        self.addSubview(videoPlayerCell)
         self.addSubview(exposureCell)
         self.addSubview(flashCell)
         self.addSubview(timeLapseBuildCell)
@@ -41,13 +41,13 @@ class SettingsView: UIView {
     private func setupViews() {
         setupBackground()
         
-        brightnessCell.autoPinEdge(toSuperviewEdge: .left)
-        brightnessCell.autoPinEdge(toSuperviewEdge: .top)
-        brightnessCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
-        brightnessCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(adjustBrightness)))
-        setupViews(for: brightnessCell, withType: SettingsType.Brightness)
+        videoPlayerCell.autoPinEdge(toSuperviewEdge: .left)
+        videoPlayerCell.autoPinEdge(toSuperviewEdge: .top)
+        videoPlayerCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
+        videoPlayerCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startVideoPlayer)))
+        setupViews(for: videoPlayerCell, withType: SettingsType.VideoPlayer)
         
-        exposureCell.autoPinEdge(.left, to: .right, of: brightnessCell, withOffset: 10)
+        exposureCell.autoPinEdge(.left, to: .right, of: videoPlayerCell, withOffset: 10)
         exposureCell.autoPinEdge(toSuperviewEdge: .top)
         exposureCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
         exposureCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(adjustExposure)))
@@ -91,9 +91,9 @@ class SettingsView: UIView {
         cell.cellLabel.textAlignment = .center
         
         switch type {
-        case .Brightness:
-            cell.cellImage.image = #imageLiteral(resourceName: "Brightness")
-            cell.cellLabel.text = SettingsType.Brightness.rawValue
+        case .VideoPlayer:
+            cell.cellImage.image = #imageLiteral(resourceName: "VideoPlayer")
+            cell.cellLabel.text = SettingsType.VideoPlayer.rawValue
         case .Exposure:
             cell.cellImage.image = #imageLiteral(resourceName: "Exposure0")
             cell.cellLabel.text = SettingsType.Exposure.rawValue
@@ -106,8 +106,8 @@ class SettingsView: UIView {
         }
     }
     
-    func changeBrightnessCellImage(to image: UIImage){
-        brightnessCell.cellImage.image = image
+    func changevideoPlayerCellImage(to image: UIImage){
+        videoPlayerCell.cellImage.image = image
     }
     
     func changeExposureCellImage(){
@@ -125,8 +125,15 @@ class SettingsView: UIView {
         flashCell.cellImage.image = image
     }
     
-    func adjustBrightness(){
-        delegate?.brightnessTapped()
+    func startVideoPlayer(){
+        do {
+            try delegate?.videoPlayerTapped()
+        }
+        catch {
+            let alert = UIAlertController(title: "titleError".localized, message: "videoPlayerMessage".localized, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
+            gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
+        }
     }
     
     func adjustExposure(){
@@ -134,7 +141,9 @@ class SettingsView: UIView {
          try delegate?.exposureTapped()
         }
         catch {
-            print(error)
+            let alert = UIAlertController(title: "titleError".localized, message: "noCamerasAvailable".localized, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
+            gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -143,7 +152,9 @@ class SettingsView: UIView {
             try delegate?.flashTapped()
         }
         catch {
-            print(error)
+            let alert = UIAlertController(title: "titleError".localized, message: "noCamerasAvailable".localized, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
+            gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
         }
     }
     
