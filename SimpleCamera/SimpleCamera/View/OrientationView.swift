@@ -8,15 +8,27 @@
 
 import UIKit
 
+/**
+ Orientation slider values.
+ 
+ - increase: An increasing slider value.
+ - decrease: A decreasing slider value.
+ */
 enum SliderValue {
     case increase
     case decrease
 }
 
+/// UIView class for setting the orientation view
 class OrientationView: UIView {
     
+    /// Horizontal slider variable.
     var horizontalSlider = UISlider()
+    
+    /// Vertical slider variable.
     var verticalSlider = UISlider()
+    
+    //MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,8 +41,10 @@ class OrientationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Setup funcions for views
+    
+    /// It setting up orintation view components.
     func setupViews(){
-        
         verticalSlider.autoSetDimensions(to: CGSize(width: 5, height: 100))
         verticalSlider.autoAlignAxis(toSuperviewAxis: .vertical)
         verticalSlider.autoCenterInSuperview()
@@ -54,6 +68,10 @@ class OrientationView: UIView {
         horizontalSlider.setThumbImage(#imageLiteral(resourceName: "SliderThumbImage"), for: .normal)
     }
     
+    /**
+     Setting the horizontal slider value.
+     - parameter value: Setting the horizontal slider value to a *SliderValue*
+     */
     func setHorizontalSlider(to value: SliderValue){
         switch value {
         case .increase:
@@ -67,6 +85,10 @@ class OrientationView: UIView {
         }
     }
     
+    /**
+     Setting the vertical slider value.
+     - parameter value: Setting the horizontal slider value to a *SliderValue*
+     */
     func setVerticalSlider(to value: SliderValue){
         switch value {
         case .increase:

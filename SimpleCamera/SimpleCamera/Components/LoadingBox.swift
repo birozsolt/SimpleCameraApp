@@ -8,7 +8,7 @@
 
 import UIKit
 
-// Singleton class for showing a hourglass
+/// Singleton class for showing a hourglass
 class LoadingBox: NSObject {
     
     static let sharedInstance = LoadingBox()
@@ -16,11 +16,10 @@ class LoadingBox: NSObject {
     var backgroundView: UIView!
     let activityIndicator: UIActivityIndicatorView!
     
-    // MARK: - LIFECYCLE
+    // MARK: - Init
     
     fileprivate override init() {
         backgroundView = UIView()
-        
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
@@ -30,11 +29,9 @@ class LoadingBox: NSObject {
         backgroundView.addSubview(activityIndicator)
     }
     
-    // MARK: - METHODS
+    // MARK: - Methods
     
-    /**
-     Displays the progress indicator and disables the user interaction
-     */
+    /// Displays the progress indicator and disables the user interaction
     func block() {
         backgroundView.frame =  UIScreen.main.bounds
         self.activityIndicator.center = backgroundView.center
@@ -44,9 +41,7 @@ class LoadingBox: NSObject {
         })
     }
     
-    /**
-     Hides the progress indicator and enables the user interaction
-     */
+    /// Hides the progress indicator and enables the user interaction
     func unblock() {
         UIView.animate(withDuration: 0.3, animations: {
             self.backgroundView.alpha = 0.0
