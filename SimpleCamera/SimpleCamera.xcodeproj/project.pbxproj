@@ -16,7 +16,7 @@
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
 		39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */; };
 		39A4E59C1FD80EE2001D374F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39A4E59B1FD80EE2001D374F /* Localizable.strings */; };
-		39A4E59E1FD80F7F001D374F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A4E59D1FD80F7F001D374F /* StringExtension.swift */; };
+		39A4E59E1FD80F7F001D374F /* BasicExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A4E59D1FD80F7F001D374F /* BasicExtensions.swift */; };
 		39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF3C271FBC4F4F00735F24 /* OrientationView.swift */; };
 		39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */; };
 		39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC61FA07D94006EB23C /* Assets.xcassets */; };
@@ -28,8 +28,6 @@
 		39E620701FA87050007E74C6 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6206F1FA87050007E74C6 /* CameraView.swift */; };
 		39E620741FA87298007E74C6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620721FA87298007E74C6 /* CameraViewController.swift */; };
 		39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620731FA87298007E74C6 /* HomeViewController.swift */; };
-		39E6207C1FA87479007E74C6 /* CameraViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6207B1FA87479007E74C6 /* CameraViewControllerExtension.swift */; };
-		39E6207E1FA87498007E74C6 /* HomeViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6207D1FA87498007E74C6 /* HomeViewControllerExtension.swift */; };
 		39E620801FA88E51007E74C6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */; };
 		39E620821FA88E9C007E74C6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620811FA88E9C007E74C6 /* SettingsView.swift */; };
 		7FD12EE83255B0A3E8BA678A /* Pods_SimpleCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27734CCF4391B03118BC779F /* Pods_SimpleCamera.framework */; };
@@ -64,7 +62,7 @@
 		39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeLapseBuilder.swift; path = Components/TimeLapseBuilder.swift; sourceTree = "<group>"; };
 		39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPlayerViewController.swift; path = Controllers/VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		39A4E59B1FD80EE2001D374F /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../Localizable.strings; sourceTree = "<group>"; };
-		39A4E59D1FD80F7F001D374F /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		39A4E59D1FD80F7F001D374F /* BasicExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicExtensions.swift; sourceTree = "<group>"; };
 		39AF3C271FBC4F4F00735F24 /* OrientationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationView.swift; path = View/OrientationView.swift; sourceTree = "<group>"; };
 		39CF5CBC1FA07D94006EB23C /* SimpleCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,8 +80,6 @@
 		39E6206F1FA87050007E74C6 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraView.swift; path = View/CameraView.swift; sourceTree = "<group>"; };
 		39E620721FA87298007E74C6 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraViewController.swift; path = Controllers/CameraViewController.swift; sourceTree = "<group>"; };
 		39E620731FA87298007E74C6 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Controllers/HomeViewController.swift; sourceTree = "<group>"; };
-		39E6207B1FA87479007E74C6 /* CameraViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraViewControllerExtension.swift; path = Extensions/CameraViewControllerExtension.swift; sourceTree = "<group>"; };
-		39E6207D1FA87498007E74C6 /* HomeViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewControllerExtension.swift; path = Extensions/HomeViewControllerExtension.swift; sourceTree = "<group>"; };
 		39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Controllers/SettingsViewController.swift; sourceTree = "<group>"; };
 		39E620811FA88E9C007E74C6 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = View/SettingsView.swift; sourceTree = "<group>"; };
 		4983C6890230FE123B604BB4 /* Pods-SimpleCameraUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCameraUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCameraUITests/Pods-SimpleCameraUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -214,9 +210,7 @@
 		39E620631FA1E87D007E74C6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				39E6207D1FA87498007E74C6 /* HomeViewControllerExtension.swift */,
-				39E6207B1FA87479007E74C6 /* CameraViewControllerExtension.swift */,
-				39A4E59D1FD80F7F001D374F /* StringExtension.swift */,
+				39A4E59D1FD80F7F001D374F /* BasicExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -570,15 +564,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39E6207E1FA87498007E74C6 /* HomeViewControllerExtension.swift in Sources */,
 				39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */,
 				39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */,
 				39A41D9B1FCD5CAA002921B8 /* LoadingBox.swift in Sources */,
 				39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */,
-				39E6207C1FA87479007E74C6 /* CameraViewControllerExtension.swift in Sources */,
 				39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */,
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
-				39A4E59E1FD80F7F001D374F /* StringExtension.swift in Sources */,
+				39A4E59E1FD80F7F001D374F /* BasicExtensions.swift in Sources */,
 				39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */,
 				391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */,
 				39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */,

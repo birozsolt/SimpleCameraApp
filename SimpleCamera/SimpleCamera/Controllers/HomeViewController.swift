@@ -11,12 +11,10 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var cameraViewController : CameraViewController!
-    
     var homeView = HomeView(frame: CGRect.zero)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     override func loadView() {
@@ -26,5 +24,13 @@ class HomeViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+}
+
+extension HomeViewController : HomeViewProtocol{
+    
+    func cameraButtonTapped() {
+        cameraViewController = CameraViewController()
+        gNavigationViewController?.pushViewController(cameraViewController, animated: true)
     }
 }

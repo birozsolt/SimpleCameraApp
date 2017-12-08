@@ -6,9 +6,13 @@
   Copyright © 2017 Biro, Zsolt. All rights reserved.
 */
 
-//Alert
+// MARK: - AlertController
+
 titleError = "Error";
 okButton = "Ok";
 cancelButton = "Cancel";
 videoPlayerMessage = "The hyperlapse video not found";
 noCamerasAvailable = "No available camera device";
+timeLapseBuildError = "Not found any image for building timelapse video";
+
+// MARK: - Others

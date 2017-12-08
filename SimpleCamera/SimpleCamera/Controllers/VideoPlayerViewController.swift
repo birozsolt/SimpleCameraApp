@@ -30,6 +30,7 @@ class VideoPlayerViewController: UIViewController {
         view.backgroundColor = .black
         
         avPlayerLayer = AVPlayerLayer(player: avPlayer)
+        avPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
         view.layer.insertSublayer(avPlayerLayer, at: 0)
         
         let playerItem = AVPlayerItem(url: videoUrl!)

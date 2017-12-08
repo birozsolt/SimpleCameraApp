@@ -39,7 +39,7 @@ extension SettingsViewController : SettingsViewProtocol {
     
     func videoPlayerTapped() throws {
         guard let videoUrl = videoUrl else {
-            throw CameraViewController.CameraControllerError.invalidOperation
+            throw CameraControllerError.invalidOperation
         }
         videoViewController = VideoPlayerViewController(videoUrl: videoUrl)
         gNavigationViewController?.pushViewController(videoViewController!, animated: true)
@@ -47,7 +47,7 @@ extension SettingsViewController : SettingsViewProtocol {
     
     func exposureTapped() throws {
         guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
-            throw CameraViewController.CameraControllerError.noCamerasAvailable
+            throw CameraControllerError.noCamerasAvailable
         }
         
         let minISO = device.activeFormat.minISO
@@ -76,7 +76,7 @@ extension SettingsViewController : SettingsViewProtocol {
     func flashTapped() throws {
         
         guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
-            throw CameraViewController.CameraControllerError.noCamerasAvailable
+            throw CameraControllerError.noCamerasAvailable
         }
         
         switch flashMode {
@@ -102,21 +102,25 @@ extension SettingsViewController : SettingsViewProtocol {
         }
     }
     
-    func buildTimeLapse() {
-        self.timeLapseBuilder = TimeLapseBuilder(photoArray: imageArray)
-        LoadingBox.sharedInstance.block()
-        self.timeLapseBuilder!.build(
-            { (progress: Progress) in
-                NSLog("Progress: \(progress.completedUnitCount) / \(progress.totalUnitCount)")
-        },
-            success: { url in
-                NSLog("Output written to \(url)")
-                self.videoUrl = url
-        },
-            failure: { error in
-                NSLog("failure: \(error)")
+    func buildTimeLapse() throws {
+        if imageArray.count > 0 {
+            self.timeLapseBuilder = TimeLapseBuilder(photoArray: imageArray)
+            LoadingBox.sharedInstance.block()
+            self.timeLapseBuilder!.build(
+                { (progress: Progress) in
+                    NSLog("Progress: \(progress.completedUnitCount) / \(progress.totalUnitCount)")
+            },
+                success: { url in
+                    NSLog("Output written to \(url)")
+                    self.videoUrl = url
+            },
+                failure: { error in
+                    NSLog("failure: \(error)")
+            }
+            )
+            LoadingBox.sharedInstance.unblock()
+        } else {
+            throw CameraControllerError.invalidOperation
         }
-        )
-         LoadingBox.sharedInstance.unblock()
     }
 }
