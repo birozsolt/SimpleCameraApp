@@ -9,24 +9,45 @@
 import UIKit
 import AVFoundation
 
+/**
+ Settings cell types.
+ 
+ - VideoPlayer: For playing videos.
+ - Exposure: For using the capture device exposure settings.
+ - Flash: For using the capture device flash.
+ - TimeLapse: For building time lapse videos.
+ 
+ - count: Returns the size of the enum.
+ */
 enum SettingsType : String {
     case VideoPlayer
     case Exposure
     case Flash
     case TimeLapse
     
+    ///Returns the size of the enum.
     static var count: Int { return SettingsType.TimeLapse.hashValue + 1}
 }
 
+///UIViewController class for managing the settings screen.
 class SettingsViewController: UIViewController {
     
+    ///The capture device flash mode.
     var flashMode = AVCaptureFlashMode.off
     
+    ///The view that the *SettingsViewController* manages.
     var settingsView = SettingsView(frame: CGRect.zero)
     
+    ///The *VideoPlayerViewController* instance for playing videos.
     var videoViewController: VideoPlayerViewController?
+    
+    ///The *TimeLapseBuilder* instance for building time lapse videos.
     var timeLapseBuilder: TimeLapseBuilder?
+    
+    ///The path of the video.
     var videoUrl : URL?
+    
+    ///Exposure cell index, used for changing *ExposureCell* image.
     var currentExposureIndex = 1
     
     override func loadView() {
@@ -34,6 +55,8 @@ class SettingsViewController: UIViewController {
         settingsView.delegate = self
     }
 }
+
+//MARK: SettingsViewProtocol extension
 
 extension SettingsViewController : SettingsViewProtocol {
     
@@ -70,11 +93,9 @@ extension SettingsViewController : SettingsViewProtocol {
         } else {
             currentExposureIndex = 0
         }
-        
     }
     
     func flashTapped() throws {
-        
         guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
             throw CameraControllerError.noCamerasAvailable
         }

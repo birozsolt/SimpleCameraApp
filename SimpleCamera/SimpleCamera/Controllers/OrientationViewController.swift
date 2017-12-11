@@ -9,22 +9,56 @@
 import CoreMotion
 import UIKit
 
+///UIViewController class where *CoreMotion* framework used for calculating the device orientation in space.
 class OrientationViewController: UIViewController {
     
+    ///A *CMMotionManager* object which is the gateway to the motion services provided by iOS.
     private var motionManager = CMMotionManager()
+    
+    ///An operation queue used for device-motion service.
     private let motionQueue = OperationQueue()
     
+    ///The reference quaternion representing the device's attitude.
     private var referenceQuaternion = CMQuaternion()
+    
+    /**
+     The reference roll of the device, in degrees.
+     
+     A roll is a rotation around a longitudinal axis that passes through the device from its top to bottom.
+     */
     private var referenceRoll = 0.0
+    
+    /**
+     The reference pitch of the device, in degrees.
+     
+     A pitch is a rotation around a lateral axis that passes through the device from side to side.
+     */
     private var referencePitch = 0.0
+    
+    /**
+     The reference yaw of the device, in degrees.
+     
+     A yaw is a rotation around an axis that runs vertically through the device.
+     It is perpendicular to the body of the device, with its origin at the center of gravity and directed toward the bottom of the device.
+     */
     private var referenceYaw = 0.0
     
+    ///The view that the *OrientationViewController* manages.
     let orientationView = OrientationView(frame: CGRect.zero)
+    
     
     override func loadView() {
         self.view = orientationView
     }
     
+    //MARK: - Motion controll functions
+
+    /**
+     If the device-motion service is available on the device, 
+     then starts device-motion updates on *motionQueue* operation queue twice in every secound.
+     
+     Calculates the reference orientation, which is the device current orientation.
+    */
     func startMotionUpdate() {
         if (motionManager.isDeviceMotionAvailable && !motionManager.isDeviceMotionActive) {
             motionManager.deviceMotionUpdateInterval = 0.5
@@ -53,22 +87,17 @@ class OrientationViewController: UIViewController {
         }
     }
     
+    /// If the application is receiving updates from the device-motion service, then it stops device-motion updates.
     func stopMotionUpdate(){
         if motionManager.isDeviceMotionActive {
             motionManager.stopDeviceMotionUpdates()
         }
     }
-    
-//    func helperFunc(deviceMotion: CMDeviceMotion){
-//        let e = CMQuaternion(x: 0, y: 0, z: 1, w: 0)
-//        let cm = deviceMotion.attitude.quaternion
-//        var quat = CMQuaternion(x: cm.x, y: cm.y, z: cm.z, w: cm.w)
-//        let quatConjugate = CMQuaternion(x: -cm.x, y: -cm.y, z: -cm.z, w: -cm.w)
-//        quat.multiplyByRight(quaternion: e)
-//        quat.multiplyByRight(quaternion: quatConjugate)
-//        print(quat.x, quat.y, quat.z)
-//    }
-    
+
+    /**
+     Calculate the device orientation from the given parameter, and set the *orientationView* sliders.
+     - parameter deviceMotion: An instance of *CMDeviceMotion* encapsulates measurements of the attitude, rotation rate, and acceleration of a device.
+     */
     private func motionRefresh(deviceMotion: CMDeviceMotion) {
         let quat = deviceMotion.attitude.quaternion
         deviceMotion.attitude.multiply(byInverseOf: deviceMotion.attitude)
@@ -97,19 +126,5 @@ class OrientationViewController: UIViewController {
             referenceYaw = currentYaw
         }
         print("Roll: \(currentRoll), Pitch: \(currentPitch), Yaw: \(currentYaw)")
-    }
-}
-
-extension CMQuaternion {
-    mutating func multiplyByRight(quaternion q: CMQuaternion) -> CMQuaternion {
-        let newW = w * q.w - x * q.x - y * q.y - z * q.z
-        let newX = w * q.x + x * q.w + y * q.z - z * q.y
-        let newY = w * q.y + y * q.w + z * q.x - x * q.z
-        let newZ = w * q.z + z * q.w + x * q.y - y * q.x
-        w = newW
-        x = newX
-        y = newY
-        z = newZ
-        return self
     }
 }

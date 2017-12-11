@@ -8,10 +8,17 @@
 
 import UIKit
 
+///UIViewController class for managing the home screen.
 class HomeViewController: UIViewController {
     
+    ///The *CameraViewController* instance for opening the camera screen.
     var cameraViewController : CameraViewController!
+    
+    ///The view that the *HomeViewController* manages.
     var homeView = HomeView(frame: CGRect.zero)
+    
+    
+    //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +33,8 @@ class HomeViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 }
+
+//MARK: - HomeViewProtocol
 
 extension HomeViewController : HomeViewProtocol{
     

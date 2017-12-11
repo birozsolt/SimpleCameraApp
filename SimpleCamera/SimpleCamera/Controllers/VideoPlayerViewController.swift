@@ -10,15 +10,22 @@ import UIKit
 import AVKit
 import AVFoundation
 
+///UIViewController class which manage the video player screen.
 class VideoPlayerViewController: UIViewController {
     var avPlayer = AVPlayer()
     var avPlayerLayer: AVPlayerLayer!
+    
+    ///The path of the video for the *avPlayer*.
     var videoUrl : URL?
+    
+    //MARK: - Init
     
     convenience init(videoUrl: URL) {
         self.init(nibName:nil, bundle:nil)
         self.videoUrl = videoUrl
     }
+    
+    //MARK: - Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
