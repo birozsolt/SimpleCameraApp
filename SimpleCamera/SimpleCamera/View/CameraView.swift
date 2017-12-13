@@ -183,7 +183,7 @@ class CameraView: UIView {
      It change the camera switch button image.
      - parameter image: Change camera switch button to *image*.
      */
-    func changeCameraImage(to image: UIImage){
+    private func changeCameraImage(to image: UIImage){
         toggleCameraButton.setImage(image, for: .normal)
     }
     
@@ -191,8 +191,22 @@ class CameraView: UIView {
      It change the setting button arrow image.
      - parameter image: Change settings button arrow to *image*.
      */
-    func changeArrowImage(to image: UIImage){
+    private func changeArrowImage(to image: UIImage){
         settingsButtonArrow.image = image
+    }
+    
+    /**
+     It animate the camera switch button image.
+     - parameter image: The result image after the animation finished.
+     */
+    func flipCameraSwitchButton(to image: UIImage){
+        UIView.transition(with: toggleCameraButton,
+                          duration: 0.4,
+                          options: UIViewAnimationOptions.transitionFlipFromLeft,
+                          animations: nil,
+                          completion: { (finished) -> Void in
+                            self.changeCameraImage(to: image)
+        })
     }
     
     // MARK: - Button touch handler functions
@@ -238,11 +252,11 @@ class CameraView: UIView {
     
     /// Show the setting menu.
     func showSettings(){
+        settingsViewController.view.isHidden = false
         settingsViewController.view.frame = CGRect(x: 0,
                                                    y: previewView.frame.size.height - 250,
                                                    width: previewView.frame.size.width,
                                                    height: 160)
-        settingsViewController.view.isHidden = false
         animateSettingsButton(toState: .open)
     }
     
@@ -262,10 +276,10 @@ class CameraView: UIView {
      - **.open** will animate the settingsView to opened state.
      - **.close** will animate the settingsView to closed state.
      */
-    func animateSettingsButton(toState state: SettingMenuState) {
+    private func animateSettingsButton(toState state: SettingMenuState) {
         switch state {
         case .open:
-            settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowLeft")
+            changeArrowImage(to:#imageLiteral(resourceName: "ArrowLeft"))
             settingsButtonArrow.frame = CGRect(x: arrowFrame.origin.x + 20,
                                                y: arrowFrame.origin.y,
                                                width: 10,
@@ -276,7 +290,7 @@ class CameraView: UIView {
                                               width: 30,
                                               height: 30)
         case .close:
-            self.settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowRight")
+            changeArrowImage(to:#imageLiteral(resourceName: "ArrowRight"))
             self.settingsButtonArrow.frame = CGRect(x: self.arrowFrame.origin.x,
                                                     y: self.arrowFrame.origin.y,
                                                     width: 10,

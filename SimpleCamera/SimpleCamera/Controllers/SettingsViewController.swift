@@ -72,7 +72,6 @@ extension SettingsViewController : SettingsViewProtocol {
         guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
             throw CameraControllerError.noCamerasAvailable
         }
-        
         let minISO = device.activeFormat.minISO
         let maxISO = device.activeFormat.maxISO
         let isoRange = maxISO - minISO
@@ -124,24 +123,40 @@ extension SettingsViewController : SettingsViewProtocol {
     }
     
     func buildTimeLapse() throws {
-        if imageArray.count > 0 {
-            self.timeLapseBuilder = TimeLapseBuilder(photoArray: imageArray)
-            LoadingBox.sharedInstance.block()
-            self.timeLapseBuilder!.build(
-                { (progress: Progress) in
-                    NSLog("Progress: \(progress.completedUnitCount) / \(progress.totalUnitCount)")
-            },
-                success: { url in
-                    NSLog("Output written to \(url)")
-                    self.videoUrl = url
-            },
-                failure: { error in
-                    NSLog("failure: \(error)")
-            }
-            )
-            LoadingBox.sharedInstance.unblock()
-        } else {
+        if imageArray.isEmpty {
             throw CameraControllerError.invalidOperation
         }
+        
+        let progressHUD = ProgressHUD()
+        progressHUD.setTextLabel("Building your timelapse...")
+        progressHUD.setProgress(0, animated: true)
+        DispatchQueue.main.async {
+            progressHUD.show()
+        }
+       
+        
+        self.timeLapseBuilder = TimeLapseBuilder(photoArray: imageArray)
+        self.timeLapseBuilder!.build(
+            { (progress: Progress) in
+                NSLog("Progress: \(progress.completedUnitCount) / \(progress.totalUnitCount)")
+                DispatchQueue.main.async{
+                    let progressPercentage = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
+                    progressHUD.setProgress(progressPercentage, animated: true)
+                }
+        },
+            success: { url in
+                NSLog("Output written to \(url)")
+                self.videoUrl = url
+                DispatchQueue.main.async {
+                    progressHUD.dismiss()
+                }
+        },
+            failure: { error in
+                NSLog("failure: \(error)")
+                DispatchQueue.main.async {
+                    progressHUD.dismiss()
+                }
+        }
+        )
     }
 }

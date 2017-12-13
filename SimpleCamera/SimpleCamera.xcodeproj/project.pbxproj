@@ -11,6 +11,7 @@
 		3910519C1FB192EF0000774D /* SakerSansBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519A1FB192EF0000774D /* SakerSansBold.ttf */; };
 		3910519D1FB192EF0000774D /* SakerSansLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519B1FB192EF0000774D /* SakerSansLight.ttf */; };
 		391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391051A11FB454EF0000774D /* OrientationViewController.swift */; };
+		394630501FE1264A00570D83 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3946304F1FE1264A00570D83 /* ProgressHUD.swift */; };
 		39A41D9B1FCD5CAA002921B8 /* LoadingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D981FCD5CAA002921B8 /* LoadingBox.swift */; };
 		39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D991FCD5CAA002921B8 /* SettingsCell.swift */; };
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
@@ -57,6 +58,7 @@
 		3910519A1FB192EF0000774D /* SakerSansBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansBold.ttf; path = Font/SakerSansBold.ttf; sourceTree = "<group>"; };
 		3910519B1FB192EF0000774D /* SakerSansLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansLight.ttf; path = Font/SakerSansLight.ttf; sourceTree = "<group>"; };
 		391051A11FB454EF0000774D /* OrientationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationViewController.swift; path = Controllers/OrientationViewController.swift; sourceTree = "<group>"; };
+		3946304F1FE1264A00570D83 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressHUD.swift; path = Components/ProgressHUD.swift; sourceTree = "<group>"; };
 		39A41D981FCD5CAA002921B8 /* LoadingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingBox.swift; path = Components/LoadingBox.swift; sourceTree = "<group>"; };
 		39A41D991FCD5CAA002921B8 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsCell.swift; path = Components/SettingsCell.swift; sourceTree = "<group>"; };
 		39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeLapseBuilder.swift; path = Components/TimeLapseBuilder.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				39A41D981FCD5CAA002921B8 /* LoadingBox.swift */,
 				39A41D991FCD5CAA002921B8 /* SettingsCell.swift */,
 				39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */,
+				3946304F1FE1264A00570D83 /* ProgressHUD.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 			files = (
 				39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */,
 				39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */,
+				394630501FE1264A00570D83 /* ProgressHUD.swift in Sources */,
 				39A41D9B1FCD5CAA002921B8 /* LoadingBox.swift in Sources */,
 				39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */,
 				39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */,

@@ -43,29 +43,32 @@ class OrientationView: UIView {
     
     //MARK: - Setup funcions for views
     
-    /// It setting up orintation view components.
+    /// It setting up orientation view components.
     func setupViews(){
-        verticalSlider.autoSetDimensions(to: CGSize(width: 5, height: 100))
-        verticalSlider.autoAlignAxis(toSuperviewAxis: .vertical)
-        verticalSlider.autoCenterInSuperview()
-        verticalSlider.maximumValue = 100
-        verticalSlider.minimumValue = 0
-        verticalSlider.tintColor = UIColor.black
-        verticalSlider.backgroundColor = UIColor.black
-        verticalSlider.setValue(50, animated: true)
-        verticalSlider.isUserInteractionEnabled = false
+        commonSliderSetups(for: verticalSlider)
         verticalSlider.setThumbImage(#imageLiteral(resourceName: "SliderThumbImage"), for: .normal)
+        verticalSlider.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2))
         
-        horizontalSlider.autoSetDimensions(to: CGSize(width: 100, height: 5))
-        horizontalSlider.autoAlignAxis(toSuperviewAxis: .horizontal)
-        horizontalSlider.autoCenterInSuperview()
-        horizontalSlider.maximumValue = 100
-        horizontalSlider.minimumValue = 0
-        horizontalSlider.tintColor = UIColor.black
-        horizontalSlider.backgroundColor = UIColor.black
-        horizontalSlider.setValue(50, animated: true)
-        horizontalSlider.isUserInteractionEnabled = false
+        commonSliderSetups(for: horizontalSlider)
         horizontalSlider.setThumbImage(#imageLiteral(resourceName: "SliderThumbImage"), for: .normal)
+    }
+    
+    /**
+     Setting an *UISlider* attributes.
+     - parameter slider: Setting the *slider* attributes to the requiered values for *OrientationView*.
+     */
+    func commonSliderSetups(for slider : UISlider) {
+        slider.autoSetDimensions(to: CGSize(width: 100, height: 5))
+        slider.autoAlignAxis(toSuperviewAxis: .horizontal)
+        slider.autoCenterInSuperview()
+        slider.maximumValue = 1.0
+        slider.minimumValue = 0.0
+        slider.tintColor = .black
+        slider.backgroundColor = .black
+        slider.maximumTrackTintColor = .black
+        slider.minimumTrackTintColor = .black
+        slider.setValue(0.5, animated: true)
+        slider.isUserInteractionEnabled = false
     }
     
     /**
@@ -76,11 +79,13 @@ class OrientationView: UIView {
         switch value {
         case .increase:
             DispatchQueue.main.async {
-                self.horizontalSlider.setValue(self.horizontalSlider.value + 5, animated: true)
+                let value = self.horizontalSlider.value + 0.05
+                self.horizontalSlider.setValue(value, animated: true)
             }
         case .decrease:
             DispatchQueue.main.async {
-                self.horizontalSlider.setValue(self.horizontalSlider.value - 5, animated: true)
+                let value = self.horizontalSlider.value - 0.05
+                self.horizontalSlider.setValue(value, animated: true)
             }
         }
     }
@@ -93,11 +98,13 @@ class OrientationView: UIView {
         switch value {
         case .increase:
             DispatchQueue.main.async {
-                self.verticalSlider.setValue(self.verticalSlider.value + 5, animated: true)
+                let value = self.verticalSlider.value + 0.05
+                self.verticalSlider.setValue(value, animated: true)
             }
         case .decrease:
             DispatchQueue.main.async {
-                self.verticalSlider.setValue(self.verticalSlider.value - 5, animated: true)
+                let value = self.verticalSlider.value + 0.05
+                self.verticalSlider.setValue(value, animated: true)
             }
         }
     }

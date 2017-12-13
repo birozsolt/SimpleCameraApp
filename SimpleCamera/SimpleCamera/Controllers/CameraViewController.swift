@@ -241,7 +241,7 @@ class CameraViewController: UIViewController {
      */
     func switchCameras() throws {
         guard let currentCameraPosition = currentCameraPosition, let captureSession = self.captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
-        
+
         captureSession.beginConfiguration()
         
         /**
@@ -290,14 +290,12 @@ class CameraViewController: UIViewController {
         
         switch currentCameraPosition {
         case .front:
-            cameraView.changeCameraImage(to: #imageLiteral(resourceName: "CameraRear"))
+            cameraView.flipCameraSwitchButton(to: #imageLiteral(resourceName: "CameraFront"))
             try switchToRearCamera()
-            
         case .rear:
-            cameraView.changeCameraImage(to: #imageLiteral(resourceName: "CameraFront"))
             try switchToFrontCamera()
+            cameraView.flipCameraSwitchButton(to: #imageLiteral(resourceName: "CameraRear"))
         }
-        
         captureSession.commitConfiguration()
     }
 }
@@ -313,7 +311,7 @@ extension CameraViewController: CameraViewProtocol {
                 self.cameraView.hideSettings()
             }
         }) { (finished) in
-            self.cameraView.changeArrowImage(to:#imageLiteral(resourceName: "ArrowRight"))
+            self.cameraView.settingsViewController.view.isHidden = true
         }
         
         captureImage{ (image, error) in
@@ -364,6 +362,13 @@ extension CameraViewController: CameraViewProtocol {
     }//swiftlint:enable force_cast
     
     func toggleCameraButtonTapped() {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+            if self.cameraView.isSettingsOpened == .open {
+                self.cameraView.hideSettings()
+            }
+        }) { (finished) in
+            self.cameraView.settingsViewController.view.isHidden = true
+        }
         do {
             try switchCameras()
         }

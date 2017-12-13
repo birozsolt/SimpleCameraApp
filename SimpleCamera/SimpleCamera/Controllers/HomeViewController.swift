@@ -17,7 +17,6 @@ class HomeViewController: UIViewController {
     ///The view that the *HomeViewController* manages.
     var homeView = HomeView(frame: CGRect.zero)
     
-    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
