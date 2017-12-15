@@ -11,8 +11,10 @@
 titleError = "Error";
 okButton = "Ok";
 cancelButton = "Cancel";
-videoPlayerMessage = "The hyperlapse video not found";
+videoPlayerError = "The hyperlapse video not found";
 noCamerasAvailable = "No available camera device";
 timeLapseBuildError = "Not found any image for building timelapse video";
+referenceFrameError = "The reference frame XArbitraryZVertical is not available.";
+motionServiceError = "No motion-service available";
 
 // MARK: - Others

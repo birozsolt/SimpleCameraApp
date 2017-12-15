@@ -90,9 +90,7 @@ class CameraViewController: UIViewController {
             do {
                 try self.displayPreview()
             } catch {
-                let alert = UIAlertController(title: "titleError".localized, message: "noCamerasAvailable".localized, preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
-                gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
+                ErrorMessage.sharedInstance.show("titleError".localized, message: "noCamerasAvailable".localized)
             }
         })
     }
@@ -373,9 +371,7 @@ extension CameraViewController: CameraViewProtocol {
             try switchCameras()
         }
         catch {
-            let alert = UIAlertController(title: "titleError".localized, message: "noCamerasAvailable".localized, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
-            gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
+            ErrorMessage.sharedInstance.show("titleError".localized, message: "noCamerasAvailable".localized)
         }
     }
     

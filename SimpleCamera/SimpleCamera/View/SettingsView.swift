@@ -182,9 +182,7 @@ class SettingsView: UIView {
             try delegate?.videoPlayerTapped()
         }
         catch {
-            let alert = UIAlertController(title: "titleError".localized, message: "videoPlayerMessage".localized, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
-            gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
+            ErrorMessage.sharedInstance.show("titleError".localized, message: "videoPlayerError".localized)
         }
     }
     
@@ -197,9 +195,7 @@ class SettingsView: UIView {
          try delegate?.exposureTapped()
         }
         catch {
-            let alert = UIAlertController(title: "titleError".localized, message: "noCamerasAvailable".localized, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
-            gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
+            ErrorMessage.sharedInstance.show("titleError".localized, message: "noCamerasAvailable".localized)
         }
     }
     
@@ -212,9 +208,7 @@ class SettingsView: UIView {
             try delegate?.flashTapped()
         }
         catch {
-            let alert = UIAlertController(title: "titleError".localized, message: "noCamerasAvailable".localized, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
-            gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
+            ErrorMessage.sharedInstance.show("titleError".localized, message: "noCamerasAvailable".localized)
         }
     }
     
@@ -227,9 +221,7 @@ class SettingsView: UIView {
             try delegate?.buildTimeLapse()
         }
         catch {
-            let alert = UIAlertController(title: "titleError".localized, message: "timeLapseBuildError".localized, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "okButton".localized, style: UIAlertActionStyle.default, handler: nil))
-            gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
+            ErrorMessage.sharedInstance.show("titleError".localized, message: "timeLapseBuildError".localized)
         }
     }
 }

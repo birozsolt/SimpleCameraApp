@@ -64,8 +64,10 @@ class VideoPlayerViewController: UIViewController {
         playbackImage.image = #imageLiteral(resourceName: "PauseVideo")
         playbackImage.isHidden = true
         
+        avPlayer = AVPlayer(url: videoUrl!)
         let playerItem = AVPlayerItem(url: videoUrl!)
         avPlayer.replaceCurrentItem(with: playerItem)
+        avPlayer.play()
         
         let timeInterval: CMTime = CMTimeMakeWithSeconds(1.0, 10)
         timeObserver = avPlayer.addPeriodicTimeObserver(forInterval: timeInterval, queue: DispatchQueue.main) {

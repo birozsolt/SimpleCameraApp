@@ -62,7 +62,14 @@ class OrientationViewController: UIViewController {
     func startMotionUpdate() {
         if (motionManager.isDeviceMotionAvailable && !motionManager.isDeviceMotionActive) {
             motionManager.deviceMotionUpdateInterval = 0.5
-            motionManager.startDeviceMotionUpdates(using: CMAttitudeReferenceFrame.xTrueNorthZVertical, to: motionQueue, withHandler:
+            
+            let myFrame = CMAttitudeReferenceFrame.xArbitraryZVertical
+            guard CMMotionManager.availableAttitudeReferenceFrames().contains(myFrame) else {
+                ErrorMessage.sharedInstance.show("titleError".localized, message: "referenceFrameError".localized)
+                return
+            }
+            
+            motionManager.startDeviceMotionUpdates(using: CMAttitudeReferenceFrame.xArbitraryCorrectedZVertical, to: motionQueue, withHandler:
                 { [unowned self] (motionData, error) in
                 if error == nil {
                     guard let data = motionData else {
@@ -83,7 +90,7 @@ class OrientationViewController: UIViewController {
                 }
             })
         } else {
-            print("No motion-service available")
+            ErrorMessage.sharedInstance.show("titleError".localized, message: "motionServiceError".localized)
         }
     }
     
