@@ -227,6 +227,7 @@ class CameraViewController: UIViewController {
         videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
         
         cameraView.videoPreviewView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        cameraView.onionEffectLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         videoPreviewLayer?.frame = CGRect(origin: CGPoint.zero, size: cameraView.videoPreviewView.frame.size)
         cameraView.videoPreviewView.layer.insertSublayer(videoPreviewLayer!, above: cameraView.videoPreviewView.layer)
     }
@@ -239,7 +240,7 @@ class CameraViewController: UIViewController {
      */
     func switchCameras() throws {
         guard let currentCameraPosition = currentCameraPosition, let captureSession = self.captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
-
+        
         captureSession.beginConfiguration()
         
         /**
@@ -263,7 +264,7 @@ class CameraViewController: UIViewController {
                 throw CameraControllerError.invalidOperation
             }
         }
-
+        
         /**
          Switch rear camera.
          - throws: `CameraControllerError` if no capture session or no capture device found.
@@ -318,14 +319,11 @@ extension CameraViewController: CameraViewProtocol {
                 return
             }
             imageArray.append(image)
-            /*
-             self.cameraView.previewView.isHidden = false
-             self.cameraView.previewView.contentMode = .scaleAspectFit
-             self.cameraView.previewView.backgroundColor = UIColor.black
-             self.cameraView.previewView.alpha = 1.0
-             self.videoPreviewLayer?.isHidden = true
-             
-             self.cameraView.previewView.image = image*/
+            
+            self.cameraView.onionEffectLayer.isHidden = false
+            self.cameraView.onionEffectLayer.contentMode = .scaleAspectFill
+            self.cameraView.onionEffectLayer.alpha = 0.5
+            self.cameraView.onionEffectLayer.image = image
         }
     }
     
@@ -374,40 +372,4 @@ extension CameraViewController: CameraViewProtocol {
             ErrorMessage.sharedInstance.show("titleError".localized, message: "noCamerasAvailable".localized)
         }
     }
-    
-    /*
-    func cropImage(image : UIImage, toRect rect: CGRect) -> UIImage {
-        
-        func rad(_ deg : CGFloat) -> CGFloat {
-            return deg / 180 * .pi
-        }
-        
-        // determine the orientation of the image and apply a transformation to the crop rectangle to shift it to the correct position
-        var rectTransform: CGAffineTransform
-        switch (image.imageOrientation) {
-        case .left:
-            rectTransform = CGAffineTransform(rotationAngle: rad(90)).translatedBy(x: 0, y: -image.size.height)
-            break
-        case .right:
-            rectTransform = CGAffineTransform(rotationAngle: rad(-90)).translatedBy(x: -image.size.width, y: 0)
-            break
-        case .down:
-            rectTransform = CGAffineTransform(rotationAngle: rad(-180)).translatedBy(x: -image.size.width, y: -image.size.height)
-            break
-        default:
-            rectTransform = CGAffineTransform.identity;
-        }
-        
-        // adjust the transformation scale based on the image scale
-        //rectTransform = rectTransform.scaledBy(x: image.scale, y: image.scale);
-        
-        // apply the transformation to the rect to create a new, shifted rect
-        let transformedCropSquare = rect.applying(rectTransform)
-        // use the rect to crop the image
-        let imageRef = image.cgImage!.cropping(to: transformedCropSquare)
-        // create a new UIImage and set the scale and orientation appropriately
-        let result = UIImage(cgImage: imageRef!, scale: image.scale, orientation: image.imageOrientation)
-        
-        return result
-    }*/
 }

@@ -29,6 +29,9 @@ class CameraView: UIView {
     /// This variable contains the videoPreview layer, where the camera is showed.
     public var videoPreviewView = UIView()
     
+    /// The layer where we show onion effect, (the previous captured image).
+    public var onionEffectLayer = UIImageView()
+    
     /// This variable initializes the *SettingsViewController*.
     public var settingsViewController = SettingsViewController()
     
@@ -90,6 +93,7 @@ class CameraView: UIView {
         self.insertSubview(settingsViewController.view, aboveSubview: previewView)
         self.insertSubview(orientationViewController.view, aboveSubview: previewView)
         self.insertSubview(videoPreviewView, belowSubview: previewView)
+        self.insertSubview(onionEffectLayer, belowSubview: previewView)
         
         setupViews()
     }
@@ -108,6 +112,11 @@ class CameraView: UIView {
         previewView.backgroundColor = UIColor.black
         
         videoPreviewView.autoPinEdgesToSuperviewEdges()
+        
+        onionEffectLayer.autoPinEdgesToSuperviewEdges()
+        onionEffectLayer.clipsToBounds = true
+        onionEffectLayer.alpha = 0.5
+        onionEffectLayer.isHidden = true
         
         setupSettingsView()
         
