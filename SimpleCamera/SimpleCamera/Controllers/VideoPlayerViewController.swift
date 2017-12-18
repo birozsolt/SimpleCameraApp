@@ -24,8 +24,6 @@ class VideoPlayerViewController: UIViewController {
     private let seekSlider = UISlider()
     private var playerRateBeforeSeek: Float = 0
     
-    let loadingIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-    
     ///The path of the video for the *avPlayer*.
     var videoUrl : URL?
     
@@ -40,17 +38,21 @@ class VideoPlayerViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadingIndicatorView.startAnimating()
         avPlayer.play()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .clear
+        
+        avPlayer = AVPlayer(url: videoUrl!)
+        let playerItem = AVPlayerItem(url: videoUrl!)
+        avPlayer.replaceCurrentItem(with: playerItem)
         
         avPlayerLayer = AVPlayerLayer(player: avPlayer)
         avPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-        view.layer.insertSublayer(avPlayerLayer, at: 0)
+        avPlayerLayer.frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
+        view.layer.insertSublayer(avPlayerLayer, above: view.layer)
         
         view.addSubview(invisibleButton)
         invisibleButton.addTarget(self, action: #selector(invisibleButtonTapped), for: .touchUpInside)
@@ -59,15 +61,9 @@ class VideoPlayerViewController: UIViewController {
         playbackImage.autoSetDimensions(to: CGSize(width: 100, height: 100))
         playbackImage.autoCenterInSuperview()
         playbackImage.layer.cornerRadius = 50
-        playbackImage.alpha = 0.7
-        playbackImage.backgroundColor = .lightGray
-        playbackImage.image = #imageLiteral(resourceName: "PauseVideo")
+        playbackImage.backgroundColor = .clear
+        playbackImage.image = #imageLiteral(resourceName: "PlayVideo")
         playbackImage.isHidden = true
-        
-        avPlayer = AVPlayer(url: videoUrl!)
-        let playerItem = AVPlayerItem(url: videoUrl!)
-        avPlayer.replaceCurrentItem(with: playerItem)
-        avPlayer.play()
         
         let timeInterval: CMTime = CMTimeMakeWithSeconds(1.0, 10)
         timeObserver = avPlayer.addPeriodicTimeObserver(forInterval: timeInterval, queue: DispatchQueue.main) {
@@ -82,10 +78,6 @@ class VideoPlayerViewController: UIViewController {
         seekSlider.addTarget(self, action: #selector(sliderBeganTracking), for: .touchDown)
         seekSlider.addTarget(self, action: #selector(sliderEndedTracking), for: [.touchUpInside, .touchUpOutside])
         seekSlider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
-        
-        loadingIndicatorView.hidesWhenStopped = true
-        view.addSubview(loadingIndicatorView)
-        avPlayer.addObserver(self, forKeyPath: "playbackLikelyToKeepUp", options: .new, context: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -93,8 +85,8 @@ class VideoPlayerViewController: UIViewController {
         avPlayer.pause()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         // Layout subviews manually
         avPlayerLayer.frame = view.bounds
         invisibleButton.frame = view.bounds
@@ -106,23 +98,10 @@ class VideoPlayerViewController: UIViewController {
                                   y: controlsY,
                                   width: view.bounds.size.width - timeRemainingLabel.bounds.size.width - 5,
                                   height: controlsHeight)
-        
-        loadingIndicatorView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "playbackLikelyToKeepUp" {
-            if avPlayer.currentItem!.isPlaybackLikelyToKeepUp {
-                loadingIndicatorView.stopAnimating()
-            } else {
-                loadingIndicatorView.startAnimating()
-            }
-        }
     }
     
     deinit {
         avPlayer.removeTimeObserver(timeObserver)
-        avPlayer.removeObserver(self, forKeyPath: "playbackLikelyToKeepUp")
     }
     
     //MARK: - Footage Time methodes

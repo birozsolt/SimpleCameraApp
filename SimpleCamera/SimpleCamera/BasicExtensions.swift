@@ -28,4 +28,11 @@ extension Double {
     var toDegrees: Double {
         return 180 / .pi * self
     }
+    
+    /**
+     Converting degrees to radians.
+     */
+    var toRadians : Double {
+        return .pi / 180 * self
+    }
 }

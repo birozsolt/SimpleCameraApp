@@ -16,7 +16,6 @@ import AVFoundation
  - Exposure: For using the capture device exposure settings.
  - Flash: For using the capture device flash.
  - TimeLapse: For building time lapse videos.
- 
  - count: Returns the size of the enum.
  */
 enum SettingsType : String {
@@ -41,11 +40,8 @@ class SettingsViewController: UIViewController {
     ///The *VideoPlayerViewController* instance for playing videos.
     var videoViewController: VideoPlayerViewController?
     
-    ///The *TimeLapseBuilder* instance for building time lapse videos.
-    var timeLapseBuilder: TimeLapseBuilder?
-    
-    ///The path of the video.
-    var videoUrl : URL?
+    ///The settings of the video.
+    let settings = RenderSettings()
     
     ///Exposure cell index, used for changing *ExposureCell* image.
     var currentExposureIndex = 1
@@ -61,7 +57,7 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController : SettingsViewProtocol {
     
     func videoPlayerTapped() throws {
-        guard let videoUrl = videoUrl else {
+        guard let videoUrl = settings.outputURL else {
             throw CameraControllerError.invalidOperation
         }
         videoViewController = VideoPlayerViewController(videoUrl: videoUrl)
@@ -134,29 +130,15 @@ extension SettingsViewController : SettingsViewProtocol {
             progressHUD.show()
         }
        
+        let timeLapseBuilder = TimeLapseBuilder(renderSettings: settings)
+        timeLapseBuilder.render(
+            {(progress: Progress) in
+            let progressPercentage = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
+            progressHUD.setProgress(progressPercentage, animated: true)
+        },  completion: {
+            progressHUD.dismiss()
+        })
+        progressHUD.dismiss()
         
-        self.timeLapseBuilder = TimeLapseBuilder(photoArray: imageArray)
-        self.timeLapseBuilder!.build(
-            { (progress: Progress) in
-                NSLog("Progress: \(progress.completedUnitCount) / \(progress.totalUnitCount)")
-                DispatchQueue.main.async{
-                    let progressPercentage = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
-                    progressHUD.setProgress(progressPercentage, animated: true)
-                }
-        },
-            success: { url in
-                NSLog("Output written to \(url)")
-                self.videoUrl = url
-                DispatchQueue.main.async {
-                    progressHUD.dismiss()
-                }
-        },
-            failure: { error in
-                NSLog("failure: \(error)")
-                DispatchQueue.main.async {
-                    progressHUD.dismiss()
-                }
-        }
-        )
     }
 }
