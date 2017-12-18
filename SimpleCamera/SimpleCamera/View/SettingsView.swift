@@ -182,7 +182,7 @@ class SettingsView: UIView {
             try delegate?.videoPlayerTapped()
         }
         catch {
-            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError.description().localized, message: LocalizedKeys.videoPlayerError.description().localized.localized)
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.videoPlayerError)
         }
     }
     
@@ -195,7 +195,7 @@ class SettingsView: UIView {
          try delegate?.exposureTapped()
         }
         catch {
-            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError.description().localized, message: LocalizedKeys.noCamerasAvailable.description().localized)
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
         }
     }
     
@@ -208,7 +208,7 @@ class SettingsView: UIView {
             try delegate?.flashTapped()
         }
         catch {
-            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError.description().localized, message: LocalizedKeys.noCamerasAvailable.description().localized)
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
         }
     }
     
@@ -221,7 +221,7 @@ class SettingsView: UIView {
             try delegate?.buildTimeLapse()
         }
         catch {
-            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError.description().localized, message: LocalizedKeys.timeLapseBuildError.description().localized)
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.timeLapseBuildError)
         }
     }
 }

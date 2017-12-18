@@ -90,7 +90,7 @@ class CameraViewController: UIViewController {
             do {
                 try self.displayPreview()
             } catch {
-                ErrorMessage.sharedInstance.show(LocalizedKeys.titleError.description().localized, message: LocalizedKeys.noCamerasAvailable.description().localized)
+                ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
             }
         })
     }
@@ -369,7 +369,7 @@ extension CameraViewController: CameraViewProtocol {
             try switchCameras()
         }
         catch {
-            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError.description().localized, message: LocalizedKeys.noCamerasAvailable.description().localized)
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
         }
     }
 }

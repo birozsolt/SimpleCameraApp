@@ -65,7 +65,7 @@ class OrientationViewController: UIViewController {
             
             let myFrame = CMAttitudeReferenceFrame.xArbitraryCorrectedZVertical
             guard CMMotionManager.availableAttitudeReferenceFrames().contains(myFrame) else {
-                ErrorMessage.sharedInstance.show(LocalizedKeys.titleError.description().localized, message: LocalizedKeys.referenceFrameError.description().localized)
+                ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.referenceFrameError)
                 return
             }
             motionManager.startDeviceMotionUpdates(using: myFrame, to: motionQueue, withHandler:
@@ -89,7 +89,7 @@ class OrientationViewController: UIViewController {
                 }
             })
         } else {
-            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError.description().localized, message: LocalizedKeys.motionServiceError.description().localized)
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.motionServiceError)
         }
     }
     

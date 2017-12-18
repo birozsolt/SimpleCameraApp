@@ -24,11 +24,11 @@ class ErrorMessage: NSObject {
     // MARK: - Methods
     
     /// Displays the progress indicator and disables the user interaction
-    func show(_ title: String, message: String) {
+    func show(_ title: LocalizedKeys, message: LocalizedKeys) {
         if Platform.isSimulator {
             print(message)
         } else {
-            alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+            alert = UIAlertController(title: title.description().localized, message: message.description().localized, preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: LocalizedKeys.okButton.description().localized, style: UIAlertActionStyle.default, handler: nil))
             gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
         }
