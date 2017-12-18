@@ -11,10 +11,19 @@
 titleError = "Error";
 okButton = "Ok";
 cancelButton = "Cancel";
-videoPlayerError = "The hyperlapse video not found";
-noCamerasAvailable = "No available camera device";
-timeLapseBuildError = "Not found any image for building timelapse video";
+videoPlayerError = "The hyperlapse video not found.";
+noCamerasAvailable = "No available camera device.";
+timeLapseBuildError = "Not found any image for building timelapse video.";
 referenceFrameError = "The reference frame XArbitraryZVertical is not available.";
-motionServiceError = "No motion-service available";
+motionServiceError = "No motion-service available.";
 
-// MARK: - Others
+// MARK: - VideoBuilder
+
+videoName = "timeLapseVideo";
+videoExt = "mp4";
+photoSaveError = "Could not save video to photo library:";
+
+// MARK: - Font types
+
+lightFont = "Saker Sans Light PERSONAL USE";
+boldFont = "Saker Sans Bold PERSONAL USE";

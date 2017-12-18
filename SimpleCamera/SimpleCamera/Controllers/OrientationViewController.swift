@@ -63,13 +63,12 @@ class OrientationViewController: UIViewController {
         if (motionManager.isDeviceMotionAvailable && !motionManager.isDeviceMotionActive) {
             motionManager.deviceMotionUpdateInterval = 0.5
             
-            let myFrame = CMAttitudeReferenceFrame.xArbitraryZVertical
+            let myFrame = CMAttitudeReferenceFrame.xArbitraryCorrectedZVertical
             guard CMMotionManager.availableAttitudeReferenceFrames().contains(myFrame) else {
-                ErrorMessage.sharedInstance.show("titleError".localized, message: "referenceFrameError".localized)
+                ErrorMessage.sharedInstance.show(LocalizedKeys.titleError.description().localized, message: LocalizedKeys.referenceFrameError.description().localized)
                 return
             }
-            
-            motionManager.startDeviceMotionUpdates(using: CMAttitudeReferenceFrame.xArbitraryCorrectedZVertical, to: motionQueue, withHandler:
+            motionManager.startDeviceMotionUpdates(using: myFrame, to: motionQueue, withHandler:
                 { [unowned self] (motionData, error) in
                 if error == nil {
                     guard let data = motionData else {
@@ -90,7 +89,7 @@ class OrientationViewController: UIViewController {
                 }
             })
         } else {
-            ErrorMessage.sharedInstance.show("titleError".localized, message: "motionServiceError".localized)
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError.description().localized, message: LocalizedKeys.motionServiceError.description().localized)
         }
     }
     
