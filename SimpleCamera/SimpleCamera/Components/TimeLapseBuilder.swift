@@ -10,28 +10,6 @@ import AVFoundation
 import UIKit
 import Photos
 
-struct RenderSettings {
-    
-    var size : CGSize = CGSize(width: 1280, height: 720)
-    var fps: Int32 = 5   // frames per second
-    var avCodecKey = AVVideoCodecH264
-    var videoFilename = LocalizedKeys.videoName.description().localized
-    var videoFilenameExt = LocalizedKeys.videoExt.description().localized
-    
-    
-    var outputURL: URL? {
-        // Use the CachesDirectory so the rendered video file sticks around as long as we need it to.
-        // Using the CachesDirectory ensures the file won't be included in a backup of the app.
-        let fileManager = FileManager.default
-        if let tmpDirURL = try? fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true) {
-            return tmpDirURL.appendingPathComponent(videoFilename).appendingPathExtension(videoFilenameExt)
-        } else {
-            return nil
-        }
-    }
-}
-
-
 class TimeLapseBuilder {
     
     // Apple suggests a timescale of 600 because it's a multiple of standard video rates 24, 25, 30, 60 fps etc.
@@ -70,11 +48,9 @@ class TimeLapseBuilder {
     init(renderSettings: RenderSettings) {
         settings = renderSettings
         videoWriter = VideoWriter(renderSettings: settings)
-        //        images = loadImages()
     }
     
     func render(_ progress: @escaping ((Progress) -> Void), completion: (()->Void)?) {
-        
         // The VideoWriter will fail if a file exists at the URL, so clear it out first.
         TimeLapseBuilder.removeFileAtURL(fileURL: settings.outputURL!)
         
@@ -84,22 +60,10 @@ class TimeLapseBuilder {
             TimeLapseBuilder.saveToLibrary(videoURL: self.settings.outputURL!)
             completion?()
         }
-        
     }
-    
-    //    // Replace this logic with your own.
-    //    func loadImages() -> [UIImage] {
-    //        var images = [UIImage]()
-    //        for index in 1...10 {
-    //            let filename = "\(index).jpg"
-    //            images.append(UIImage(named: filename)!)
-    //        }
-    //        return images
-    //    }
     
     // This is the callback function for VideoWriter.render()
     func appendPixelBuffers(writer: VideoWriter) -> Bool {
-        
         let frameDuration = CMTimeMake(Int64(TimeLapseBuilder.kTimescale / settings.fps), TimeLapseBuilder.kTimescale)
         
         while !imageArray.isEmpty {
@@ -117,11 +81,9 @@ class TimeLapseBuilder {
             currentProgress.completedUnitCount = Int64(frameNum)
             frameNum += 1
         }
-        
         // Inform writer all buffers have been written.
         return true
     }
-    
 }
 
 
@@ -147,20 +109,20 @@ class VideoWriter {
         }
         
         let pixelBuffer = pixelBufferOut!
-        
         CVPixelBufferLockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: 0))
         
         let data = CVPixelBufferGetBaseAddress(pixelBuffer)
         let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
         let context = CGContext(data: data, width: Int(size.width), height: Int(size.height),
-                                bitsPerComponent: 8, bytesPerRow: CVPixelBufferGetBytesPerRow(pixelBuffer), space: rgbColorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue)
+                                bitsPerComponent: 8, bytesPerRow: CVPixelBufferGetBytesPerRow(pixelBuffer),
+                                space: rgbColorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue)
         
         context!.clear(CGRect(x:0,y: 0,width: size.width,height: size.height))
         
         let horizontalRatio = size.width / image.size.width
         let verticalRatio = size.height / image.size.height
-        //let aspectRatio = max(horizontalRatio, verticalRatio) // ScaleAspectFill
-        let aspectRatio = min(horizontalRatio, verticalRatio) // ScaleAspectFit
+        let aspectRatio = max(horizontalRatio, verticalRatio) // ScaleAspectFill
+        //let aspectRatio = min(horizontalRatio, verticalRatio) // ScaleAspectFit
         
         let newSize = CGSize(width: image.size.width * aspectRatio, height: image.size.height * aspectRatio)
         

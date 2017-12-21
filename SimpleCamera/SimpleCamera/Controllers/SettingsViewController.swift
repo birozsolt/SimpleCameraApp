@@ -46,8 +46,10 @@ class SettingsViewController: UIViewController {
     ///Exposure cell index, used for changing *ExposureCell* image.
     var currentExposureIndex = 1
     
+    //MARK: - View Lifecycle
+    
     override func loadView() {
-        self.view = settingsView
+        view = settingsView
         settingsView.delegate = self
     }
 }
@@ -57,7 +59,7 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController : SettingsViewProtocol {
     
     func videoPlayerTapped() throws {
-        guard let videoUrl = settings.outputURL else {
+        guard let videoUrl = settings.outputURL, !Platform.isSimulator else {
             throw CameraControllerError.invalidOperation
         }
         videoViewController = VideoPlayerViewController(videoUrl: videoUrl)
@@ -94,7 +96,7 @@ extension SettingsViewController : SettingsViewProtocol {
         guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
             throw CameraControllerError.noCamerasAvailable
         }
-        
+
         switch flashMode {
         case .on:
             flashMode = .off
@@ -122,7 +124,6 @@ extension SettingsViewController : SettingsViewProtocol {
         if imageArray.isEmpty {
             throw CameraControllerError.invalidOperation
         }
-        
         let progressHUD = ProgressHUD()
         progressHUD.setTextLabel("Building your timelapse...")
         progressHUD.setProgress(0, animated: true)
@@ -139,6 +140,5 @@ extension SettingsViewController : SettingsViewProtocol {
             progressHUD.dismiss()
         })
         progressHUD.dismiss()
-        
     }
 }

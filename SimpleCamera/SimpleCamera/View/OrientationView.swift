@@ -28,12 +28,12 @@ class OrientationView: UIView {
     /// Vertical slider variable.
     var verticalSlider = UISlider()
     
-    //MARK: - Init
+    //MARK: - Object Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(horizontalSlider)
-        self.addSubview(verticalSlider)
+        addSubview(horizontalSlider)
+        addSubview(verticalSlider)
         setupViews()
     }
     

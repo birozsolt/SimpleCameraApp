@@ -8,12 +8,12 @@
 
 import UIKit
 
-/// Singleton class for showing error messages
+/// Singleton class for showing error messages.
 class ErrorMessage: NSObject {
     
     static let sharedInstance = ErrorMessage()
     
-    var alert = UIAlertController()
+    private var alert = UIAlertController()
     
     // MARK: - Init
     
@@ -23,13 +23,17 @@ class ErrorMessage: NSObject {
     
     // MARK: - Methods
     
-    /// Displays the progress indicator and disables the user interaction
+    /**
+     Displays the progress indicator and disables the user interaction.
+     - parameter title: The title of the ErrorMessage.
+     - parameter message: The description of the ErrorMessage.
+     */
     func show(_ title: LocalizedKeys, message: LocalizedKeys) {
         if Platform.isSimulator {
             print(message)
         } else {
-            alert = UIAlertController(title: title.description().localized, message: message.description().localized, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: LocalizedKeys.okButton.description().localized, style: UIAlertActionStyle.default, handler: nil))
+            alert = UIAlertController(title: title.description(), message: message.description(), preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: LocalizedKeys.okButton.description(), style: UIAlertActionStyle.default, handler: nil))
             gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
         }
     }

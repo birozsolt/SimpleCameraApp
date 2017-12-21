@@ -46,6 +46,7 @@ class OrientationViewController: UIViewController {
     ///The view that the *OrientationViewController* manages.
     let orientationView = OrientationView(frame: CGRect.zero)
     
+    //MARK: - View Lifecycle
     
     override func loadView() {
         self.view = orientationView

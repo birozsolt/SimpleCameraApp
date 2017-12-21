@@ -35,10 +35,10 @@ enum Fonts {
 func getFont(_ font : Fonts, withSize size: CGFloat) -> UIFont {
     switch font {
     case .light:
-        let font = UIFont(name: LocalizedKeys.lightFont.description().localized, size: size)
+        let font = UIFont(name: LocalizedKeys.lightFont.description(), size: size)
         return font ?? UIFont.systemFont(ofSize: size)
     case .bold:
-        let font = UIFont(name: LocalizedKeys.boldFont.description().localized, size: size)
+        let font = UIFont(name: LocalizedKeys.boldFont.description(), size: size)
         return font ?? UIFont.systemFont(ofSize: size)
     }
 }
@@ -59,6 +59,7 @@ struct Platform {
 
 ///Contains the localized keys from *Localizable.string* file.
 enum LocalizedKeys: String {
+    case camera
     case titleError
     case okButton
     case cancelButton
@@ -75,19 +76,7 @@ enum LocalizedKeys: String {
     
     func description() -> String {
         switch self {
-        case .titleError: return "titleError"
-        case .okButton: return "okButton"
-        case .cancelButton: return "cancelButton"
-        case .videoPlayerError: return "videoPlayerError"
-        case .noCamerasAvailable: return "noCamerasAvailable"
-        case .timeLapseBuildError: return "timeLapseBuildError"
-        case .referenceFrameError: return "referenceFrameError"
-        case .motionServiceError: return "motionServiceError"
-        case .videoName: return "videoName"
-        case .videoExt: return "videoExt"
-        case .photoSaveError: return "photoSaveError"
-        case .lightFont: return "lightFont"
-        case .boldFont: return "boldFont"
+            default: return NSLocalizedString(self.rawValue, tableName: nil, bundle: Bundle.main, value: "", comment: "")
         }
     }
 }

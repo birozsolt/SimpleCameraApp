@@ -17,14 +17,14 @@ class HomeViewController: UIViewController {
     ///The view that the *HomeViewController* manages.
     var homeView = HomeView(frame: CGRect.zero)
     
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func loadView() {
-        self.view = homeView
+        view = homeView
         homeView.delegate = self
     }
     
@@ -37,6 +37,9 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController : HomeViewProtocol{
     
+    /**
+     Open *CameraViewController* after tapped.
+     */
     func cameraButtonTapped() {
         cameraViewController = CameraViewController()
         gNavigationViewController?.pushViewController(cameraViewController, animated: true)

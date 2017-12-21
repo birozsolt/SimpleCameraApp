@@ -7,154 +7,162 @@
 //
 
 import UIKit
-import AVKit
+import Player
 import AVFoundation
 
-///UIViewController class which manage the video player screen.
 class VideoPlayerViewController: UIViewController {
-    private var avPlayer = AVPlayer()
-    private var avPlayerLayer: AVPlayerLayer!
     
-    private let invisibleButton = UIButton()
-    private var playbackImage = UIImageView()
+    fileprivate let player = Player()
+    fileprivate let timeRemainingLabel = UILabel()
+    fileprivate let playbackProgressView = UIProgressView()
+    fileprivate let playbackImage = UIImageView()
     
-    private var timeObserver: AnyObject!
-    private let timeRemainingLabel = UILabel()
+    ///The path of the video for the *videoPlayer*.
+    fileprivate var videoUrl : URL?
     
-    private let seekSlider = UISlider()
-    private var playerRateBeforeSeek: Float = 0
-    
-    ///The path of the video for the *avPlayer*.
-    var videoUrl : URL?
-    
-    //MARK: - Init
+    //MARK: - Object Lifecycle
     
     convenience init(videoUrl: URL) {
         self.init(nibName:nil, bundle:nil)
         self.videoUrl = videoUrl
     }
     
-    //MARK: - Lifecycle
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        avPlayer.play()
+    deinit {
+        player.willMove(toParentViewController: self)
+        player.view.removeFromSuperview()
+        player.removeFromParentViewController()
     }
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
         
-        avPlayer = AVPlayer(url: videoUrl!)
-        let playerItem = AVPlayerItem(url: videoUrl!)
-        avPlayer.replaceCurrentItem(with: playerItem)
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        avPlayerLayer = AVPlayerLayer(player: avPlayer)
-        avPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-        avPlayerLayer.frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
-        view.layer.insertSublayer(avPlayerLayer, above: view.layer)
+        player.playerDelegate = self
+        player.playbackDelegate = self
+        player.view.frame = view.bounds
         
-        view.addSubview(invisibleButton)
-        invisibleButton.addTarget(self, action: #selector(invisibleButtonTapped), for: .touchUpInside)
+        addChildViewController(player)
+        view.addSubview(player.view)
+        player.didMove(toParentViewController: self)
         
-        invisibleButton.addSubview(playbackImage)
-        playbackImage.autoSetDimensions(to: CGSize(width: 100, height: 100))
+        view.insertSubview(timeRemainingLabel, aboveSubview: player.view)
+        timeRemainingLabel.textColor = .white
+        timeRemainingLabel.autoPinEdge(.left, to: .left, of: view, withOffset: 5)
+        timeRemainingLabel.autoPinEdge(toSuperviewEdge: .bottom)
+        timeRemainingLabel.autoSetDimensions(to: CGSize(width: 60, height: 30))
+        
+        view.insertSubview(playbackProgressView, aboveSubview: player.view)
+        playbackProgressView.autoPinEdge(.left, to: .right, of: timeRemainingLabel, withOffset: 0)
+        playbackProgressView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
+        playbackProgressView.autoPinEdge(toSuperviewEdge: .right)
+        playbackProgressView.autoSetDimension(.height, toSize: 20)
+        
+        view.insertSubview(playbackImage, aboveSubview: player.view)
+        playbackImage.autoSetDimensions(to: CGSize(width: 80, height: 80))
         playbackImage.autoCenterInSuperview()
-        playbackImage.layer.cornerRadius = 50
+        playbackImage.layer.cornerRadius = 40
         playbackImage.backgroundColor = .clear
-        playbackImage.image = #imageLiteral(resourceName: "PlayVideo")
         playbackImage.isHidden = true
         
-        let timeInterval: CMTime = CMTimeMakeWithSeconds(1.0, 10)
-        timeObserver = avPlayer.addPeriodicTimeObserver(forInterval: timeInterval, queue: DispatchQueue.main) {
-            (elapsedTime: CMTime) -> Void in
-                self.observeTime(elapsedTime: elapsedTime)
-        } as AnyObject
+        player.url = videoUrl
+        
+        player.playbackLoops = false
+        player.fillMode = PlayerFillMode.resizeAspectFit.avFoundationType
+        
+        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        player.view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    fileprivate func showPlaybackImage(image: UIImage) {
+        playbackImage.image = image
+        animatePlaybackImage()
+    }
+    fileprivate func animatePlaybackImage(){
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            self.playbackImage.isHidden = false
+            self.playbackImage.alpha = 0.0
+            self.playbackImage.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            
+        }) { (finished) in
+            self.playbackImage.transform = CGAffineTransform.identity
+            self.playbackImage.isHidden = true
+            self.playbackImage.alpha = 1.0
+        }
+    }
+}
 
-        timeRemainingLabel.textColor = .white
-        view.addSubview(timeRemainingLabel)
+// MARK: - UIGestureRecognizer
+extension VideoPlayerViewController {
+    
+    func handleTapGestureRecognizer(_ gestureRecognizer: UITapGestureRecognizer) {
+        switch (self.player.playbackState.rawValue) {
+        case PlaybackState.stopped.rawValue:
+            showPlaybackImage(image: #imageLiteral(resourceName: "PlayVideo"))
+            player.playFromBeginning()
+            break
+        case PlaybackState.paused.rawValue:
+            showPlaybackImage(image: #imageLiteral(resourceName: "PlayVideo"))
+            player.playFromCurrentTime()
+            break
+        case PlaybackState.playing.rawValue:
+            showPlaybackImage(image: #imageLiteral(resourceName: "PauseVideo"))
+            player.pause()
+            break
+        case PlaybackState.failed.rawValue:
+            showPlaybackImage(image: #imageLiteral(resourceName: "PauseVideo"))
+            player.pause()
+            break
+        default:
+            showPlaybackImage(image: #imageLiteral(resourceName: "PauseVideo"))
+            player.pause()
+            break
+        }
+    }
+}
+
+// MARK: - PlayerDelegate
+extension VideoPlayerViewController: PlayerDelegate {
+    
+    func playerReady(_ player: Player) {
+        player.playFromBeginning()
+    }
+    
+    func playerPlaybackStateDidChange(_ player: Player) {
+    }
+    
+    func playerBufferingStateDidChange(_ player: Player) {
         
-        view.addSubview(seekSlider)
-        seekSlider.addTarget(self, action: #selector(sliderBeganTracking), for: .touchDown)
-        seekSlider.addTarget(self, action: #selector(sliderEndedTracking), for: [.touchUpInside, .touchUpOutside])
-        seekSlider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        avPlayer.pause()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // Layout subviews manually
-        avPlayerLayer.frame = view.bounds
-        invisibleButton.frame = view.bounds
-        let controlsHeight: CGFloat = 30
-        let controlsY: CGFloat = view.bounds.size.height - controlsHeight
-        timeRemainingLabel.frame = CGRect(x: 5, y: controlsY, width: 60, height: controlsHeight)
+    func playerBufferTimeDidChange(_ bufferTime: Double) {
         
-        seekSlider.frame = CGRect(x: timeRemainingLabel.frame.origin.x + timeRemainingLabel.bounds.size.width,
-                                  y: controlsY,
-                                  width: view.bounds.size.width - timeRemainingLabel.bounds.size.width - 5,
-                                  height: controlsHeight)
     }
+}
+
+// MARK: - PlayerPlaybackDelegate
+extension VideoPlayerViewController: PlayerPlaybackDelegate {
     
-    deinit {
-        avPlayer.removeTimeObserver(timeObserver)
-    }
-    
-    //MARK: - Footage Time methodes
-    
-    private func updateTimeLabel(elapsedTime: Float64, duration: Float64) {
-        let timeRemaining: Float64 = CMTimeGetSeconds(avPlayer.currentItem!.duration) - elapsedTime
+    func playerCurrentTimeDidChange(_ player: Player) {
+        let fraction = Double(player.currentTime) / Double(player.maximumDuration)
+        playbackProgressView.setProgress(Float(fraction), animated: true)
+        
+        let timeRemaining: Float64 = player.maximumDuration - player.currentTime
         timeRemainingLabel.text = String(format: "%02d:%02d", ((lround(timeRemaining) / 60) % 60), lround(timeRemaining) % 60)
     }
     
-    private func observeTime(elapsedTime: CMTime) {
-        let duration = CMTimeGetSeconds(avPlayer.currentItem!.duration)
-        if duration.isFinite {
-            let elapsedTime = CMTimeGetSeconds(elapsedTime)
-            updateTimeLabel(elapsedTime: elapsedTime, duration: duration)
-        }
+    func playerPlaybackWillStartFromBeginning(_ player: Player) {
+        playbackProgressView.setProgress(0, animated: false)
+        timeRemainingLabel.text = String(format: "%02d:%02d", ((lround(0) / 60) % 60), lround(player.maximumDuration) % 60)
     }
     
-    //MARK: - Pause / play handler
-    
-    func invisibleButtonTapped(sender: UIButton){
-        let playerIsPlaying = avPlayer.rate > 0
-        if playerIsPlaying {
-            avPlayer.pause()
-            playbackImage.isHidden = false
-        } else {
-            avPlayer.play()
-            playbackImage.isHidden = true
-        }
+    func playerPlaybackDidEnd(_ player: Player) {
+        self.playbackProgressView.setProgress(1.0, animated: false)
     }
     
-    //MARK: - Seeker methodes
-    
-    func sliderBeganTracking(slider: UISlider) {
-        playerRateBeforeSeek = avPlayer.rate
-        avPlayer.pause()
-    }
-    
-    func sliderEndedTracking(slider: UISlider) {
-        let videoDuration = CMTimeGetSeconds(avPlayer.currentItem!.duration)
-        let elapsedTime: Float64 = videoDuration * Float64(seekSlider.value)
-        updateTimeLabel(elapsedTime: elapsedTime, duration: videoDuration)
-        
-        avPlayer.seek(to: CMTimeMakeWithSeconds(elapsedTime, 100)) {
-            (completed: Bool) -> Void in
-            if self.playerRateBeforeSeek > 0 {
-                self.avPlayer.play()
-            }
-        }
-    }
-    
-    func sliderValueChanged(slider: UISlider) {
-        let videoDuration = CMTimeGetSeconds(avPlayer.currentItem!.duration)
-        let elapsedTime: Float64 = videoDuration * Float64(seekSlider.value)
-        updateTimeLabel(elapsedTime: elapsedTime, duration: videoDuration)
+    func playerPlaybackWillLoop(_ player: Player) {
+        playbackProgressView.progress = 0
     }
 }

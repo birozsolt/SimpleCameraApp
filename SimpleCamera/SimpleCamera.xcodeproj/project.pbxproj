@@ -13,6 +13,7 @@
 		391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391051A11FB454EF0000774D /* OrientationViewController.swift */; };
 		394630501FE1264A00570D83 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3946304F1FE1264A00570D83 /* ProgressHUD.swift */; };
 		394630521FE2ABFC00570D83 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394630511FE2ABFC00570D83 /* ErrorMessage.swift */; };
+		394630541FE9152200570D83 /* RenderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394630531FE9152200570D83 /* RenderSettings.swift */; };
 		39A41D9B1FCD5CAA002921B8 /* LoadingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D981FCD5CAA002921B8 /* LoadingBox.swift */; };
 		39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D991FCD5CAA002921B8 /* SettingsCell.swift */; };
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
@@ -61,6 +62,7 @@
 		391051A11FB454EF0000774D /* OrientationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationViewController.swift; path = Controllers/OrientationViewController.swift; sourceTree = "<group>"; };
 		3946304F1FE1264A00570D83 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressHUD.swift; path = Components/ProgressHUD.swift; sourceTree = "<group>"; };
 		394630511FE2ABFC00570D83 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorMessage.swift; path = Components/ErrorMessage.swift; sourceTree = "<group>"; };
+		394630531FE9152200570D83 /* RenderSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderSettings.swift; path = Components/RenderSettings.swift; sourceTree = "<group>"; };
 		39A41D981FCD5CAA002921B8 /* LoadingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingBox.swift; path = Components/LoadingBox.swift; sourceTree = "<group>"; };
 		39A41D991FCD5CAA002921B8 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsCell.swift; path = Components/SettingsCell.swift; sourceTree = "<group>"; };
 		39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeLapseBuilder.swift; path = Components/TimeLapseBuilder.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */,
 				3946304F1FE1264A00570D83 /* ProgressHUD.swift */,
 				394630511FE2ABFC00570D83 /* ErrorMessage.swift */,
+				394630531FE9152200570D83 /* RenderSettings.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -471,10 +474,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Player/Player.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Player.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -578,6 +583,7 @@
 				39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */,
 				39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */,
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
+				394630541FE9152200570D83 /* RenderSettings.swift in Sources */,
 				39A4E59E1FD80F7F001D374F /* BasicExtensions.swift in Sources */,
 				39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */,
 				391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */,

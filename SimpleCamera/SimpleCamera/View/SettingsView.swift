@@ -46,15 +46,15 @@ class SettingsView: UIView {
     
     private var currentIndex = 1
     
-    //MARK: - Init
+    //MARK: - Object Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(videoPlayerCell)
-        self.addSubview(exposureCell)
-        self.addSubview(flashCell)
-        self.addSubview(timeLapseBuildCell)
+        addSubview(videoPlayerCell)
+        addSubview(exposureCell)
+        addSubview(flashCell)
+        addSubview(timeLapseBuildCell)
         
         setupViews()
     }
@@ -96,10 +96,10 @@ class SettingsView: UIView {
     
     /// It setting up the background of the *SettingView*.
     private func setupBackground() {
-        self.backgroundColor = UIColor.black
-        self.alpha = 0.8
-        self.isHidden = true
-        self.layer.cornerRadius = 20
+        backgroundColor = UIColor.black
+        alpha = 0.8
+        isHidden = true
+        layer.cornerRadius = 20
     }
     
     /**

@@ -9,15 +9,13 @@
 import UIKit
 
 class ProgressHUD: NSObject {
-
-    //static let sharedInstance = ProgressHUD()
     
-    var backgroundView: UIView!
-    let activityIndicator: UIActivityIndicatorView!
-    var progressView : UIProgressView!
-    let progressLabel : UILabel!
+    private var backgroundView: UIView!
+    private let activityIndicator: UIActivityIndicatorView!
+    private var progressView : UIProgressView!
+    private let progressLabel : UILabel!
     
-    // MARK: - Init
+    // MARK: - Object Lifecycle
     
     override init() {
         backgroundView = UIView()
@@ -41,7 +39,6 @@ class ProgressHUD: NSObject {
         progressLabel.autoPinEdge(.top, to: .bottom, of: progressView, withOffset: 5)
         progressLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         progressLabel.textColor = .white
-        progressLabel.alpha = 0.7
     }
     
     // MARK: - Methods

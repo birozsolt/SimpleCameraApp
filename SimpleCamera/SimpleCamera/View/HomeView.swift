@@ -10,8 +10,6 @@ import UIKit
 
 /// HomeView protocol used for implementing button actions.
 protocol HomeViewProtocol {
-    
-    /// Camera button touch handler function.
     func cameraButtonTapped()
 }
 
@@ -31,13 +29,13 @@ class HomeView: UIView {
     /// The camera button variable.
     private var cameraButton = UIButton(type: UIButtonType.custom)
     
-    //MARK: - Init
+    //MARK: - Object Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(backgroundView)
-        self.insertSubview(cameraButton, aboveSubview: backgroundView)
+        addSubview(backgroundView)
+        insertSubview(cameraButton, aboveSubview: backgroundView)
         
         gNavigationViewController?.navigationBar.isHidden = true
         
@@ -62,7 +60,7 @@ class HomeView: UIView {
         cameraButton.addTarget(self, action: #selector(startCamera), for: .touchUpInside)
         cameraButton.backgroundColor = UIColor.black
         cameraButton.setTitleColor(UIColor.white, for: .normal)
-        cameraButton.setTitle("Camera", for: .normal)
+        cameraButton.setTitle(LocalizedKeys.camera.description(), for: .normal)
         cameraButton.titleLabel?.font = getFont(.bold, withSize: 30)
     }
     

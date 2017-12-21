@@ -8,17 +8,6 @@
 
 import Foundation
 
-//MARK: String extension
-
-extension String {
-    /**
-     Returning the value of the String key from *Localizable.string* file.
-     */
-    var localized: String {
-        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
-    }
-}
-
 //MARK: Double extension
 
 extension Double {

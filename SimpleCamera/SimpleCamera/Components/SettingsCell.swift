@@ -13,6 +13,8 @@ class SettingsCell: UIView {
     var cellImage = UIImageView()
     var cellLabel = UILabel()
     
+    //MARK: - Object Lifecycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

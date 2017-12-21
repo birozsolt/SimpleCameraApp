@@ -6,6 +6,7 @@ target 'SimpleCamera' do
   use_frameworks!
     pod 'PureLayout'
     pod 'SwiftLint'
+    pod 'Player', '~> 0.7.0'
   # Pods for SimpleCamera
 
   target 'SimpleCameraTests' do

@@ -16,7 +16,7 @@ class LoadingBox: NSObject {
     var backgroundView: UIView!
     let activityIndicator: UIActivityIndicatorView!
     
-    // MARK: - Init
+    // MARK: - Object Lifecycle
     
     fileprivate override init() {
         backgroundView = UIView()

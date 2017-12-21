@@ -7,94 +7,129 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		015D332FC097305C17B80AFB94E718FC /* Player-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF2ECB27493A18465C528CCAC218CAA /* Player-dummy.m */; };
+		015D77B4D6D22B586C9E45B89626B34F /* Player-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CC81ACB094959CBAAA4F95158D0AF52 /* Player-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0883C77B9035626BCE807CF8F7E5786B /* Pods-SimpleCameraTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BE588D44AB87EC48893949BEDC6E9E /* Pods-SimpleCameraTests-dummy.m */; };
-		113E797590F351873444E13C0B9AADE8 /* PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = A7F4C3321B481959B2445B2DD6B5C2B5 /* PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		14AA0BD47FD348F0AB6EB9D81AEE5C4E /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 14678B0D7F11AEA6284724D0FA508450 /* NSLayoutConstraint+PureLayout.m */; };
 		227B80CB3C8E5701DB42092846DC0C4C /* Pods-SimpleCameraTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DF3E75306BEBA8CBCE9C0AC580293CE /* Pods-SimpleCameraTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2AC5AE373D95BE8B90B6AF94A4B2E70F /* PureLayout-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F87AF466C2C86988B4ABA0E588ADC9E /* PureLayout-dummy.m */; };
-		3BE6C73C3352793DC3BCB5377BA359BB /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D593583D35716327B55D03AC4C20286 /* ALView+PureLayout.m */; };
-		4BAFDF8D4E5C34C4CA0508D5481D3C9F /* Pods-SimpleCamera-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CF66D74CFEFF5F9B63AB93407E321967 /* Pods-SimpleCamera-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2ABE80280AB90DE61B4075BC43A9313A /* PureLayout-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C52DC657D5925B4BC33BC96ABD18FC /* PureLayout-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B85C4B6D5BCA5762E1A227BCB93B66A /* PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 06B801D6124039F42F858B2BDF2026F7 /* PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61C8A35602FC7CB7DC7EFBC9151733E6 /* Pods-SimpleCameraUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D2FF269610E9C1C93D751779F11C65A /* Pods-SimpleCameraUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		775F89A3C2678AFA0D5623D8F12D91D9 /* NSLayoutConstraint+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B44D0EE1A868A6F43916BA50B27894B /* NSLayoutConstraint+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		778B46B8268C6176EA26419708F10CCE /* PureLayoutDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = F6C981A91C88F23BE8EF1E2CE83157ED /* PureLayoutDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7F0353799BE7E5B0099BE57D398DF502 /* Pods-SimpleCamera-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8323CAE7373990389012E83FD75450B8 /* Pods-SimpleCamera-dummy.m */; };
+		75BA8C227D47B03BFDB5A543FE20B81B /* PureLayout+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF75F89D908AF39F36752B71564218A /* PureLayout+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		78A55964DE436E7625C6E6600E731780 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 488F7B87C7779FB71DFC307000596B82 /* NSArray+PureLayout.m */; };
+		7C4764D604459E74D3C975D50EF22590 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		7E9A270EDE2A461E567566F0E441638B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		7EE448C0F2623EE435F577CE2DDC1942 /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A29E41D0A59A8C13F5F6F40C78851AE /* ALView+PureLayout.m */; };
 		8626CEBD87ADB505538F05F02BB34E69 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		917DAEF9D2E9A375E27A41717A3D4A4E /* NSArray+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = BAE34E7059E65DE94EB294525E860E17 /* NSArray+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		95FFCB63E93173063DE0676B63326164 /* PureLayout-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C2EE2CB248F0AE58871130CF5DFB6A4 /* PureLayout-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9B52C476030675EFDF5F207A933AA3AA /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D4271C6E87593F64B3068D2EA630205A /* NSArray+PureLayout.m */; };
-		B20D07C7000167DFB33333A788B54E1E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		923E67F2A9FA2E4DEAE38A37A3D457CD /* PureLayoutDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 71B7FC5ABCB4FEC4920FDE95F735D95C /* PureLayoutDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F03FBE461673EA9AF016D72CD6E989 /* NSLayoutConstraint+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F9BAE89E435D0EE13F02E40D59DBB66 /* NSLayoutConstraint+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B65B4E94B673AC419E5B0E1BFA3312F1 /* Pods-SimpleCameraUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3596FBCB87A00289970E05E137A98599 /* Pods-SimpleCameraUITests-dummy.m */; };
+		BAB55FED623FF6E55F215F9D27D4A389 /* Pods-SimpleCamera-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CF66D74CFEFF5F9B63AB93407E321967 /* Pods-SimpleCamera-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C0B29C84AD6756F26F4F205B4426C727 /* ALView+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A8F6C0D7179F7195C0D56022FB5A4C9 /* ALView+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2C5D15DBE542D7CA2EDE5F5E5AF69BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		C49EBBC051B0FFB52E7D239A35CF2D51 /* PureLayout+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 911C53E4079FEB1406FB85152B69FF66 /* PureLayout+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E8E566BB347382FBD372FB8BE9ABD484 /* ALView+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 846086E66DFD4B803FC83129990FC3FA /* ALView+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FB9902DB715A1F11395CD4204345E02F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		C564889AAF42F793D9AE0ADBCB723050 /* PureLayout-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 385DA340A3017F59218DE17889E6ACA8 /* PureLayout-dummy.m */; };
+		D744121621263D8FD94DE09C92C67A44 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		DBF214A07C8818708B9FA1993C0DB311 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ED048F6F4F7409EC0265F8810EE73D /* NSLayoutConstraint+PureLayout.m */; };
+		E7D3C456DA0974B5A579804503ABBF8C /* Pods-SimpleCamera-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8323CAE7373990389012E83FD75450B8 /* Pods-SimpleCamera-dummy.m */; };
+		EC8CB4731E5C9E2E4575A7D1FD71AEB2 /* NSArray+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B069A6CB06005471661774FAADB8E8 /* NSArray+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6A1B6036E8F455776A10AD42ABDB7D7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16572AC55D0CDA0B6457E175E70ECB89 /* Player.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		40E640226317237D335EE3F8CAE3C7D9 /* PBXContainerItemProxy */ = {
+		FC48DE581CA2C83D7903670F6D3138A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B7B282A827434CA8452041407D134DF3;
+			remoteGlobalIDString = 4D0B9673C275AEEB46E49351DE797758;
+			remoteInfo = Player;
+		};
+		FE6BD21E45CEA2089775C7F224237203 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03B20589F3F5F7AEE843ECED25CCA64F;
 			remoteInfo = PureLayout;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06B801D6124039F42F858B2BDF2026F7 /* PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PureLayout.h; path = PureLayout/PureLayout/PureLayout.h; sourceTree = "<group>"; };
 		0859DDF8224F134951F1F8E6EAAEBEEA /* Pods-SimpleCameraUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleCameraUITests-frameworks.sh"; sourceTree = "<group>"; };
 		0D2FF269610E9C1C93D751779F11C65A /* Pods-SimpleCameraUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SimpleCameraUITests-umbrella.h"; sourceTree = "<group>"; };
-		0E2D37AB1A61EC4F1C7AC8DD7D72F55B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F9BAE89E435D0EE13F02E40D59DBB66 /* NSLayoutConstraint+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+PureLayout.h"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.h"; sourceTree = "<group>"; };
 		0FF2F3811021BD6630AAD6D6EAC5B1E9 /* Pods-SimpleCamera-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SimpleCamera-acknowledgements.markdown"; sourceTree = "<group>"; };
+		10C52DC657D5925B4BC33BC96ABD18FC /* PureLayout-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PureLayout-umbrella.h"; sourceTree = "<group>"; };
+		11C6619E8E3735FE88A5AA492C24EE0F /* PureLayout.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = PureLayout.modulemap; sourceTree = "<group>"; };
 		126C8762D33318AF0AFED229FF2AC449 /* Pods-SimpleCameraTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SimpleCameraTests.modulemap"; sourceTree = "<group>"; };
-		14678B0D7F11AEA6284724D0FA508450 /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+PureLayout.m"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
+		16572AC55D0CDA0B6457E175E70ECB89 /* Player.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Player.swift; path = Sources/Player.swift; sourceTree = "<group>"; };
+		1CC81ACB094959CBAAA4F95158D0AF52 /* Player-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Player-umbrella.h"; sourceTree = "<group>"; };
 		23B4D30BCD74753B511CF6761F9900DF /* Pods-SimpleCamera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleCamera.debug.xcconfig"; sourceTree = "<group>"; };
 		23BE588D44AB87EC48893949BEDC6E9E /* Pods-SimpleCameraTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SimpleCameraTests-dummy.m"; sourceTree = "<group>"; };
 		26D343484417A4037E95C90E60C1A577 /* Pods-SimpleCamera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleCamera.release.xcconfig"; sourceTree = "<group>"; };
-		27ABAED84A53D2F3329B0951BC623886 /* PureLayout.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PureLayout.xcconfig; sourceTree = "<group>"; };
 		27FFDC30D17B677A974B5E1C0C2A89EA /* Pods-SimpleCameraUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleCameraUITests-resources.sh"; sourceTree = "<group>"; };
-		2B44D0EE1A868A6F43916BA50B27894B /* NSLayoutConstraint+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+PureLayout.h"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.h"; sourceTree = "<group>"; };
-		2D593583D35716327B55D03AC4C20286 /* ALView+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ALView+PureLayout.m"; path = "PureLayout/PureLayout/ALView+PureLayout.m"; sourceTree = "<group>"; };
 		2DF3E75306BEBA8CBCE9C0AC580293CE /* Pods-SimpleCameraTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SimpleCameraTests-umbrella.h"; sourceTree = "<group>"; };
-		2F87AF466C2C86988B4ABA0E588ADC9E /* PureLayout-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PureLayout-dummy.m"; sourceTree = "<group>"; };
+		2EC0C9B524ADB77DF1F4E10E0ACD31CC /* PureLayout.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PureLayout.xcconfig; sourceTree = "<group>"; };
 		3596FBCB87A00289970E05E137A98599 /* Pods-SimpleCameraUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SimpleCameraUITests-dummy.m"; sourceTree = "<group>"; };
+		385DA340A3017F59218DE17889E6ACA8 /* PureLayout-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PureLayout-dummy.m"; sourceTree = "<group>"; };
 		3B594C4005EC7A1EE38198F92BF65F2E /* Pods-SimpleCameraTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleCameraTests-frameworks.sh"; sourceTree = "<group>"; };
-		46212797D40675AF46CCDEEAF8610204 /* Pods_SimpleCameraUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SimpleCameraUITests.framework; path = "Pods-SimpleCameraUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		488F7B87C7779FB71DFC307000596B82 /* NSArray+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+PureLayout.m"; path = "PureLayout/PureLayout/NSArray+PureLayout.m"; sourceTree = "<group>"; };
 		4C4EEA1A42E0F7AB8859CC32066322E0 /* Pods-SimpleCameraUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SimpleCameraUITests.modulemap"; sourceTree = "<group>"; };
+		4C7D921F899DDBE7D1E89D416730B89D /* Player.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Player.modulemap; sourceTree = "<group>"; };
+		5420FCDE381650D827C3EF3B31948C26 /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PureLayout.framework; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		590D244AD5A0513F132EE5CA000C00FC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A8F6C0D7179F7195C0D56022FB5A4C9 /* ALView+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ALView+PureLayout.h"; path = "PureLayout/PureLayout/ALView+PureLayout.h"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		683ED4D96BE8269FF9A41609AC2A1809 /* PureLayout-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PureLayout-prefix.pch"; sourceTree = "<group>"; };
-		6C2EE2CB248F0AE58871130CF5DFB6A4 /* PureLayout-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PureLayout-umbrella.h"; sourceTree = "<group>"; };
+		6A29E41D0A59A8C13F5F6F40C78851AE /* ALView+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ALView+PureLayout.m"; path = "PureLayout/PureLayout/ALView+PureLayout.m"; sourceTree = "<group>"; };
+		71B7FC5ABCB4FEC4920FDE95F735D95C /* PureLayoutDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PureLayoutDefines.h; path = PureLayout/PureLayout/PureLayoutDefines.h; sourceTree = "<group>"; };
 		74E6361DB8CF9CBF99AB3999F891A646 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80DD7B96ABBDCB16A61650F34AC26E54 /* Pods-SimpleCameraTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SimpleCameraTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		8323CAE7373990389012E83FD75450B8 /* Pods-SimpleCamera-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SimpleCamera-dummy.m"; sourceTree = "<group>"; };
 		8340DF217B3D8A6E94128AAEE243B866 /* Pods-SimpleCamera-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleCamera-resources.sh"; sourceTree = "<group>"; };
-		846086E66DFD4B803FC83129990FC3FA /* ALView+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ALView+PureLayout.h"; path = "PureLayout/PureLayout/ALView+PureLayout.h"; sourceTree = "<group>"; };
-		911C53E4079FEB1406FB85152B69FF66 /* PureLayout+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PureLayout+Internal.h"; path = "PureLayout/PureLayout/PureLayout+Internal.h"; sourceTree = "<group>"; };
+		891EF3D8C2148884A3C32572A1B6FFCC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8AF2ECB27493A18465C528CCAC218CAA /* Player-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Player-dummy.m"; sourceTree = "<group>"; };
+		90B77012E9299455C7E7E6F3938F1E27 /* Player.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Player.xcconfig; sourceTree = "<group>"; };
+		9282AD29705348AE6813D57B7261982E /* PureLayout-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PureLayout-prefix.pch"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9EBBCD17EC85877704AF84C6ED84D954 /* Pods_SimpleCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SimpleCamera.framework; path = "Pods-SimpleCamera.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9BCD05C60264B7F658D1A451D2167F68 /* Pods_SimpleCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SimpleCamera.framework; path = "Pods-SimpleCamera.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F6C3AA4C52875F673A1BA5313041AA2 /* Pods-SimpleCameraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleCameraTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A71BADC0A7F00EEF6A7F6E8AD6C880C3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A7F4C3321B481959B2445B2DD6B5C2B5 /* PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PureLayout.h; path = PureLayout/PureLayout/PureLayout.h; sourceTree = "<group>"; };
+		AB087A80D76361E814AB2B271E0DCEC9 /* Player.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Player.framework; path = Player.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4FC8ED2C77319786CFACD911AA660BF /* Pods-SimpleCameraUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SimpleCameraUITests-acknowledgements.plist"; sourceTree = "<group>"; };
 		B5AF90F99EE7691A9C7685B2F793B293 /* Pods-SimpleCameraUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleCameraUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B70A64ECEEBE83AD162DAF9148B5EECB /* Pods-SimpleCameraTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SimpleCameraTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		B89C65844D448B9EEA4E8389C8B6BBF9 /* Pods-SimpleCameraUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SimpleCameraUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		BAE34E7059E65DE94EB294525E860E17 /* NSArray+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+PureLayout.h"; path = "PureLayout/PureLayout/NSArray+PureLayout.h"; sourceTree = "<group>"; };
-		C4157EF26B3790220C27C08175C7CA10 /* Pods_SimpleCameraTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SimpleCameraTests.framework; path = "Pods-SimpleCameraTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAE46670790A1EDA878FE82B067E1F3B /* Pods_SimpleCameraTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SimpleCameraTests.framework; path = "Pods-SimpleCameraTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAECAE12250A29AB5D01D77558353942 /* Pods_SimpleCameraUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SimpleCameraUITests.framework; path = "Pods-SimpleCameraUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70F594F6321DAFB924E348CCA376C30 /* Pods-SimpleCamera.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SimpleCamera.modulemap"; sourceTree = "<group>"; };
-		CA4AF184E24E02057B11962E9D9EBD56 /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PureLayout.framework; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB77DD9A138012595A63F49A9D4B6715 /* Pods-SimpleCamera-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SimpleCamera-acknowledgements.plist"; sourceTree = "<group>"; };
+		CDF75F89D908AF39F36752B71564218A /* PureLayout+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PureLayout+Internal.h"; path = "PureLayout/PureLayout/PureLayout+Internal.h"; sourceTree = "<group>"; };
 		CF66D74CFEFF5F9B63AB93407E321967 /* Pods-SimpleCamera-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SimpleCamera-umbrella.h"; sourceTree = "<group>"; };
+		D0ED048F6F4F7409EC0265F8810EE73D /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+PureLayout.m"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
 		D4042147A1C1DEAA4057F6B3D07C7F3F /* Pods-SimpleCamera-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleCamera-frameworks.sh"; sourceTree = "<group>"; };
-		D4271C6E87593F64B3068D2EA630205A /* NSArray+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+PureLayout.m"; path = "PureLayout/PureLayout/NSArray+PureLayout.m"; sourceTree = "<group>"; };
 		D58484BDFE8F7C062E1DE6ADC5E314B5 /* Pods-SimpleCameraUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleCameraUITests.release.xcconfig"; sourceTree = "<group>"; };
-		D6591609208328DA9E34FA1AC17B501B /* PureLayout.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = PureLayout.modulemap; sourceTree = "<group>"; };
 		E69F0E3C1407DA6E471A583BC63D89ED /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F6C981A91C88F23BE8EF1E2CE83157ED /* PureLayoutDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PureLayoutDefines.h; path = PureLayout/PureLayout/PureLayoutDefines.h; sourceTree = "<group>"; };
+		F0B069A6CB06005471661774FAADB8E8 /* NSArray+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+PureLayout.h"; path = "PureLayout/PureLayout/NSArray+PureLayout.h"; sourceTree = "<group>"; };
 		F89AB917AF10405C151A589702AB3859 /* Pods-SimpleCameraTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleCameraTests.release.xcconfig"; sourceTree = "<group>"; };
+		FEB73185632A9AD653F3978A13C68FA8 /* Player-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Player-prefix.pch"; sourceTree = "<group>"; };
 		FEF7A580214134BC65B52AF91FFB0596 /* Pods-SimpleCameraTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleCameraTests-resources.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		17D5A8F20F80896548DBE0248CC0FD00 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E9A270EDE2A461E567566F0E441638B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2520003D0ADFD008BAF1F2CCF4253A47 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C4764D604459E74D3C975D50EF22590 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2F46098911287797BB457B0EB31BCA90 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -103,11 +138,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7F96BE9DE5728AFF6630C7D49CABC178 /* Frameworks */ = {
+		969D93A833BC110E9B081CD9AED9291B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B20D07C7000167DFB33333A788B54E1E /* Foundation.framework in Frameworks */,
+				D744121621263D8FD94DE09C92C67A44 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,24 +154,41 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BF0B78D0D9BB650F1E384C5C0C85E21A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB9902DB715A1F11395CD4204345E02F /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		27EF964E95D5AEC05B1AA14E7356BF8B /* Pods */ = {
+		03BAB54303EB2F44023D4675B66EE318 /* SwiftLint */ = {
 			isa = PBXGroup;
 			children = (
-				872093A1AB12F0806C60CAA063866F0E /* PureLayout */,
-				9E5CDE1916964C9209ED5EC6BDE9A8A3 /* SwiftLint */,
 			);
-			name = Pods;
+			name = SwiftLint;
+			path = SwiftLint;
+			sourceTree = "<group>";
+		};
+		0AD3F0817AAD009B5322A9C6EABC1B7D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB087A80D76361E814AB2B271E0DCEC9 /* Player.framework */,
+				9BCD05C60264B7F658D1A451D2167F68 /* Pods_SimpleCamera.framework */,
+				BAE46670790A1EDA878FE82B067E1F3B /* Pods_SimpleCameraTests.framework */,
+				BAECAE12250A29AB5D01D77558353942 /* Pods_SimpleCameraUITests.framework */,
+				5420FCDE381650D827C3EF3B31948C26 /* PureLayout.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		150D2D3A7A1D418E0797354217330EC1 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				891EF3D8C2148884A3C32572A1B6FFCC /* Info.plist */,
+				4C7D921F899DDBE7D1E89D416730B89D /* Player.modulemap */,
+				90B77012E9299455C7E7E6F3938F1E27 /* Player.xcconfig */,
+				8AF2ECB27493A18465C528CCAC218CAA /* Player-dummy.m */,
+				FEB73185632A9AD653F3978A13C68FA8 /* Player-prefix.pch */,
+				1CC81ACB094959CBAAA4F95158D0AF52 /* Player-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Player";
 			sourceTree = "<group>";
 		};
 		2FD5BCA9D21A7B0CBD4F438A0BAD23C5 /* Pods-SimpleCamera */ = {
@@ -157,58 +209,35 @@
 			path = "Target Support Files/Pods-SimpleCamera";
 			sourceTree = "<group>";
 		};
-		4A84B68EA49C5B9DF11AA243998EBEA3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9EBBCD17EC85877704AF84C6ED84D954 /* Pods_SimpleCamera.framework */,
-				C4157EF26B3790220C27C08175C7CA10 /* Pods_SimpleCameraTests.framework */,
-				46212797D40675AF46CCDEEAF8610204 /* Pods_SimpleCameraUITests.framework */,
-				CA4AF184E24E02057B11962E9D9EBD56 /* PureLayout.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		6129A1CE3848A1451B72BE3A63719112 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				0E2D37AB1A61EC4F1C7AC8DD7D72F55B /* Info.plist */,
-				D6591609208328DA9E34FA1AC17B501B /* PureLayout.modulemap */,
-				27ABAED84A53D2F3329B0951BC623886 /* PureLayout.xcconfig */,
-				2F87AF466C2C86988B4ABA0E588ADC9E /* PureLayout-dummy.m */,
-				683ED4D96BE8269FF9A41609AC2A1809 /* PureLayout-prefix.pch */,
-				6C2EE2CB248F0AE58871130CF5DFB6A4 /* PureLayout-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/PureLayout";
-			sourceTree = "<group>";
-		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				27EF964E95D5AEC05B1AA14E7356BF8B /* Pods */,
-				4A84B68EA49C5B9DF11AA243998EBEA3 /* Products */,
+				8281DA5257BEE5048C2AAE5688FBF907 /* Pods */,
+				0AD3F0817AAD009B5322A9C6EABC1B7D /* Products */,
 				983FEB7E7EB20AD3879FC6F604B17C90 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		872093A1AB12F0806C60CAA063866F0E /* PureLayout */ = {
+		8281DA5257BEE5048C2AAE5688FBF907 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				846086E66DFD4B803FC83129990FC3FA /* ALView+PureLayout.h */,
-				2D593583D35716327B55D03AC4C20286 /* ALView+PureLayout.m */,
-				BAE34E7059E65DE94EB294525E860E17 /* NSArray+PureLayout.h */,
-				D4271C6E87593F64B3068D2EA630205A /* NSArray+PureLayout.m */,
-				2B44D0EE1A868A6F43916BA50B27894B /* NSLayoutConstraint+PureLayout.h */,
-				14678B0D7F11AEA6284724D0FA508450 /* NSLayoutConstraint+PureLayout.m */,
-				A7F4C3321B481959B2445B2DD6B5C2B5 /* PureLayout.h */,
-				911C53E4079FEB1406FB85152B69FF66 /* PureLayout+Internal.h */,
-				F6C981A91C88F23BE8EF1E2CE83157ED /* PureLayoutDefines.h */,
-				6129A1CE3848A1451B72BE3A63719112 /* Support Files */,
+				848449C225E31774692DE83E68141B35 /* Player */,
+				E054864DEE9DEB7CC22AC8CF6C87FE19 /* PureLayout */,
+				03BAB54303EB2F44023D4675B66EE318 /* SwiftLint */,
 			);
-			name = PureLayout;
-			path = PureLayout;
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		848449C225E31774692DE83E68141B35 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				16572AC55D0CDA0B6457E175E70ECB89 /* Player.swift */,
+				150D2D3A7A1D418E0797354217330EC1 /* Support Files */,
+			);
+			name = Player;
+			path = Player;
 			sourceTree = "<group>";
 		};
 		934BCCC6FE974707A329A6D2AD57F8C9 /* Pods-SimpleCameraTests */ = {
@@ -239,12 +268,18 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		9E5CDE1916964C9209ED5EC6BDE9A8A3 /* SwiftLint */ = {
+		A7B281D8C7F7D7C7B493E3FA8DF7D840 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				590D244AD5A0513F132EE5CA000C00FC /* Info.plist */,
+				11C6619E8E3735FE88A5AA492C24EE0F /* PureLayout.modulemap */,
+				2EC0C9B524ADB77DF1F4E10E0ACD31CC /* PureLayout.xcconfig */,
+				385DA340A3017F59218DE17889E6ACA8 /* PureLayout-dummy.m */,
+				9282AD29705348AE6813D57B7261982E /* PureLayout-prefix.pch */,
+				10C52DC657D5925B4BC33BC96ABD18FC /* PureLayout-umbrella.h */,
 			);
-			name = SwiftLint;
-			path = SwiftLint;
+			name = "Support Files";
+			path = "../Target Support Files/PureLayout";
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -281,14 +316,38 @@
 			path = "Target Support Files/Pods-SimpleCameraUITests";
 			sourceTree = "<group>";
 		};
+		E054864DEE9DEB7CC22AC8CF6C87FE19 /* PureLayout */ = {
+			isa = PBXGroup;
+			children = (
+				5A8F6C0D7179F7195C0D56022FB5A4C9 /* ALView+PureLayout.h */,
+				6A29E41D0A59A8C13F5F6F40C78851AE /* ALView+PureLayout.m */,
+				F0B069A6CB06005471661774FAADB8E8 /* NSArray+PureLayout.h */,
+				488F7B87C7779FB71DFC307000596B82 /* NSArray+PureLayout.m */,
+				0F9BAE89E435D0EE13F02E40D59DBB66 /* NSLayoutConstraint+PureLayout.h */,
+				D0ED048F6F4F7409EC0265F8810EE73D /* NSLayoutConstraint+PureLayout.m */,
+				06B801D6124039F42F858B2BDF2026F7 /* PureLayout.h */,
+				CDF75F89D908AF39F36752B71564218A /* PureLayout+Internal.h */,
+				71B7FC5ABCB4FEC4920FDE95F735D95C /* PureLayoutDefines.h */,
+				A7B281D8C7F7D7C7B493E3FA8DF7D840 /* Support Files */,
+			);
+			name = PureLayout;
+			path = PureLayout;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		4EA255D1C5CAA642BC0F39C848565C7A /* Headers */ = {
+		342C8DEB3FA3D356383053F5EE389493 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BAFDF8D4E5C34C4CA0508D5481D3C9F /* Pods-SimpleCamera-umbrella.h in Headers */,
+				C0B29C84AD6756F26F4F205B4426C727 /* ALView+PureLayout.h in Headers */,
+				EC8CB4731E5C9E2E4575A7D1FD71AEB2 /* NSArray+PureLayout.h in Headers */,
+				93F03FBE461673EA9AF016D72CD6E989 /* NSLayoutConstraint+PureLayout.h in Headers */,
+				75BA8C227D47B03BFDB5A543FE20B81B /* PureLayout+Internal.h in Headers */,
+				2ABE80280AB90DE61B4075BC43A9313A /* PureLayout-umbrella.h in Headers */,
+				5B85C4B6D5BCA5762E1A227BCB93B66A /* PureLayout.h in Headers */,
+				923E67F2A9FA2E4DEAE38A37A3D457CD /* PureLayoutDefines.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,23 +367,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BA274AB9DAB50BFDF4B4F6A27F906349 /* Headers */ = {
+		8E44ADB20F481C352AA29CC0AAEFD9E8 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8E566BB347382FBD372FB8BE9ABD484 /* ALView+PureLayout.h in Headers */,
-				917DAEF9D2E9A375E27A41717A3D4A4E /* NSArray+PureLayout.h in Headers */,
-				775F89A3C2678AFA0D5623D8F12D91D9 /* NSLayoutConstraint+PureLayout.h in Headers */,
-				C49EBBC051B0FFB52E7D239A35CF2D51 /* PureLayout+Internal.h in Headers */,
-				95FFCB63E93173063DE0676B63326164 /* PureLayout-umbrella.h in Headers */,
-				113E797590F351873444E13C0B9AADE8 /* PureLayout.h in Headers */,
-				778B46B8268C6176EA26419708F10CCE /* PureLayoutDefines.h in Headers */,
+				BAB55FED623FF6E55F215F9D27D4A389 /* Pods-SimpleCamera-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9AB30110D442C426878AB5D6BC4707E1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				015D77B4D6D22B586C9E45B89626B34F /* Player-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		03B20589F3F5F7AEE843ECED25CCA64F /* PureLayout */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E02907FA7518FFC907A20AFE91072F9 /* Build configuration list for PBXNativeTarget "PureLayout" */;
+			buildPhases = (
+				E610AF4D236A914074EE5DE3195D9865 /* Sources */,
+				2520003D0ADFD008BAF1F2CCF4253A47 /* Frameworks */,
+				342C8DEB3FA3D356383053F5EE389493 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PureLayout;
+			productName = PureLayout;
+			productReference = 5420FCDE381650D827C3EF3B31948C26 /* PureLayout.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		37FF07452E95A4D6825FA31240D78D3E /* Pods-SimpleCameraTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4294EA543BEB76ED3727AEE49816BAE5 /* Build configuration list for PBXNativeTarget "Pods-SimpleCameraTests" */;
@@ -339,42 +417,43 @@
 			);
 			name = "Pods-SimpleCameraTests";
 			productName = "Pods-SimpleCameraTests";
-			productReference = C4157EF26B3790220C27C08175C7CA10 /* Pods_SimpleCameraTests.framework */;
+			productReference = BAE46670790A1EDA878FE82B067E1F3B /* Pods_SimpleCameraTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		797A55447F41EE85652FA576BEEE759D /* Pods-SimpleCamera */ = {
+		4D0B9673C275AEEB46E49351DE797758 /* Player */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DB835E4A831308613417D1DE0089872 /* Build configuration list for PBXNativeTarget "Pods-SimpleCamera" */;
+			buildConfigurationList = 44C3826930AA5E9BD3D74884E3AACE0C /* Build configuration list for PBXNativeTarget "Player" */;
 			buildPhases = (
-				43D7C6C9010716708F0C81C83D2C8E18 /* Sources */,
-				BF0B78D0D9BB650F1E384C5C0C85E21A /* Frameworks */,
-				4EA255D1C5CAA642BC0F39C848565C7A /* Headers */,
+				631C16B7B3FCF6B3DFD9D77F495FB59F /* Sources */,
+				17D5A8F20F80896548DBE0248CC0FD00 /* Frameworks */,
+				9AB30110D442C426878AB5D6BC4707E1 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6D1DB4D95A0A05BC3DF2BED88DE26917 /* PBXTargetDependency */,
+			);
+			name = Player;
+			productName = Player;
+			productReference = AB087A80D76361E814AB2B271E0DCEC9 /* Player.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5454BE52209B8A68862972431A4825F7 /* Pods-SimpleCamera */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D0D3E8E5F10D429FF74C54FE24F467E /* Build configuration list for PBXNativeTarget "Pods-SimpleCamera" */;
+			buildPhases = (
+				C714421153F272606308212D6FB5BE0C /* Sources */,
+				969D93A833BC110E9B081CD9AED9291B /* Frameworks */,
+				8E44ADB20F481C352AA29CC0AAEFD9E8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ADD3D23E0C758467B1A159A3E1EE99E5 /* PBXTargetDependency */,
+				34809F448A9C130209472876E35AB7A6 /* PBXTargetDependency */,
 			);
 			name = "Pods-SimpleCamera";
 			productName = "Pods-SimpleCamera";
-			productReference = 9EBBCD17EC85877704AF84C6ED84D954 /* Pods_SimpleCamera.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		B7B282A827434CA8452041407D134DF3 /* PureLayout */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FA6FBFC35ECF9AB93AC37E2F5FB19222 /* Build configuration list for PBXNativeTarget "PureLayout" */;
-			buildPhases = (
-				8E06A0B8B3D8E40BDFB5CF8E724DD70E /* Sources */,
-				7F96BE9DE5728AFF6630C7D49CABC178 /* Frameworks */,
-				BA274AB9DAB50BFDF4B4F6A27F906349 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = PureLayout;
-			productName = PureLayout;
-			productReference = CA4AF184E24E02057B11962E9D9EBD56 /* PureLayout.framework */;
+			productReference = 9BCD05C60264B7F658D1A451D2167F68 /* Pods_SimpleCamera.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		E059E2E9F1693A7D0E1A301ECDE2A445 /* Pods-SimpleCameraUITests */ = {
@@ -391,7 +470,7 @@
 			);
 			name = "Pods-SimpleCameraUITests";
 			productName = "Pods-SimpleCameraUITests";
-			productReference = 46212797D40675AF46CCDEEAF8610204 /* Pods_SimpleCameraUITests.framework */;
+			productReference = BAECAE12250A29AB5D01D77558353942 /* Pods_SimpleCameraUITests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -411,35 +490,26 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 4A84B68EA49C5B9DF11AA243998EBEA3 /* Products */;
+			productRefGroup = 0AD3F0817AAD009B5322A9C6EABC1B7D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				797A55447F41EE85652FA576BEEE759D /* Pods-SimpleCamera */,
+				4D0B9673C275AEEB46E49351DE797758 /* Player */,
+				5454BE52209B8A68862972431A4825F7 /* Pods-SimpleCamera */,
 				37FF07452E95A4D6825FA31240D78D3E /* Pods-SimpleCameraTests */,
 				E059E2E9F1693A7D0E1A301ECDE2A445 /* Pods-SimpleCameraUITests */,
-				B7B282A827434CA8452041407D134DF3 /* PureLayout */,
+				03B20589F3F5F7AEE843ECED25CCA64F /* PureLayout */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		43D7C6C9010716708F0C81C83D2C8E18 /* Sources */ = {
+		631C16B7B3FCF6B3DFD9D77F495FB59F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F0353799BE7E5B0099BE57D398DF502 /* Pods-SimpleCamera-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8E06A0B8B3D8E40BDFB5CF8E724DD70E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3BE6C73C3352793DC3BCB5377BA359BB /* ALView+PureLayout.m in Sources */,
-				9B52C476030675EFDF5F207A933AA3AA /* NSArray+PureLayout.m in Sources */,
-				14AA0BD47FD348F0AB6EB9D81AEE5C4E /* NSLayoutConstraint+PureLayout.m in Sources */,
-				2AC5AE373D95BE8B90B6AF94A4B2E70F /* PureLayout-dummy.m in Sources */,
+				015D332FC097305C17B80AFB94E718FC /* Player-dummy.m in Sources */,
+				F6A1B6036E8F455776A10AD42ABDB7D7 /* Player.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,14 +529,39 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C714421153F272606308212D6FB5BE0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7D3C456DA0974B5A579804503ABBF8C /* Pods-SimpleCamera-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E610AF4D236A914074EE5DE3195D9865 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EE448C0F2623EE435F577CE2DDC1942 /* ALView+PureLayout.m in Sources */,
+				78A55964DE436E7625C6E6600E731780 /* NSArray+PureLayout.m in Sources */,
+				DBF214A07C8818708B9FA1993C0DB311 /* NSLayoutConstraint+PureLayout.m in Sources */,
+				C564889AAF42F793D9AE0ADBCB723050 /* PureLayout-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6D1DB4D95A0A05BC3DF2BED88DE26917 /* PBXTargetDependency */ = {
+		34809F448A9C130209472876E35AB7A6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PureLayout;
-			target = B7B282A827434CA8452041407D134DF3 /* PureLayout */;
-			targetProxy = 40E640226317237D335EE3F8CAE3C7D9 /* PBXContainerItemProxy */;
+			target = 03B20589F3F5F7AEE843ECED25CCA64F /* PureLayout */;
+			targetProxy = FE6BD21E45CEA2089775C7F224237203 /* PBXContainerItemProxy */;
+		};
+		ADD3D23E0C758467B1A159A3E1EE99E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Player;
+			target = 4D0B9673C275AEEB46E49351DE797758 /* Player */;
+			targetProxy = FC48DE581CA2C83D7903670F6D3138A8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -507,9 +602,9 @@
 			};
 			name = Release;
 		};
-		4EB2F6EEF5A0447387ED2A8760B0BB0A /* Release */ = {
+		6B55E0A342D0FB0C441A049D54CD3C03 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27ABAED84A53D2F3329B0951BC623886 /* PureLayout.xcconfig */;
+			baseConfigurationReference = 2EC0C9B524ADB77DF1F4E10E0ACD31CC /* PureLayout.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -541,9 +636,9 @@
 			};
 			name = Release;
 		};
-		6AC8A9A4966606C604FEDA17278E06BF /* Debug */ = {
+		95351E7ECDFEA7475B498F3BCEBBF452 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27ABAED84A53D2F3329B0951BC623886 /* PureLayout.xcconfig */;
+			baseConfigurationReference = 2EC0C9B524ADB77DF1F4E10E0ACD31CC /* PureLayout.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -623,6 +718,79 @@
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
+		};
+		A2AC0C47C43531FEE519A2771B5FAB37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90B77012E9299455C7E7E6F3938F1E27 /* Player.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Player/Player-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Player/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Player/Player.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = Player;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A9B46AC95C0D684A1D2316F39B6D5AB3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 26D343484417A4037E95C90E60C1A577 /* Pods-SimpleCamera.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SimpleCamera/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SimpleCamera;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		AC1CF9214CF0759CD9252BD6115CBF2B /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -740,7 +908,42 @@
 			};
 			name = Debug;
 		};
-		C51C814985972211CB3144C1326A0E0A /* Debug */ = {
+		D79D01D97AE74C859162F152FAF91752 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90B77012E9299455C7E7E6F3938F1E27 /* Player.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Player/Player-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Player/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Player/Player.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Player;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		DA25F2B316C37B779E5D83BC46EF0CE1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 23B4D30BCD74753B511CF6761F9900DF /* Pods-SimpleCamera.debug.xcconfig */;
 			buildSettings = {
@@ -770,47 +973,14 @@
 				PRODUCT_NAME = Pods_SimpleCamera;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		D13EFAA7EE07B9DE450CEF4EE98DCA23 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 26D343484417A4037E95C90E60C1A577 /* Pods-SimpleCamera.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SimpleCamera/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SimpleCamera;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
 		};
 		E26323E499EC6195583480A1EE75242E /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -851,20 +1021,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DB835E4A831308613417D1DE0089872 /* Build configuration list for PBXNativeTarget "Pods-SimpleCamera" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C51C814985972211CB3144C1326A0E0A /* Debug */,
-				D13EFAA7EE07B9DE450CEF4EE98DCA23 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				97803B46811A9BDB5E70FA1303AFBFFE /* Debug */,
 				BDD0139D6EB93FA375F887ABD62DAB2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E02907FA7518FFC907A20AFE91072F9 /* Build configuration list for PBXNativeTarget "PureLayout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95351E7ECDFEA7475B498F3BCEBBF452 /* Debug */,
+				6B55E0A342D0FB0C441A049D54CD3C03 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -878,20 +1048,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		44C3826930AA5E9BD3D74884E3AACE0C /* Build configuration list for PBXNativeTarget "Player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2AC0C47C43531FEE519A2771B5FAB37 /* Debug */,
+				D79D01D97AE74C859162F152FAF91752 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D0D3E8E5F10D429FF74C54FE24F467E /* Build configuration list for PBXNativeTarget "Pods-SimpleCamera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA25F2B316C37B779E5D83BC46EF0CE1 /* Debug */,
+				A9B46AC95C0D684A1D2316F39B6D5AB3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E03AB952D6BE78269271BB4B59347222 /* Build configuration list for PBXNativeTarget "Pods-SimpleCameraUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E26323E499EC6195583480A1EE75242E /* Debug */,
 				4C0F4F36C2A3F31C0E835CC301286165 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FA6FBFC35ECF9AB93AC37E2F5FB19222 /* Build configuration list for PBXNativeTarget "PureLayout" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6AC8A9A4966606C604FEDA17278E06BF /* Debug */,
-				4EB2F6EEF5A0447387ED2A8760B0BB0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
