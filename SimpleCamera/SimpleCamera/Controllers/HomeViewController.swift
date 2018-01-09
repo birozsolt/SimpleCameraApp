@@ -12,7 +12,7 @@ import UIKit
 class HomeViewController: UIViewController {
     
     ///The *CameraViewController* instance for opening the camera screen.
-    var cameraViewController : CameraViewController!
+    fileprivate var cameraViewController : CameraViewController!
     
     ///The view that the *HomeViewController* manages.
     var homeView = HomeView(frame: CGRect.zero)

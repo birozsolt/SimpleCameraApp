@@ -37,7 +37,7 @@ protocol SettingsViewProtocol {
 
 /// UIView class for setting the settings view
 class SettingsView: UIView {
-    public var delegate : SettingsViewProtocol?
+    var delegate : SettingsViewProtocol?
     
     private var videoPlayerCell = SettingsCell(frame: CGRect.zero)
     private var exposureCell = SettingsCell(frame: CGRect.zero)
@@ -145,7 +145,7 @@ class SettingsView: UIView {
      It change the videoPlayer cell image.
      - parameter image: Change videoPlayer cell image to *image*.
      */
-    func changevideoPlayerCellImage(to image: UIImage){
+    private func changevideoPlayerCellImage(to image: UIImage){
         videoPlayerCell.cellImage.image = image
     }
     
@@ -192,7 +192,7 @@ class SettingsView: UIView {
      */
     func adjustExposure(){
         do {
-         try delegate?.exposureTapped()
+            try delegate?.exposureTapped()
         }
         catch {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)

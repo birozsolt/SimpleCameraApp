@@ -49,17 +49,17 @@ class OrientationViewController: UIViewController {
     //MARK: - View Lifecycle
     
     override func loadView() {
-        self.view = orientationView
+        view = orientationView
     }
     
     //MARK: - Motion controll functions
-
+    
     /**
-     If the device-motion service is available on the device, 
+     If the device-motion service is available on the device,
      then starts device-motion updates on *motionQueue* operation queue twice in every secound.
      
      Calculates the reference orientation, which is the device current orientation.
-    */
+     */
     func startMotionUpdate() {
         if (motionManager.isDeviceMotionAvailable && !motionManager.isDeviceMotionActive) {
             motionManager.deviceMotionUpdateInterval = 0.5
@@ -71,23 +71,23 @@ class OrientationViewController: UIViewController {
             }
             motionManager.startDeviceMotionUpdates(using: myFrame, to: motionQueue, withHandler:
                 { [unowned self] (motionData, error) in
-                if error == nil {
-                    guard let data = motionData else {
-                        print("No motion Data")
-                        return
+                    if error == nil {
+                        guard let data = motionData else {
+                            print("No motion Data")
+                            return
+                        }
+                        if self.referenceYaw == 0 && self.referenceRoll == 0 && self.referencePitch == 0 {
+                            self.referenceQuaternion = (self.motionManager.deviceMotion?.attitude.quaternion)!
+                            self.referenceRoll = atan2(2 * (self.referenceQuaternion.y * self.referenceQuaternion.w - self.referenceQuaternion.x * self.referenceQuaternion.z),
+                                                       1 - 2 * (self.referenceQuaternion.y * self.referenceQuaternion.y - self.referenceQuaternion.z*self.referenceQuaternion.z)).toDegrees
+                            self.referencePitch = atan2(2 * (self.referenceQuaternion.x * self.referenceQuaternion.w + self.referenceQuaternion.y * self.referenceQuaternion.z),
+                                                        1 - 2 * (self.referenceQuaternion.x * self.referenceQuaternion.x - self.referenceQuaternion.z * self.referenceQuaternion.z)).toDegrees
+                            self.referenceYaw = asin(2 * (self.referenceQuaternion.x * self.referenceQuaternion.y + self.referenceQuaternion.w * self.referenceQuaternion.z)).toDegrees
+                        }
+                        self.motionRefresh(deviceMotion: data)
+                    } else {
+                        print(error ?? "Some Error")
                     }
-                    if self.referenceYaw == 0 && self.referenceRoll == 0 && self.referencePitch == 0 {
-                        self.referenceQuaternion = (self.motionManager.deviceMotion?.attitude.quaternion)!
-                        self.referenceRoll = atan2(2 * (self.referenceQuaternion.y * self.referenceQuaternion.w - self.referenceQuaternion.x * self.referenceQuaternion.z),
-                                                   1 - 2 * (self.referenceQuaternion.y * self.referenceQuaternion.y - self.referenceQuaternion.z*self.referenceQuaternion.z)).toDegrees
-                        self.referencePitch = atan2(2 * (self.referenceQuaternion.x * self.referenceQuaternion.w + self.referenceQuaternion.y * self.referenceQuaternion.z),
-                                                    1 - 2 * (self.referenceQuaternion.x * self.referenceQuaternion.x - self.referenceQuaternion.z * self.referenceQuaternion.z)).toDegrees
-                        self.referenceYaw = asin(2 * (self.referenceQuaternion.x * self.referenceQuaternion.y + self.referenceQuaternion.w * self.referenceQuaternion.z)).toDegrees
-                    }
-                    self.motionRefresh(deviceMotion: data)
-                } else {
-                    print(error ?? "Some Error")
-                }
             })
         } else {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.motionServiceError)
@@ -100,7 +100,7 @@ class OrientationViewController: UIViewController {
             motionManager.stopDeviceMotionUpdates()
         }
     }
-
+    
     /**
      Calculate the device orientation from the given parameter, and set the *orientationView* sliders.
      - parameter deviceMotion: An instance of *CMDeviceMotion* encapsulates measurements of the attitude, rotation rate, and acceleration of a device.

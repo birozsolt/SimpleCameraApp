@@ -56,7 +56,7 @@ class ProgressHUD: NSObject {
     /// Displays the progress indicator and disables the user interaction
     func show() {
         backgroundView.frame =  UIScreen.main.bounds
-        self.activityIndicator.center = backgroundView.center
+        activityIndicator.center = backgroundView.center
         UIView.animate(withDuration: 0.3, animations: {
             self.backgroundView.alpha = 1.0
             gNavigationViewController?.topViewController!.view.addSubview(self.backgroundView)

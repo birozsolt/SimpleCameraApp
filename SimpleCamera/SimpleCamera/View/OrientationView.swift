@@ -44,7 +44,7 @@ class OrientationView: UIView {
     //MARK: - Setup funcions for views
     
     /// It setting up orientation view components.
-    func setupViews(){
+    private func setupViews(){
         commonSliderSetups(for: verticalSlider)
         verticalSlider.setThumbImage(#imageLiteral(resourceName: "SliderThumbImage"), for: .normal)
         verticalSlider.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2))
@@ -57,7 +57,7 @@ class OrientationView: UIView {
      Setting an *UISlider* attributes.
      - parameter slider: Setting the *slider* attributes to the requiered values for *OrientationView*.
      */
-    func commonSliderSetups(for slider : UISlider) {
+    private func commonSliderSetups(for slider : UISlider) {
         slider.autoSetDimensions(to: CGSize(width: 100, height: 5))
         slider.autoAlignAxis(toSuperviewAxis: .horizontal)
         slider.autoCenterInSuperview()

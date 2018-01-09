@@ -76,7 +76,7 @@ enum LocalizedKeys: String {
     
     func description() -> String {
         switch self {
-            default: return NSLocalizedString(self.rawValue, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+        default: return NSLocalizedString(self.rawValue, tableName: nil, bundle: Bundle.main, value: "", comment: "")
         }
     }
 }

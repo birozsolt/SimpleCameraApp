@@ -32,19 +32,19 @@ enum SettingsType : String {
 class SettingsViewController: UIViewController {
     
     ///The capture device flash mode.
-    var flashMode = AVCaptureFlashMode.off
+    fileprivate var flashMode = AVCaptureFlashMode.off
     
     ///The view that the *SettingsViewController* manages.
     var settingsView = SettingsView(frame: CGRect.zero)
     
     ///The *VideoPlayerViewController* instance for playing videos.
-    var videoViewController: VideoPlayerViewController?
+    fileprivate var videoViewController: VideoPlayerViewController?
     
     ///The settings of the video.
-    let settings = RenderSettings()
+    fileprivate let settings = RenderSettings()
     
     ///Exposure cell index, used for changing *ExposureCell* image.
-    var currentExposureIndex = 1
+    fileprivate var currentExposureIndex = 1
     
     //MARK: - View Lifecycle
     
@@ -96,7 +96,7 @@ extension SettingsViewController : SettingsViewProtocol {
         guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
             throw CameraControllerError.noCamerasAvailable
         }
-
+        
         switch flashMode {
         case .on:
             flashMode = .off
@@ -130,12 +130,12 @@ extension SettingsViewController : SettingsViewProtocol {
         DispatchQueue.main.async {
             progressHUD.show()
         }
-       
+        
         let timeLapseBuilder = TimeLapseBuilder(renderSettings: settings)
         timeLapseBuilder.render(
             {(progress: Progress) in
-            let progressPercentage = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
-            progressHUD.setProgress(progressPercentage, animated: true)
+                let progressPercentage = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
+                progressHUD.setProgress(progressPercentage, animated: true)
         },  completion: {
             progressHUD.dismiss()
         })

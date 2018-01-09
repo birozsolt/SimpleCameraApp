@@ -18,9 +18,9 @@ class SettingsCell: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor.clear
-        self.addSubview(cellImage)
-        self.addSubview(cellLabel)
+        backgroundColor = UIColor.clear
+        addSubview(cellImage)
+        addSubview(cellLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {

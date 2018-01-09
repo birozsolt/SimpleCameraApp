@@ -13,8 +13,8 @@ class LoadingBox: NSObject {
     
     static let sharedInstance = LoadingBox()
     
-    var backgroundView: UIView!
-    let activityIndicator: UIActivityIndicatorView!
+    private var backgroundView: UIView!
+    private let activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Object Lifecycle
     
@@ -34,7 +34,7 @@ class LoadingBox: NSObject {
     /// Displays the progress indicator and disables the user interaction
     func block() {
         backgroundView.frame =  UIScreen.main.bounds
-        self.activityIndicator.center = backgroundView.center
+        activityIndicator.center = backgroundView.center
         UIView.animate(withDuration: 0.3, animations: {
             self.backgroundView.alpha = 1.0
             gNavigationViewController?.topViewController!.view.addSubview(self.backgroundView)

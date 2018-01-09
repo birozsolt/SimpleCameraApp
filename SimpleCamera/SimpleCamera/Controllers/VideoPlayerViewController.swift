@@ -72,7 +72,7 @@ class VideoPlayerViewController: UIViewController {
         player.playbackLoops = false
         player.fillMode = PlayerFillMode.resizeAspectFit.avFoundationType
         
-        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
         tapGestureRecognizer.numberOfTapsRequired = 1
         player.view.addGestureRecognizer(tapGestureRecognizer)
     }
@@ -81,6 +81,7 @@ class VideoPlayerViewController: UIViewController {
         playbackImage.image = image
         animatePlaybackImage()
     }
+    
     fileprivate func animatePlaybackImage(){
         UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             self.playbackImage.isHidden = false
@@ -95,7 +96,7 @@ class VideoPlayerViewController: UIViewController {
     }
 }
 
-// MARK: - UIGestureRecognizer
+// MARK: - UIGestureRecognizer extension
 extension VideoPlayerViewController {
     
     func handleTapGestureRecognizer(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -124,7 +125,7 @@ extension VideoPlayerViewController {
     }
 }
 
-// MARK: - PlayerDelegate
+// MARK: - PlayerDelegate extension
 extension VideoPlayerViewController: PlayerDelegate {
     
     func playerReady(_ player: Player) {
@@ -142,7 +143,7 @@ extension VideoPlayerViewController: PlayerDelegate {
     }
 }
 
-// MARK: - PlayerPlaybackDelegate
+// MARK: - PlayerPlaybackDelegate extension
 extension VideoPlayerViewController: PlayerPlaybackDelegate {
     
     func playerCurrentTimeDidChange(_ player: Player) {

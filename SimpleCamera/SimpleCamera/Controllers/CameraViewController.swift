@@ -16,7 +16,7 @@ import AVFoundation
  - front: Front camera.
  - rear: Rear camera.
  */
-enum CameraPosition {
+fileprivate enum CameraPosition {
     case front
     case rear
 }
@@ -44,37 +44,37 @@ enum CameraControllerError: Swift.Error {
 class CameraViewController: UIViewController {
     
     ///The view that the *CameraViewController* manages.
-    var cameraView = CameraView(frame: CGRect.zero)
+    fileprivate var cameraView = CameraView(frame: CGRect.zero)
     
     ///The layer that is used to display video as it is being captured by an input device
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    fileprivate var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     
     ///An object that manages the capture activity and coordinates the flow of data from input devices to capture outputs.
-    var captureSession : AVCaptureSession?
+    fileprivate var captureSession : AVCaptureSession?
     
     ///A capture output for recording still images.
-    var photoOutput: AVCaptureStillImageOutput?
+    fileprivate var photoOutput: AVCaptureStillImageOutput?
     
     ///The capture device that provides video input for *captureSession* and offers controls for hardware-specific capture features.
-    var captureDevice: AVCaptureDevice?
+    fileprivate var captureDevice: AVCaptureDevice?
     
     ///The object used for front camera device
-    var frontCamera: AVCaptureDevice?
+    fileprivate var frontCamera: AVCaptureDevice?
     
     ///A capture input that provides media from the *frontCamera* to a capture session.
-    var frontCameraInput: AVCaptureDeviceInput?
+    fileprivate var frontCameraInput: AVCaptureDeviceInput?
     
     ///The object used for rear camera device
-    var rearCamera: AVCaptureDevice?
+    fileprivate var rearCamera: AVCaptureDevice?
     
     ///A capture input that provides media from the *rearCamera* to a capture session.
-    var rearCameraInput: AVCaptureDeviceInput?
+    fileprivate var rearCameraInput: AVCaptureDeviceInput?
     
     ///A bool value indicates that the camera is already set up (**true**) or not (**false**).
-    var isCameraAlreadySetUp = false
+    fileprivate var isCameraAlreadySetUp = false
     
     ///The currently active camera position
-    var currentCameraPosition: CameraPosition?
+    fileprivate var currentCameraPosition: CameraPosition?
     
     // MARK: View Lifecycle
     
@@ -115,7 +115,7 @@ class CameraViewController: UIViewController {
      - parameter completionHandler: Returns `nil` if succes otherwise an error.
      - parameter error: Contains an error if capture session is missing, otherwise `nil`.
      */
-    func prepare(completionHandler: @escaping (_ error: Error?) -> Void) {
+    private func prepare(completionHandler: @escaping (_ error: Error?) -> Void) {
         
         /// Initiate the *captureSession* object.
         func createCaptureSession() {
@@ -220,7 +220,7 @@ class CameraViewController: UIViewController {
      Displays the video preview from capture session.
      - throws: *CameraControllerError* if no capture session found.
      */
-    func displayPreview() throws {
+    private func displayPreview() throws {
         guard let captureSession = captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
         
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -240,7 +240,7 @@ class CameraViewController: UIViewController {
      Switch between front and rear cameras.
      - throws: *CameraControllerError* if no capture session found.
      */
-    func switchCameras() throws {
+    fileprivate func switchCameras() throws {
         guard let currentCameraPosition = currentCameraPosition, let captureSession = captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
         
         captureSession.beginConfiguration()

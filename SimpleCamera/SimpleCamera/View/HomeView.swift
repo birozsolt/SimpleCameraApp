@@ -17,7 +17,7 @@ protocol HomeViewProtocol {
 class HomeView: UIView {
     
     /// HomeViewProtocol delegate variable.
-    public var delegate : HomeViewProtocol?
+    var delegate : HomeViewProtocol?
     
     //MARK: - View variables
     

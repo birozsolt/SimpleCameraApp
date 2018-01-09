@@ -19,24 +19,24 @@ protocol CameraViewProtocol {
 /// UIView class for setting the camera screen view
 class CameraView: UIView {
     /// CameraViewProtocol delegate variable.
-    public var delegate: CameraViewProtocol?
+    var delegate: CameraViewProtocol?
     
     //MARK: - View variables
     
     /// The background view of the *CameraView*.
-    public var previewView = UIImageView()
+    private var previewView = UIImageView()
     
     /// This variable contains the videoPreview layer, where the camera is showed.
-    public var videoPreviewView = UIView()
+    var videoPreviewView = UIView()
     
     /// The layer where we show onion effect, (the previous captured image).
-    public var onionEffectLayer = UIImageView()
+    var onionEffectLayer = UIImageView()
     
     /// This variable initializes the *SettingsViewController*.
-    public var settingsViewController = SettingsViewController()
+    var settingsViewController = SettingsViewController()
     
     /// This variable initializes the *OrientationViewController*.
-    public var orientationViewController = OrientationViewController()
+    var orientationViewController = OrientationViewController()
     
     //MARK: - Button variables
     
@@ -67,9 +67,9 @@ class CameraView: UIView {
     
     /**
      Setting menu current state
-        - default state: *.close*.
+     - default state: *.close*.
      */
-    public var isSettingsOpened : SettingMenuState = .close
+    var isSettingsOpened : SettingMenuState = .close
     
     /**
      Settings menu state.
@@ -105,7 +105,7 @@ class CameraView: UIView {
     //MARK: - Setup funcions for views
     
     /// It setting up camera screen views.
-    func setupViews(){
+    private func setupViews(){
         previewView.autoPinEdgesToSuperviewEdges()
         previewView.isHidden = true
         previewView.alpha = 0.0
@@ -144,7 +144,7 @@ class CameraView: UIView {
     }
     
     /// It setting up the settings button components
-    func setupSettingsButton(){
+    private func setupSettingsButton(){
         settingsButtonGridView = UIImageView(image: #imageLiteral(resourceName: "SettingView"))
         settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowRight")
         
@@ -172,7 +172,7 @@ class CameraView: UIView {
     }
     
     /// It setting up the settings menu.
-    func setupSettingsView() {
+    private func setupSettingsView() {
         settingsViewController.view.autoPinEdge(toSuperviewEdge: .left)
         settingsViewController.view.autoPinEdge(.bottom, to: .top, of: captureButton, withOffset: -20)
         settingsViewController.view.autoSetDimensions(to: CGSize(width: previewView.frame.size.width, height: 160))
@@ -180,7 +180,7 @@ class CameraView: UIView {
     }
     
     /// It setting up the orientation view.
-    func setupOrientationView(){
+    private func setupOrientationView(){
         orientationViewController.view.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
         orientationViewController.view.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         orientationViewController.view.autoSetDimensions(to: CGSize(width: 100 , height: 100))
@@ -260,7 +260,7 @@ class CameraView: UIView {
     // MARK: - Setting button and view animation functions
     
     /// Show the setting menu.
-    func showSettings(){
+    private func showSettings(){
         settingsViewController.view.isHidden = false
         settingsViewController.view.frame = CGRect(x: 0,
                                                    y: previewView.frame.size.height - 250,
@@ -285,7 +285,7 @@ class CameraView: UIView {
      - **.open** will animate the settingsView to opened state.
      - **.close** will animate the settingsView to closed state.
      */
-    func animateSettingsButton(toState state: SettingMenuState) {
+    private func animateSettingsButton(toState state: SettingMenuState) {
         switch state {
         case .open:
             changeArrowImage(to:#imageLiteral(resourceName: "ArrowLeft"))
