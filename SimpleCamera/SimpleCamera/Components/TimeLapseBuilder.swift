@@ -13,15 +13,21 @@ import Photos
 class TimeLapseBuilder {
     
     // Apple suggests a timescale of 600 because it's a multiple of standard video rates 24, 25, 30, 60 fps etc.
-    static let kTimescale: Int32 = 600
+    fileprivate static let kTimescale: Int32 = 600
     
-    let settings: RenderSettings
-    let videoWriter: VideoWriter
+    fileprivate let settings: RenderSettings
+    fileprivate let videoWriter: VideoWriter
     
-    var frameNum = 0
+    fileprivate var frameNum = 0
     
-    let currentProgress = Progress(totalUnitCount: Int64(imageArray.count))
+    fileprivate let currentProgress = Progress(totalUnitCount: Int64(imageArray.count))
     
+    //MARK:- Class functions
+    
+    /**
+     Save the video to the photo library.
+     - parameter videoURL: The path of the timelapse video.
+     */
     class func saveToLibrary(videoURL: URL) {
         PHPhotoLibrary.requestAuthorization { status in
             guard status == .authorized else { return }
@@ -36,6 +42,10 @@ class TimeLapseBuilder {
         }
     }
     
+    /**
+     Delete the video from the photo library.
+     - parameter fileURL: The path of the timelapse video.
+     */
     class func removeFileAtURL(fileURL: URL) {
         do {
             try FileManager.default.removeItem(atPath: fileURL.path)
@@ -45,11 +55,22 @@ class TimeLapseBuilder {
         }
     }
     
+    //MARK: - Object Lifecycle
+    
+    /**
+     Initialise the videoWriter
+     - parameter renderSettings: The settings used for writing a video.
+     */
     init(renderSettings: RenderSettings) {
         settings = renderSettings
         videoWriter = VideoWriter(renderSettings: settings)
     }
     
+    /**
+     Start writing the video and save it to Library after finished.
+     - parameter progress: The progress of the writing process.
+     - parameter completition: Completition handler after the writing process finished.
+     */
     func render(_ progress: @escaping ((Progress) -> Void), completion: (()->Void)?) {
         // The VideoWriter will fail if a file exists at the URL, so clear it out first.
         TimeLapseBuilder.removeFileAtURL(fileURL: settings.outputURL!)
@@ -62,8 +83,12 @@ class TimeLapseBuilder {
         }
     }
     
-    // This is the callback function for VideoWriter.render()
-    func appendPixelBuffers(writer: VideoWriter) -> Bool {
+    /**
+     This is the callback function for VideoWriter.render().
+     - parameter writer: The *AVAssetWriter* object to write media data to a new file.
+     - returns: *False* if there is more image to write. *True* if all image added to the video.
+     */
+    fileprivate func appendPixelBuffers(writer: VideoWriter) -> Bool {
         let frameDuration = CMTimeMake(Int64(TimeLapseBuilder.kTimescale / settings.fps), TimeLapseBuilder.kTimescale)
         
         while !imageArray.isEmpty {
@@ -86,20 +111,22 @@ class TimeLapseBuilder {
     }
 }
 
-
-class VideoWriter {
+/// The videoWriter class, which implements the writing methodes.
+private class VideoWriter {
     
-    let renderSettings: RenderSettings
+    fileprivate let renderSettings: RenderSettings
     
-    var videoWriter: AVAssetWriter!
-    var videoWriterInput: AVAssetWriterInput!
-    var pixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor!
+    fileprivate var videoWriter: AVAssetWriter!
+    fileprivate var videoWriterInput: AVAssetWriterInput!
+    fileprivate var pixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor!
     
-    var isReadyForData: Bool {
+    fileprivate var isReadyForData: Bool {
         return videoWriterInput?.isReadyForMoreMediaData ?? false
     }
     
-    class func pixelBufferFromImage(image: UIImage, pixelBufferPool: CVPixelBufferPool, size: CGSize) -> CVPixelBuffer {
+    //MARK: - Class functions
+    
+    fileprivate class func pixelBufferFromImage(image: UIImage, pixelBufferPool: CVPixelBufferPool, size: CGSize) -> CVPixelBuffer {
         
         var pixelBufferOut: CVPixelBuffer?
         
@@ -135,18 +162,23 @@ class VideoWriter {
         return pixelBuffer
     }
     
+    //MARK:- Object Lifecycle
+    
     init(renderSettings: RenderSettings) {
         self.renderSettings = renderSettings
     }
     
-    func start() {
+    /// Set up and start the asset writing.
+    fileprivate func start() {
         
+        /// The ouput settings for the assetWriter.
         let avOutputSettings: [String: Any] = [
             AVVideoCodecKey: renderSettings.avCodecKey,
             AVVideoWidthKey: NSNumber(value: Float(renderSettings.size.width)),
             AVVideoHeightKey: NSNumber(value: Float(renderSettings.size.height))
         ]
         
+        /// Create the pixel buffer adaptor.
         func createPixelBufferAdaptor() {
             let sourcePixelBufferAttributesDictionary = [
                 kCVPixelBufferPixelFormatTypeKey as String: NSNumber(value: kCVPixelFormatType_32ARGB),
@@ -157,6 +189,7 @@ class VideoWriter {
                                                                       sourcePixelBufferAttributes: sourcePixelBufferAttributesDictionary)
         }
         
+        /// Create the asset writer.
         func createAssetWriter(outputURL: URL) -> AVAssetWriter {
             guard let assetWriter = try? AVAssetWriter(outputURL: outputURL, fileType: AVFileTypeMPEG4) else {
                 fatalError("AVAssetWriter() failed")
@@ -191,7 +224,8 @@ class VideoWriter {
         precondition(pixelBufferAdaptor.pixelBufferPool != nil, "nil pixelBufferPool")
     }
     
-    func render(appendPixelBuffers: ((VideoWriter)->Bool)?, completion: (()->Void)?) {
+    ///Render the video and finish writing.
+    fileprivate func render(appendPixelBuffers: ((VideoWriter)->Bool)?, completion: (()->Void)?) {
         
         precondition(videoWriter != nil, "Call start() to initialze the writer")
         
@@ -212,7 +246,13 @@ class VideoWriter {
         }
     }
     
-    func addImage(image: UIImage, withPresentationTime presentationTime: CMTime) -> Bool {
+    /**
+     Add an image to a single *AVAssetWriterInputPixelBufferAdaptor* object.
+     - parameter image: The image what will be used for the pixel buffer.
+     - parameter presentationTime: The presentation time for the pixel buffer to be appended.
+     - returns: *true* if the pixel buffer was successfully appended, otherwise *false*.
+     */
+    fileprivate func addImage(image: UIImage, withPresentationTime presentationTime: CMTime) -> Bool {
         
         precondition(pixelBufferAdaptor != nil, "Call start() to initialze the writer")
         

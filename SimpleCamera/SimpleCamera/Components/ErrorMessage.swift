@@ -15,7 +15,7 @@ class ErrorMessage: NSObject {
     
     private var alert = UIAlertController()
     
-    // MARK: - Init
+    // MARK: - Object Lifecycle
     
     fileprivate override init() {
         
@@ -24,7 +24,7 @@ class ErrorMessage: NSObject {
     // MARK: - Methods
     
     /**
-     Displays the progress indicator and disables the user interaction.
+     Displays the error message.
      - parameter title: The title of the ErrorMessage.
      - parameter message: The description of the ErrorMessage.
      */
