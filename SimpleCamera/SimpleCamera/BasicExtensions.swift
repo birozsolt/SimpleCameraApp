@@ -6,7 +6,7 @@
 //  Copyright © 2017 Biro, Zsolt. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 //MARK: Double extension
 
@@ -17,11 +17,45 @@ extension Double {
     var toDegrees: Double {
         return 180 / .pi * self
     }
-    
+}
+
+//MARK: CGFloat extension
+
+extension CGFloat {
     /**
      Converting degrees to radians.
      */
-    var toRadians : Double {
+    var toRadians: CGFloat {
         return .pi / 180 * self
+    }
+}
+
+//MARK: UIView extension
+
+extension UIView {
+    
+    /**
+     Change the view frame y-coordinate to *value*.
+     - parameter yValue: The new value of the y-coordinate.
+     */
+    func moveYCoordinate(with yValue: CGFloat) {
+        self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y + yValue, width: self.frame.size.width, height: self.frame.size.height)
+    }
+    
+    /**
+     Change the view frame x-coordinate to *value*.
+     - parameter xValue: The new value of the x-coordinate.
+     */
+    func moveXCoordinate(with xValue: CGFloat) {
+        self.frame = CGRect(x: self.frame.origin.x + xValue, y: self.frame.origin.y, width: self.frame.size.width, height: self.frame.size.height)
+    }
+    
+    /**
+     Change the view frame x-coordinate and y-coordinate to the *values*.
+     - parameter xValue: The new value of the x-coordinate.
+     - parameter yValue: The new value of the y-coordinate.
+     */
+    func setXCoordinate(to xValue: CGFloat) {
+        self.frame = CGRect(x: xValue, y: self.frame.origin.y, width: self.frame.size.width, height: self.frame.size.height)
     }
 }

@@ -57,19 +57,13 @@ class CameraView: UIView {
     /// The *toggleSettingsButton* grid view component.
     private var settingsButtonGridView = UIImageView()
     
-    /// The *settingsButtonArrow* frame.
-    private var arrowFrame = CGRect()
-    
-    /// The *settingsButtonGridView* frame.
-    private var gridFrame = CGRect()
-    
     //MARK: - Setting menu state variables
     
     /**
      Setting menu current state
      - default state: *.close*.
      */
-    var isSettingsOpened : SettingMenuState = .close
+    var isSettingsOpened : SettingMenuState = .undefined
     
     /**
      Settings menu state.
@@ -78,7 +72,7 @@ class CameraView: UIView {
      - close: Closed state.
      */
     enum SettingMenuState {
-        case open, close
+        case open, close, undefined
     }
     
     //MARK: - Object Lifecycle
@@ -116,9 +110,7 @@ class CameraView: UIView {
         onionEffectLayer.autoPinEdgesToSuperviewEdges()
         onionEffectLayer.clipsToBounds = true
         onionEffectLayer.alpha = 0.5
-        onionEffectLayer.isHidden = true
-        
-        setupSettingsView()
+        onionEffectLayer.isHidden = isOnionSkinHidden
         
         setupOrientationView()
         
@@ -140,6 +132,7 @@ class CameraView: UIView {
         toggleCameraButton.layer.cornerRadius = 15
         toggleCameraButton.setImage(#imageLiteral(resourceName: "CameraRear"), for: .normal)
         
+        setupSettingsView()
         setupSettingsButton()
     }
     
@@ -166,9 +159,6 @@ class CameraView: UIView {
         settingsButtonGridView.autoPinEdge(.bottom, to: .bottom, of: toggleSettingsButton)
         settingsButtonGridView.autoPinEdge(.top, to: .top, of: toggleSettingsButton)
         settingsButtonGridView.autoSetDimension(.width, toSize: 30)
-        
-        arrowFrame = convert(settingsButtonArrow.frame, from: toggleSettingsButton)
-        gridFrame = convert(settingsButtonGridView.frame, from: toggleSettingsButton)
     }
     
     /// It setting up the settings menu.
@@ -181,9 +171,7 @@ class CameraView: UIView {
     
     /// It setting up the orientation view.
     private func setupOrientationView(){
-        orientationViewController.view.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
-        orientationViewController.view.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        orientationViewController.view.autoSetDimensions(to: CGSize(width: 100 , height: 100))
+         orientationViewController.view.autoCenterInSuperview()
     }
     
     //MARK: - Button image changer functions
@@ -210,7 +198,7 @@ class CameraView: UIView {
      */
     func flipCameraSwitchButton(to image: UIImage){
         UIView.transition(with: toggleCameraButton,
-                          duration: 0.4,
+                          duration: 0.3,
                           options: UIViewAnimationOptions.transitionFlipFromLeft,
                           animations: nil,
                           completion: { (finished) -> Void in
@@ -238,7 +226,11 @@ class CameraView: UIView {
     
     /// It is called after touching the settings button.
     func toggleSettings() {
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+        if isSettingsOpened == .undefined {
+            hideSettings()
+            isSettingsOpened = .close
+        }
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             if self.isSettingsOpened == .close {
                 self.showSettings()
                 self.isSettingsOpened = .open
@@ -262,20 +254,16 @@ class CameraView: UIView {
     /// Show the setting menu.
     private func showSettings(){
         settingsViewController.view.isHidden = false
-        settingsViewController.view.frame = CGRect(x: 0,
-                                                   y: previewView.frame.size.height - 250,
-                                                   width: previewView.frame.size.width,
-                                                   height: 160)
+        settingsViewController.view.setXCoordinate(to: 0)
         animateSettingsButton(toState: .open)
     }
     
     /// Hide the setting menu.
     func hideSettings(){
-        settingsViewController.view.frame = CGRect(x: 0 - previewView.frame.size.width,
-                                                   y: previewView.frame.size.height - 250,
-                                                   width: previewView.frame.size.width,
-                                                   height: 160)
-        animateSettingsButton(toState: .close)
+        settingsViewController.view.setXCoordinate(to: 0 - previewView.frame.size.width)
+        if isSettingsOpened != .undefined {
+            animateSettingsButton(toState: .close)
+        }
     }
     
     /**
@@ -289,26 +277,16 @@ class CameraView: UIView {
         switch state {
         case .open:
             changeArrowImage(to:#imageLiteral(resourceName: "ArrowLeft"))
-            settingsButtonArrow.frame = CGRect(x: arrowFrame.origin.x + 20,
-                                               y: arrowFrame.origin.y,
-                                               width: 10,
-                                               height: 30)
-            
-            settingsButtonGridView.frame = CGRect(x: gridFrame.origin.x - 10,
-                                                  y: gridFrame.origin.y,
-                                                  width: 30,
-                                                  height: 30)
+            settingsButtonArrow.moveXCoordinate(with: 30)
+            settingsButtonGridView.moveXCoordinate(with: -10)
         case .close:
             changeArrowImage(to:#imageLiteral(resourceName: "ArrowRight"))
-            self.settingsButtonArrow.frame = CGRect(x: arrowFrame.origin.x,
-                                                    y: arrowFrame.origin.y,
-                                                    width: 10,
-                                                    height: 30)
-            
-            self.settingsButtonGridView.frame = CGRect(x: gridFrame.origin.x + 10,
-                                                       y: gridFrame.origin.y,
-                                                       width: 30,
-                                                       height: 30)
+            settingsButtonArrow.moveXCoordinate(with: -30)
+            settingsButtonGridView.moveXCoordinate(with: 10)
+        case .undefined:
+            changeArrowImage(to:#imageLiteral(resourceName: "ArrowRight"))
+            settingsButtonArrow.moveXCoordinate(with: 0)
+            settingsButtonGridView.moveXCoordinate(with: 0)
         }
     }
 }

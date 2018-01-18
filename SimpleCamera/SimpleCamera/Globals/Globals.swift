@@ -14,6 +14,8 @@ var gNavigationViewController : UINavigationController?
 ///Contains images for creating timelapse video.
 var imageArray = [UIImage]()
 
+var isOnionSkinHidden = true
+
 /**
  Font types used for texts.
  

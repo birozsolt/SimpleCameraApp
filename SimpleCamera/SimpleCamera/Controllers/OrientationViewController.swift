@@ -64,7 +64,7 @@ class OrientationViewController: UIViewController {
         if (motionManager.isDeviceMotionAvailable && !motionManager.isDeviceMotionActive) {
             motionManager.deviceMotionUpdateInterval = 0.5
             
-            let myFrame = CMAttitudeReferenceFrame.xArbitraryCorrectedZVertical
+            let myFrame = CMAttitudeReferenceFrame.xArbitraryZVertical
             guard CMMotionManager.availableAttitudeReferenceFrames().contains(myFrame) else {
                 ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.referenceFrameError)
                 return
@@ -76,14 +76,14 @@ class OrientationViewController: UIViewController {
                             print("No motion Data")
                             return
                         }
-                        if self.referenceYaw == 0 && self.referenceRoll == 0 && self.referencePitch == 0 {
+                        /*if self.referenceYaw == 0 && self.referenceRoll == 0 && self.referencePitch == 0 {
                             self.referenceQuaternion = (self.motionManager.deviceMotion?.attitude.quaternion)!
                             self.referenceRoll = atan2(2 * (self.referenceQuaternion.y * self.referenceQuaternion.w - self.referenceQuaternion.x * self.referenceQuaternion.z),
                                                        1 - 2 * (self.referenceQuaternion.y * self.referenceQuaternion.y - self.referenceQuaternion.z*self.referenceQuaternion.z)).toDegrees
                             self.referencePitch = atan2(2 * (self.referenceQuaternion.x * self.referenceQuaternion.w + self.referenceQuaternion.y * self.referenceQuaternion.z),
                                                         1 - 2 * (self.referenceQuaternion.x * self.referenceQuaternion.x - self.referenceQuaternion.z * self.referenceQuaternion.z)).toDegrees
                             self.referenceYaw = asin(2 * (self.referenceQuaternion.x * self.referenceQuaternion.y + self.referenceQuaternion.w * self.referenceQuaternion.z)).toDegrees
-                        }
+                        }*/
                         self.motionRefresh(deviceMotion: data)
                     } else {
                         print(error ?? "Some Error")
@@ -106,28 +106,45 @@ class OrientationViewController: UIViewController {
      - parameter deviceMotion: An instance of *CMDeviceMotion* encapsulates measurements of the attitude, rotation rate, and acceleration of a device.
      */
     private func motionRefresh(deviceMotion: CMDeviceMotion) {
+        let fromAttitude = deviceMotion.attitude.pitch
+        print("From Attitude: ", fromAttitude.toDegrees)
+        
         let quat = deviceMotion.attitude.quaternion
         deviceMotion.attitude.multiply(byInverseOf: deviceMotion.attitude)
-        // roll (x-axis rotation)
-        let currentRoll = atan2(2 * (quat.y * quat.w - quat.x * quat.z), 1 - 2 * (quat.y * quat.y - quat.z*quat.z)).toDegrees
-        
-        // pitch (y-axis rotation)
         let currentPitch = atan2(2 * (quat.x * quat.w + quat.y * quat.z), 1 - 2 * (quat.x * quat.x - quat.z * quat.z)).toDegrees
-        
-        // yaw (z-axis rotation)
-        let currentYaw = asin(2 * (quat.x * quat.y + quat.w * quat.z)).toDegrees
-        
-        if currentPitch < referencePitch{
-            orientationView.setVerticalSlider(to: SliderValue.decrease)
-        } else  {
-            orientationView.setVerticalSlider(to: SliderValue.increase)
-        }
-        
-        if currentYaw < referenceYaw {
-            orientationView.setHorizontalSlider(to: SliderValue.decrease)
+        print("From Quaternion: ", currentPitch)
+        if currentPitch < 60 {
+            OperationQueue.main.addOperation {
+                self.orientationView.moveVerticalMarker(value: .up)
+            }
         } else {
-            orientationView.setHorizontalSlider(to: SliderValue.increase)
+            OperationQueue.main.addOperation {
+                self.orientationView.moveVerticalMarker(value: .down)
+            }
         }
-        //print("Roll: \(currentRoll), Pitch: \(currentPitch), Yaw: \(currentYaw)")
+        
+//        let quat = deviceMotion.attitude.quaternion
+//        deviceMotion.attitude.multiply(byInverseOf: deviceMotion.attitude)
+//        // roll (x-axis rotation)
+//        let currentRoll = atan2(2 * (quat.y * quat.w - quat.x * quat.z), 1 - 2 * (quat.y * quat.y - quat.z*quat.z)).toDegrees
+//        
+//        // pitch (y-axis rotation)
+//        let currentPitch = atan2(2 * (quat.x * quat.w + quat.y * quat.z), 1 - 2 * (quat.x * quat.x - quat.z * quat.z)).toDegrees
+//        
+//        // yaw (z-axis rotation)
+//        let currentYaw = asin(2 * (quat.x * quat.y + quat.w * quat.z)).toDegrees
+//        
+//        if currentPitch < referencePitch{
+//           // TODO orientationView.setVerticalSlider(to: SliderValue.decrease)
+//        } else  {
+//           // TODO orientationView.setVerticalSlider(to: SliderValue.increase)
+//        }
+//        
+//        if currentYaw < referenceYaw {
+//            // TODO orientationView.setHorizontalSlider(to: SliderValue.decrease)
+//        } else {
+//            // TODO orientationView.setHorizontalSlider(to: SliderValue.increase)
+//        }
+//        //print("Roll: \(currentRoll), Pitch: \(currentPitch), Yaw: \(currentYaw)")
     }
 }

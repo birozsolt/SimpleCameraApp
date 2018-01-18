@@ -307,9 +307,10 @@ class CameraViewController: UIViewController {
 extension CameraViewController: CameraViewProtocol {
     
     func captureButtonTapped() {
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             if self.cameraView.isSettingsOpened == .open {
                 self.cameraView.hideSettings()
+                self.cameraView.isSettingsOpened = .close
             }
         }) { (finished) in
             self.cameraView.settingsViewController.view.isHidden = true
@@ -322,7 +323,7 @@ extension CameraViewController: CameraViewProtocol {
             }
             imageArray.append(image)
             //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-            self.cameraView.onionEffectLayer.isHidden = false
+            self.cameraView.onionEffectLayer.isHidden = isOnionSkinHidden
             self.cameraView.onionEffectLayer.contentMode = .scaleAspectFill
             self.cameraView.onionEffectLayer.alpha = 0.5
             self.cameraView.onionEffectLayer.image = image
@@ -361,9 +362,10 @@ extension CameraViewController: CameraViewProtocol {
     }//swiftlint:enable force_cast
     
     func toggleCameraButtonTapped() {
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             if self.cameraView.isSettingsOpened == .open {
                 self.cameraView.hideSettings()
+                self.cameraView.isSettingsOpened = .close
             }
         }) { (finished) in
             self.cameraView.settingsViewController.view.isHidden = true

@@ -23,9 +23,10 @@ enum SettingsType : String {
     case Exposure
     case Flash
     case TimeLapse
+    case OnionSkin
     
     ///Returns the size of the enum.
-    static var count: Int { return SettingsType.TimeLapse.hashValue + 1}
+    static var count: Int { return SettingsType.OnionSkin.hashValue + 1}
 }
 
 ///UIViewController class for managing the settings screen.
@@ -140,5 +141,13 @@ extension SettingsViewController : SettingsViewProtocol {
             progressHUD.dismiss()
         })
         progressHUD.dismiss()
+    }
+    
+    func addOnionSkinning() throws {
+        if isOnionSkinHidden {
+            isOnionSkinHidden = false
+        } else {
+            isOnionSkinHidden = true
+        }
     }
 }

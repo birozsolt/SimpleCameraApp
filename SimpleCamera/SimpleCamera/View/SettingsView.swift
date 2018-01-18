@@ -33,6 +33,12 @@ protocol SettingsViewProtocol {
      - throws: *CameraControllerError* if *imageArray* is empty.
      */
     func buildTimeLapse() throws
+    
+    /**
+     OnionSkin cell touch handler function.
+     - throws: *CameraControllerError* if no camera device available.
+     */
+    func addOnionSkinning() throws
 }
 
 /// UIView class for setting the settings view
@@ -43,6 +49,7 @@ class SettingsView: UIView {
     private var exposureCell = SettingsCell(frame: CGRect.zero)
     private var flashCell = SettingsCell(frame: CGRect.zero)
     private var timeLapseBuildCell = SettingsCell(frame: CGRect.zero)
+    private var onionSkinningCell = SettingsCell(frame: CGRect.zero)
     
     private var currentIndex = 1
     
@@ -55,6 +62,7 @@ class SettingsView: UIView {
         addSubview(exposureCell)
         addSubview(flashCell)
         addSubview(timeLapseBuildCell)
+        addSubview(onionSkinningCell)
         
         setupViews()
     }
@@ -92,6 +100,13 @@ class SettingsView: UIView {
         timeLapseBuildCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
         setupViews(for: timeLapseBuildCell, withType: SettingsType.TimeLapse)
         timeLapseBuildCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(buildTimeLapse)))
+        
+        onionSkinningCell.autoPinEdge(toSuperviewEdge: .left)
+        onionSkinningCell.autoPinEdge(.top, to: .bottom, of: videoPlayerCell, withOffset: 10)
+        onionSkinningCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
+        setupViews(for: onionSkinningCell, withType: SettingsType.OnionSkin)
+        onionSkinningCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addOnionSkinning)))
+
     }
     
     /// It setting up the background of the *SettingView*.
@@ -136,6 +151,9 @@ class SettingsView: UIView {
         case .TimeLapse:
             cell.cellImage.image = #imageLiteral(resourceName: "TimeLapse")
             cell.cellLabel.text = SettingsType.TimeLapse.rawValue
+        case .OnionSkin:
+            cell.cellImage.image = #imageLiteral(resourceName: "OnionSkin")
+            cell.cellLabel.text = SettingsType.OnionSkin.rawValue
         }
     }
     
@@ -222,6 +240,19 @@ class SettingsView: UIView {
         }
         catch {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.timeLapseBuildError)
+        }
+    }
+    
+    /**
+     It is called after touching the OnionSkinning button.
+     - Implemented in the class which adopted *SettingsViewProtocol*.
+     */
+    func addOnionSkinning(){
+        do {
+            try delegate?.addOnionSkinning()
+        }
+        catch {
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
         }
     }
 }

@@ -204,7 +204,7 @@ private class VideoWriter {
         
         videoWriter = createAssetWriter(outputURL: renderSettings.outputURL!)
         videoWriterInput = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: avOutputSettings)
-        videoWriterInput.transform = CGAffineTransform(rotationAngle: CGFloat(90.toRadians))
+        videoWriterInput.transform = CGAffineTransform(rotationAngle: CGFloat(90).toRadians)
         if videoWriter.canAdd(videoWriterInput) {
             videoWriter.add(videoWriterInput)
         }
