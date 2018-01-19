@@ -108,10 +108,10 @@ class CameraView: UIView {
         videoPreviewView.autoPinEdgesToSuperviewEdges()
         
         onionEffectLayer.autoPinEdgesToSuperviewEdges()
-        onionEffectLayer.clipsToBounds = true
         onionEffectLayer.alpha = 0.5
         onionEffectLayer.isHidden = isOnionSkinHidden
         
+        setupSettingsView()
         setupOrientationView()
         
         captureButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20)
@@ -132,7 +132,6 @@ class CameraView: UIView {
         toggleCameraButton.layer.cornerRadius = 15
         toggleCameraButton.setImage(#imageLiteral(resourceName: "CameraRear"), for: .normal)
         
-        setupSettingsView()
         setupSettingsButton()
     }
     
@@ -228,23 +227,18 @@ class CameraView: UIView {
     func toggleSettings() {
         if isSettingsOpened == .undefined {
             hideSettings()
-            isSettingsOpened = .close
         }
         UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             if self.isSettingsOpened == .close {
                 self.showSettings()
-                self.isSettingsOpened = .open
             } else {
                 self.hideSettings()
-                self.isSettingsOpened = .close
             }
         }) { (finished) in
             if self.isSettingsOpened == .close {
                 self.settingsViewController.view.isHidden = true
-                self.changeArrowImage(to: #imageLiteral(resourceName: "ArrowRight"))
             } else {
                 self.settingsViewController.view.isHidden = false
-                self.changeArrowImage(to: #imageLiteral(resourceName: "ArrowLeft"))
             }
         }
     }
@@ -254,16 +248,28 @@ class CameraView: UIView {
     /// Show the setting menu.
     private func showSettings(){
         settingsViewController.view.isHidden = false
-        settingsViewController.view.setXCoordinate(to: 0)
+        settingsViewController.view.frame = CGRect(x: 0,
+                                                   y: settingsViewController.view.frame.origin.y,
+                                                   width: previewView.frame.size.width,
+                                                   height: 160)
+
+        //settingsViewController.view.setXCoordinate(to: 0)
         animateSettingsButton(toState: .open)
+        isSettingsOpened = .open
     }
     
     /// Hide the setting menu.
     func hideSettings(){
-        settingsViewController.view.setXCoordinate(to: 0 - previewView.frame.size.width)
+        //settingsViewController.view.setXCoordinate(to: 0 - previewView.frame.size.width)
+        settingsViewController.view.frame = CGRect(x: 0 - previewView.frame.size.width,
+                                                   y: settingsViewController.view.frame.origin.y,
+                                                   width: previewView.frame.size.width,
+                                                   height: 160)
+
         if isSettingsOpened != .undefined {
             animateSettingsButton(toState: .close)
         }
+        isSettingsOpened = .close
     }
     
     /**

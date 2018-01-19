@@ -355,7 +355,7 @@
 				TargetAttributes = {
 					39CF5CBB1FA07D94006EB23C = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 9L2TPWUVEQ;
+						DevelopmentTeam = 48NALRU3W3;
 						ProvisioningStyle = Automatic;
 					};
 					39CF5CCF1FA07D94006EB23C = {
@@ -743,13 +743,14 @@
 			baseConfigurationReference = 8B324F3EB72C8D1CEEAFC185 /* Pods-SimpleCamera.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9L2TPWUVEQ;
+				DEVELOPMENT_TEAM = 48NALRU3W3;
 				INFOPLIST_FILE = SimpleCamera/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -758,13 +759,14 @@
 			baseConfigurationReference = AEAAAED98C7EB99432125DC8 /* Pods-SimpleCamera.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9L2TPWUVEQ;
+				DEVELOPMENT_TEAM = 48NALRU3W3;
 				INFOPLIST_FILE = SimpleCamera/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

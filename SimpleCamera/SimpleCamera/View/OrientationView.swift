@@ -32,7 +32,7 @@ class OrientationView: UIView {
     
     private let horizontalView = UIView()
     private let horizontalLeftMarker = UIView()
-    private let horizontalightMarker = UIView()
+    private let horizontalRightMarker = UIView()
     
     private let leftArcView = LeftArcView()
     private let rightArcView = RightArcView()
@@ -46,6 +46,8 @@ class OrientationView: UIView {
         super.init(frame: frame)
         addSubview(backgroundView)
         backgroundView.addSubview(horizontalView)
+        horizontalView.addSubview(horizontalLeftMarker)
+        horizontalView.addSubview(horizontalRightMarker)
         backgroundView.addSubview(verticalLeftView)
         backgroundView.addSubview(verticalRightView)
         backgroundView.addSubview(leftArcView)
@@ -66,6 +68,22 @@ class OrientationView: UIView {
         
         backgroundView.autoPinEdgesToSuperviewEdges()
         backgroundView.backgroundColor = .clear
+        
+        horizontalView.autoSetDimensions(to: CGSize(width: 170, height: 10))
+        horizontalView.autoAlignAxis(.horizontal, toSameAxisOf: self, withOffset: 0)
+        horizontalView.autoAlignAxis(toSuperviewAxis: .vertical)
+        horizontalView.alpha = 0.5
+        horizontalView.backgroundColor = .lightGray
+        
+        horizontalLeftMarker.autoSetDimensions(to: CGSize(width: 10, height: 10))
+        horizontalLeftMarker.autoPinEdge(toSuperviewEdge: .left)
+        horizontalLeftMarker.autoAlignAxis(.horizontal, toSameAxisOf: self, withOffset: 0)
+        horizontalLeftMarker.backgroundColor = .orange
+
+        horizontalRightMarker.autoSetDimensions(to: CGSize(width: 10, height: 10))
+        horizontalRightMarker.autoAlignAxis(.horizontal, toSameAxisOf: self, withOffset: 0)
+        horizontalRightMarker.autoPinEdge(toSuperviewEdge: .right)
+        horizontalRightMarker.backgroundColor = .orange
         
         verticalLeftView.autoSetDimensions(to: CGSize(width: 10, height: 180))
         verticalLeftView.autoAlignAxis(.vertical, toSameAxisOf: self, withOffset: -30)
@@ -103,8 +121,8 @@ class OrientationView: UIView {
         rightArcView.alpha = 0.5
         rightArcView.backgroundColor = .clear
 
-        min = verticalLeftView.frame.origin.y + verticalLeftMarker.frame.size.height / 2
-        max = verticalLeftView.frame.origin.y + 160
+        min = verticalLeftView.frame.origin.y
+        max = verticalLeftView.frame.origin.y + 170
     }
     
     /**
@@ -118,13 +136,13 @@ class OrientationView: UIView {
             switch value {
             case .up:
                 UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.verticalLeftMarker.moveYCoordinate(with: -10)
-                    self.verticalRightMarker.moveYCoordinate(with: -10)
+                    self.verticalLeftMarker.moveYCoordinate(with: -5)
+                    self.verticalRightMarker.moveYCoordinate(with: -5)
                 })
             case .down:
                 UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.verticalLeftMarker.moveYCoordinate(with: 10)
-                    self.verticalRightMarker.moveYCoordinate(with: 10)
+                    self.verticalLeftMarker.moveYCoordinate(with: 5)
+                    self.verticalRightMarker.moveYCoordinate(with: 5)
                 })
             }
         }
@@ -134,8 +152,8 @@ class OrientationView: UIView {
             switch value {
             case .up:
                 UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.verticalLeftMarker.moveYCoordinate(with: -10)
-                    self.verticalRightMarker.moveYCoordinate(with: -10)
+                    self.verticalLeftMarker.moveYCoordinate(with: -5)
+                    self.verticalRightMarker.moveYCoordinate(with: -5)
                 })
             case .down:
                 self.verticalLeftMarker.moveYCoordinate(with: 0)
@@ -152,17 +170,73 @@ class OrientationView: UIView {
                 
             case .down:
                 UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.verticalLeftMarker.moveYCoordinate(with: 10)
-                    self.verticalRightMarker.moveYCoordinate(with: 10)
+                    self.verticalLeftMarker.moveYCoordinate(with: 5)
+                    self.verticalRightMarker.moveYCoordinate(with: 5)
                 })
             }
         }
 
-        if verticalLeftMarker.frame.origin.y <= max && verticalLeftMarker.frame.origin.y >= min{
+        if verticalLeftMarker.frame.origin.y < max && verticalLeftMarker.frame.origin.y > min{
             animate(value: value)
-        } else if verticalLeftMarker.frame.origin.y > max {
+        } else if verticalLeftMarker.frame.origin.y >= max {
             stopAnimationDown(value: value)
-        } else if verticalLeftMarker.frame.origin.y < min {
+        } else if verticalLeftMarker.frame.origin.y <= min {
+            stopAnimationUp(value: value)
+        }
+    }
+    
+    /**
+     Move the marker to the direction of *value*.
+     - parameter value: The marker direction.
+     */
+    func moveHorizontalMarker(value: MarkerValue) {
+        /// Start animationg the markers/
+        func animate(value: MarkerValue){
+            switch value {
+            case .up:
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(5).toRadians)
+                })
+            case .down:
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(-5).toRadians)
+                })
+            }
+        }
+        
+        /// Stop animating the markers in the direction down
+        func stopAnimationDown(value: MarkerValue){
+            switch value {
+            case .up:
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(5).toRadians)
+                })
+            case .down:
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(0).toRadians)
+                })
+            }
+        }
+        
+        /// Stop animating the markers in the direction up
+        func stopAnimationUp(value: MarkerValue){
+            switch value {
+            case .up:
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(0).toRadians)
+                })
+            case .down:
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(-5).toRadians)
+                })
+            }
+        }
+        
+        if horizontalLeftMarker.frame.origin.x < max && horizontalLeftMarker.frame.origin.y > min{
+            animate(value: value)
+        } else if horizontalLeftMarker.frame.origin.y >= max {
+            stopAnimationDown(value: value)
+        } else if horizontalLeftMarker.frame.origin.y <= min {
             stopAnimationUp(value: value)
         }
     }

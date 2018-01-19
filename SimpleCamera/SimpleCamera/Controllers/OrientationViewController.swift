@@ -106,13 +106,13 @@ class OrientationViewController: UIViewController {
      - parameter deviceMotion: An instance of *CMDeviceMotion* encapsulates measurements of the attitude, rotation rate, and acceleration of a device.
      */
     private func motionRefresh(deviceMotion: CMDeviceMotion) {
-        let fromAttitude = deviceMotion.attitude.pitch
-        print("From Attitude: ", fromAttitude.toDegrees)
-        
         let quat = deviceMotion.attitude.quaternion
         deviceMotion.attitude.multiply(byInverseOf: deviceMotion.attitude)
+        
+        // pitch (y-axis rotation)
         let currentPitch = atan2(2 * (quat.x * quat.w + quat.y * quat.z), 1 - 2 * (quat.x * quat.x - quat.z * quat.z)).toDegrees
-        print("From Quaternion: ", currentPitch)
+        print("Pitch From Quaternion: ", currentPitch)
+        
         if currentPitch < 60 {
             OperationQueue.main.addOperation {
                 self.orientationView.moveVerticalMarker(value: .up)
@@ -120,6 +120,20 @@ class OrientationViewController: UIViewController {
         } else {
             OperationQueue.main.addOperation {
                 self.orientationView.moveVerticalMarker(value: .down)
+            }
+        }
+        
+        // roll (x-axis rotation)
+        let currentRoll = atan2(2 * (quat.y * quat.w - quat.x * quat.z), 1 - 2 * (quat.y * quat.y - quat.z*quat.z)).toDegrees
+        print("Roll From Quaternion: ", currentRoll)
+        
+        if currentPitch < 0 {
+            OperationQueue.main.addOperation {
+                self.orientationView.moveHorizontalMarker(value: .up)
+            }
+        } else {
+            OperationQueue.main.addOperation {
+                self.orientationView.moveHorizontalMarker(value: .down)
             }
         }
         
