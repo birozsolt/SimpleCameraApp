@@ -17,10 +17,9 @@ protocol SettingsViewProtocol {
     func videoPlayerTapped() throws
     
     /**
-     Exposure cell touch handler function.
-     - throws: *CameraControllerError* if no camera device available.
+     Orientation Assistant cell touch handler function.
      */
-    func exposureTapped() throws
+    func orientationAssistTapped()
     
     /**
      Flash cell touch handler function.
@@ -46,12 +45,10 @@ class SettingsView: UIView {
     var delegate : SettingsViewProtocol?
     
     private var videoPlayerCell = SettingsCell(frame: CGRect.zero)
-    private var exposureCell = SettingsCell(frame: CGRect.zero)
+    private var orientationCell = SettingsCell(frame: CGRect.zero)
     private var flashCell = SettingsCell(frame: CGRect.zero)
     private var timeLapseBuildCell = SettingsCell(frame: CGRect.zero)
     private var onionSkinningCell = SettingsCell(frame: CGRect.zero)
-    
-    private var currentIndex = 1
     
     //MARK: - Object Lifecycle
     
@@ -59,7 +56,7 @@ class SettingsView: UIView {
         super.init(frame: frame)
         
         addSubview(videoPlayerCell)
-        addSubview(exposureCell)
+        addSubview(orientationCell)
         addSubview(flashCell)
         addSubview(timeLapseBuildCell)
         addSubview(onionSkinningCell)
@@ -79,33 +76,23 @@ class SettingsView: UIView {
         
         videoPlayerCell.autoPinEdge(toSuperviewEdge: .left)
         videoPlayerCell.autoPinEdge(toSuperviewEdge: .top)
-        videoPlayerCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
-        setupViews(for: videoPlayerCell, withType: SettingsType.VideoPlayer)
-        videoPlayerCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startVideoPlayer)))
+        setupViews(for: videoPlayerCell, withType: SettingsType.VideoPlayer, action: #selector(startVideoPlayer))
         
-        exposureCell.autoPinEdge(.left, to: .right, of: videoPlayerCell, withOffset: 10)
-        exposureCell.autoPinEdge(toSuperviewEdge: .top)
-        exposureCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
-        setupViews(for: exposureCell, withType: SettingsType.Exposure)
-        exposureCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(adjustExposure)))
+        orientationCell.autoPinEdge(.left, to: .right, of: videoPlayerCell, withOffset: 10)
+        orientationCell.autoPinEdge(toSuperviewEdge: .top)
+        setupViews(for: orientationCell, withType: SettingsType.Orientation, action: #selector(orientationalAssistant))
         
-        flashCell.autoPinEdge(.left, to: .right, of: exposureCell, withOffset: 10)
+        flashCell.autoPinEdge(.left, to: .right, of: orientationCell, withOffset: 10)
         flashCell.autoPinEdge(toSuperviewEdge: .top)
-        flashCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
-        setupViews(for: flashCell, withType: SettingsType.Flash)
-        flashCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleFlash)))
+        setupViews(for: flashCell, withType: SettingsType.Flash, action: #selector(toggleFlash))
         
         timeLapseBuildCell.autoPinEdge(.left, to: .right, of: flashCell, withOffset: 10)
         timeLapseBuildCell.autoPinEdge(toSuperviewEdge: .top)
-        timeLapseBuildCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
-        setupViews(for: timeLapseBuildCell, withType: SettingsType.TimeLapse)
-        timeLapseBuildCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(buildTimeLapse)))
+        setupViews(for: timeLapseBuildCell, withType: SettingsType.TimeLapse, action: #selector(buildTimeLapse))
         
         onionSkinningCell.autoPinEdge(toSuperviewEdge: .left)
         onionSkinningCell.autoPinEdge(.top, to: .bottom, of: videoPlayerCell, withOffset: 10)
-        onionSkinningCell.autoSetDimensions(to: CGSize(width: 70, height: 70))
-        setupViews(for: onionSkinningCell, withType: SettingsType.OnionSkin)
-        onionSkinningCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addOnionSkinning)))
+        setupViews(for: onionSkinningCell, withType: SettingsType.OnionSkin, action: #selector(addOnionSkinning))
 
     }
     
@@ -122,7 +109,9 @@ class SettingsView: UIView {
      - parameter cell: The *SettingsCell*, which will be configured.
      - parameter type: The *SettingsType*, how the *cell* will be configured.
      */
-    private func setupViews(for cell: SettingsCell, withType type: SettingsType){
+    private func setupViews(for cell: SettingsCell, withType type: SettingsType, action selector: Selector){
+        cell.autoSetDimensions(to: CGSize(width: 70, height: 70))
+        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: selector))
         
         cell.cellImage.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         cell.cellImage.autoPinEdge(toSuperviewEdge: .right)
@@ -142,9 +131,9 @@ class SettingsView: UIView {
         case .VideoPlayer:
             cell.cellImage.image = #imageLiteral(resourceName: "VideoPlayer")
             cell.cellLabel.text = SettingsType.VideoPlayer.rawValue
-        case .Exposure:
-            cell.cellImage.image = #imageLiteral(resourceName: "Exposure0")
-            cell.cellLabel.text = SettingsType.Exposure.rawValue
+        case .Orientation:
+            cell.cellImage.image = #imageLiteral(resourceName: "OrientationOff")
+            cell.cellLabel.text = SettingsType.Orientation.rawValue
         case .Flash:
             cell.cellImage.image = #imageLiteral(resourceName: "FlashOff")
             cell.cellLabel.text = SettingsType.Flash.rawValue
@@ -168,17 +157,22 @@ class SettingsView: UIView {
     }
     
     /**
-     It change the exposure cell image.
+     It change the orientation cell image.
      */
-    func changeExposureCellImage(){
-        var exposureList = [#imageLiteral(resourceName: "Exposure0"), #imageLiteral(resourceName: "Exposure+1"), #imageLiteral(resourceName: "Exposure+2"), #imageLiteral(resourceName: "Exposure-2"), #imageLiteral(resourceName: "Exposure-1")]
-        if currentIndex < 5 {
-            let currentImage = exposureList[currentIndex]
-            exposureCell.cellImage.image = currentImage
-            currentIndex += 1
+    func changeOrientationCellImage(to image: UIImage){
+        if image == #imageLiteral(resourceName: "OrientationOff") {
+            orientationCell.backgroundColor = .clear
         } else {
-            currentIndex = 0
+            orientationCell.backgroundColor = .darkGray
         }
+        orientationCell.cellImage.image = image
+    }
+    
+    /**
+     Returns the orientation cell image
+     */
+    func getOrientationCellImage() -> UIImage{
+        return orientationCell.cellImage.image!
     }
     
     /**
@@ -205,16 +199,11 @@ class SettingsView: UIView {
     }
     
     /**
-     It is called after touching the exposure button.
+     It is called after touching the orientation button.
      - Implemented in the class which adopted *SettingsViewProtocol*.
      */
-    func adjustExposure(){
-        do {
-            try delegate?.exposureTapped()
-        }
-        catch {
-            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
-        }
+    func orientationalAssistant(){
+        delegate?.orientationAssistTapped()
     }
     
     /**

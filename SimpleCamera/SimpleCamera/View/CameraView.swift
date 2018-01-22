@@ -36,7 +36,7 @@ class CameraView: UIView {
     var settingsViewController = SettingsViewController()
     
     /// This variable initializes the *OrientationViewController*.
-    var orientationViewController = OrientationViewController()
+    static var orientationViewController = OrientationViewController()
     
     //MARK: - Button variables
     
@@ -85,7 +85,7 @@ class CameraView: UIView {
         insertSubview(toggleCameraButton, aboveSubview: previewView)
         insertSubview(toggleSettingsButton, aboveSubview: previewView)
         insertSubview(settingsViewController.view, aboveSubview: previewView)
-        insertSubview(orientationViewController.view, aboveSubview: previewView)
+        insertSubview(CameraView.orientationViewController.view, aboveSubview: previewView)
         insertSubview(videoPreviewView, belowSubview: previewView)
         insertSubview(onionEffectLayer, belowSubview: previewView)
         
@@ -170,7 +170,8 @@ class CameraView: UIView {
     
     /// It setting up the orientation view.
     private func setupOrientationView(){
-         orientationViewController.view.autoCenterInSuperview()
+         CameraView.orientationViewController.view.autoCenterInSuperview()
+         CameraView.orientationViewController.view.isHidden = true
     }
     
     //MARK: - Button image changer functions

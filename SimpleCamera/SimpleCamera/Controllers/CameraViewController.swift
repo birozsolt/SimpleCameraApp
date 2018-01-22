@@ -81,7 +81,6 @@ class CameraViewController: UIViewController {
     override func loadView() {
         view = cameraView
         cameraView.delegate = self
-        cameraView.orientationViewController.startMotionUpdate()
     }
     
     override func viewDidLoad() {
@@ -105,7 +104,6 @@ class CameraViewController: UIViewController {
         super.viewDidDisappear(animated)
         guard let captureSession = captureSession, captureSession.isRunning else { return }
         captureSession.stopRunning()
-        cameraView.orientationViewController.stopMotionUpdate()
     }
     
     //MARK: - Configuring camera for capture.

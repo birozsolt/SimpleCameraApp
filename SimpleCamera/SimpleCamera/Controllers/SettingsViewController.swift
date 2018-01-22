@@ -20,7 +20,7 @@ import AVFoundation
  */
 enum SettingsType : String {
     case VideoPlayer
-    case Exposure
+    case Orientation
     case Flash
     case TimeLapse
     case OnionSkin
@@ -44,9 +44,6 @@ class SettingsViewController: UIViewController {
     ///The settings of the video.
     fileprivate let settings = RenderSettings()
     
-    ///Exposure cell index, used for changing *ExposureCell* image.
-    fileprivate var currentExposureIndex = 1
-    
     //MARK: - View Lifecycle
     
     override func loadView() {
@@ -67,29 +64,15 @@ extension SettingsViewController : SettingsViewProtocol {
         gNavigationViewController?.pushViewController(videoViewController!, animated: true)
     }
     
-    func exposureTapped() throws {
-        guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
-            throw CameraControllerError.noCamerasAvailable
-        }
-        let minISO = device.activeFormat.minISO
-        let maxISO = device.activeFormat.maxISO
-        let isoRange = maxISO - minISO
-        let isoCounter = isoRange / 5
-        let midIso = minISO + isoCounter * 2
-        var isoList = [midIso, midIso + isoCounter, midIso + isoCounter * 2, midIso - isoCounter * 2, midIso - isoCounter]
-        settingsView.changeExposureCellImage()
-        if currentExposureIndex < 5 {
-            let currentIso = isoList[currentExposureIndex]
-            do {
-                try device.lockForConfiguration()
-                device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, iso: currentIso, completionHandler: nil)
-                device.unlockForConfiguration()
-            } catch {
-                print(error)
-            }
-            currentExposureIndex += 1
+    func orientationAssistTapped() {
+        if settingsView.getOrientationCellImage() == #imageLiteral(resourceName: "OrientationOff") {
+            CameraView.orientationViewController.startMotionUpdate()
+            CameraView.orientationViewController.view.isHidden = false
+            settingsView.changeOrientationCellImage(to: #imageLiteral(resourceName: "OrientationOn"))
         } else {
-            currentExposureIndex = 0
+            CameraView.orientationViewController.stopMotionUpdate()
+            CameraView.orientationViewController.view.isHidden = true
+            settingsView.changeOrientationCellImage(to: #imageLiteral(resourceName: "OrientationOff"))
         }
     }
     
