@@ -19,6 +19,17 @@ enum MarkerValue {
     case down
 }
 
+/**
+ Orientation marker colors.
+ 
+ - green: Green background.
+ - orange: Orange background.
+ */
+enum MarkerColor{
+    case green
+    case orange
+}
+
 /// UIView class for setting the orientation view
 class OrientationView: UIView {
     
@@ -48,8 +59,8 @@ class OrientationView: UIView {
         backgroundView.addSubview(horizontalView)
         horizontalView.addSubview(horizontalLeftMarker)
         horizontalView.addSubview(horizontalRightMarker)
-        backgroundView.addSubview(verticalLeftView)
-        backgroundView.addSubview(verticalRightView)
+        horizontalView.addSubview(verticalLeftView)
+        horizontalView.addSubview(verticalRightView)
         backgroundView.addSubview(leftArcView)
         backgroundView.addSubview(rightArcView)
         verticalLeftView.addSubview(verticalLeftMarker)
@@ -69,175 +80,116 @@ class OrientationView: UIView {
         backgroundView.autoPinEdgesToSuperviewEdges()
         backgroundView.backgroundColor = .clear
         
-        horizontalView.autoSetDimensions(to: CGSize(width: 170, height: 10))
+        horizontalView.autoSetDimensions(to: CGSize(width: 170, height: 6))
         horizontalView.autoAlignAxis(.horizontal, toSameAxisOf: self, withOffset: 0)
         horizontalView.autoAlignAxis(toSuperviewAxis: .vertical)
         horizontalView.alpha = 0.5
         horizontalView.backgroundColor = .lightGray
         
-        horizontalLeftMarker.autoSetDimensions(to: CGSize(width: 10, height: 10))
+        setupHorizontalMarkerViews(for: horizontalLeftMarker)
         horizontalLeftMarker.autoPinEdge(toSuperviewEdge: .left)
-        horizontalLeftMarker.autoAlignAxis(.horizontal, toSameAxisOf: self, withOffset: 0)
-        horizontalLeftMarker.backgroundColor = .orange
-
-        horizontalRightMarker.autoSetDimensions(to: CGSize(width: 10, height: 10))
-        horizontalRightMarker.autoAlignAxis(.horizontal, toSameAxisOf: self, withOffset: 0)
+        setupHorizontalMarkerViews(for: horizontalRightMarker)
         horizontalRightMarker.autoPinEdge(toSuperviewEdge: .right)
-        horizontalRightMarker.backgroundColor = .orange
         
-        verticalLeftView.autoSetDimensions(to: CGSize(width: 10, height: 180))
-        verticalLeftView.autoAlignAxis(.vertical, toSameAxisOf: self, withOffset: -30)
-        verticalLeftView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        verticalLeftView.alpha = 0.5
-        verticalLeftView.backgroundColor = .lightGray
+        verticalLeftView.autoAlignAxis(.vertical, toSameAxisOf: horizontalView, withOffset: -15)
+        setupViews(for: verticalLeftView)
+        verticalRightView.autoAlignAxis(.vertical, toSameAxisOf: horizontalView, withOffset: 15)
+        setupViews(for: verticalRightView)
         
-        verticalLeftMarker.autoSetDimensions(to: CGSize(width: 10, height: 10))
-        verticalLeftMarker.autoCenterInSuperview()
-        verticalLeftMarker.backgroundColor = .orange
+        setupVerticalMarkerViews(for: verticalLeftMarker)
+        setupVerticalMarkerViews(for: verticalRightMarker)
         
-        verticalRightView.autoSetDimensions(to: CGSize(width: 10, height: 180))
-        verticalRightView.autoAlignAxis(.vertical, toSameAxisOf: self, withOffset: 30)
-        verticalRightView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        verticalRightView.alpha = 0.5
-        verticalRightView.backgroundColor = .lightGray
-        
-        verticalRightMarker.autoSetDimensions(to: CGSize(width: 10, height: 10))
-        verticalRightMarker.autoCenterInSuperview()
-        verticalRightMarker.backgroundColor = .orange
-        
-        leftArcView.autoSetDimensions(to: CGSize(width: 180, height: 190))
+        setupArcViews(for: leftArcView, startAngle: CGFloat(133).toRadians, endAngle: CGFloat(227).toRadians)
         leftArcView.autoAlignAxis(.vertical, toSameAxisOf: self, withOffset: -90)
-        leftArcView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        leftArcView.startAngle = CGFloat(148).toRadians
-        leftArcView.endAngle = CGFloat(212).toRadians
-        leftArcView.alpha = 0.5
-        leftArcView.backgroundColor = .clear
-        
-        rightArcView.autoSetDimensions(to: CGSize(width: 180, height: 190))
+        setupArcViews(for: rightArcView, startAngle: CGFloat(313).toRadians, endAngle: CGFloat(47).toRadians)
         rightArcView.autoAlignAxis(.vertical, toSameAxisOf: self, withOffset: 90)
-        rightArcView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        rightArcView.startAngle = CGFloat(328).toRadians
-        rightArcView.endAngle = CGFloat(32).toRadians
-        rightArcView.alpha = 0.5
-        rightArcView.backgroundColor = .clear
-
-        min = verticalLeftView.frame.origin.y
-        max = verticalLeftView.frame.origin.y + 170
+    }
+    
+    /// It setting up the vertical view components.
+    func setupViews(for verticalView: UIView){
+        verticalView.autoSetDimensions(to: CGSize(width: 10, height: 90))
+        verticalView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        verticalView.backgroundColor = .lightGray
+    }
+    
+    /// It setting up the vertical marker view components.
+    func setupVerticalMarkerViews(for marker: UIView){
+        marker.autoSetDimensions(to: CGSize(width: 10, height: 6))
+        marker.autoCenterInSuperview()
+        marker.backgroundColor = .orange
+    }
+    
+    /// It setting up the horizontal marker view components.
+    func setupHorizontalMarkerViews(for marker: UIView){
+        marker.autoSetDimensions(to: CGSize(width: 10, height: 6))
+        marker.autoAlignAxis(.horizontal, toSameAxisOf: self, withOffset: 0)
+        marker.backgroundColor = .orange
+    }
+    
+    /// It setting up the vertical view components.
+    func setupArcViews(for arcView: ArcView, startAngle: CGFloat, endAngle: CGFloat){
+        arcView.autoSetDimensions(to: CGSize(width: 90, height: 90))
+        arcView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        arcView.startAngle = startAngle
+        arcView.endAngle = endAngle
+        arcView.alpha = 0.5
+        arcView.backgroundColor = .clear
     }
     
     /**
-     Move the marker to the direction of *value*.
-     - parameter value: The marker direction.
+     Move the marker to the given of *angle*.
+     - parameter angle: The marker tilt angle.
      */
-    func moveVerticalMarker(value: MarkerValue) {
+    func updateVerticalMarker(for angle : CGFloat){
+        var zoomAngle = angle / 2
         
-        /// Start animationg the markers/
-        func animate(value: MarkerValue){
-            switch value {
-            case .up:
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.verticalLeftMarker.moveYCoordinate(with: -5)
-                    self.verticalRightMarker.moveYCoordinate(with: -5)
-                })
-            case .down:
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.verticalLeftMarker.moveYCoordinate(with: 5)
-                    self.verticalRightMarker.moveYCoordinate(with: 5)
-                })
-            }
-        }
+        if zoomAngle > 90 {
+            zoomAngle = 90
+        } // stop at the end
+        if zoomAngle < 0{
+            zoomAngle = 0
+        } // stop at the other end
         
-        /// Stop animating the markers in the direction down
-        func stopAnimationDown(value: MarkerValue){
-            switch value {
-            case .up:
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.verticalLeftMarker.moveYCoordinate(with: -5)
-                    self.verticalRightMarker.moveYCoordinate(with: -5)
-                })
-            case .down:
-                self.verticalLeftMarker.moveYCoordinate(with: 0)
-                self.verticalRightMarker.moveYCoordinate(with: 0)
-            }
+        if zoomAngle > 40 && zoomAngle < 44 {
+            verticalLeftMarker.changeMarkerColor(to: .green)
+            verticalRightMarker.changeMarkerColor(to: .green)
+        } else {
+            verticalLeftMarker.changeMarkerColor(to: .orange)
+            verticalRightMarker.changeMarkerColor(to: .orange)
         }
         
-        /// Stop animating the markers in the direction up
-        func stopAnimationUp(value: MarkerValue){
-            switch value {
-            case .up:
-                self.verticalLeftMarker.moveYCoordinate(with: 0)
-                self.verticalRightMarker.moveYCoordinate(with: 0)
-                
-            case .down:
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.verticalLeftMarker.moveYCoordinate(with: 5)
-                    self.verticalRightMarker.moveYCoordinate(with: 5)
-                })
-            }
-        }
-
-        if verticalLeftMarker.frame.origin.y < max && verticalLeftMarker.frame.origin.y > min{
-            animate(value: value)
-        } else if verticalLeftMarker.frame.origin.y >= max {
-            stopAnimationDown(value: value)
-        } else if verticalLeftMarker.frame.origin.y <= min {
-            stopAnimationUp(value: value)
-        }
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+            self.verticalLeftMarker.setYCoordinate(to: zoomAngle)
+            self.verticalRightMarker.setYCoordinate(to: zoomAngle)
+        })
     }
     
     /**
-     Move the marker to the direction of *value*.
-     - parameter value: The marker direction.
+     Move the marker to the given of *angle*.
+     - parameter angle: The marker roll angle.
      */
-    func moveHorizontalMarker(value: MarkerValue) {
-        /// Start animationg the markers/
-        func animate(value: MarkerValue){
-            switch value {
-            case .up:
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(5).toRadians)
-                })
-            case .down:
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(-5).toRadians)
-                })
-            }
-        }
+    func updateHorizontalMarker(to angle: CGFloat) {
+        var zoomAngle = angle
         
-        /// Stop animating the markers in the direction down
-        func stopAnimationDown(value: MarkerValue){
-            switch value {
-            case .up:
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(5).toRadians)
-                })
-            case .down:
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(0).toRadians)
-                })
-            }
-        }
+        if zoomAngle > 34 {
+            zoomAngle = 34
+        } // stop at the end
+        if zoomAngle < -34{
+            zoomAngle = -34
+        } // stop at the other end
         
-        /// Stop animating the markers in the direction up
-        func stopAnimationUp(value: MarkerValue){
-            switch value {
-            case .up:
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(0).toRadians)
-                })
-            case .down:
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.horizontalView.transform = CGAffineTransform(rotationAngle: CGFloat(-5).toRadians)
-                })
-            }
+        if zoomAngle > -1 && zoomAngle < 1 {
+            horizontalLeftMarker.changeMarkerColor(to: .green)
+            horizontalRightMarker.changeMarkerColor(to: .green)
+        } else {
+            horizontalLeftMarker.changeMarkerColor(to: .orange)
+            horizontalRightMarker.changeMarkerColor(to: .orange)
         }
-        
-        if horizontalLeftMarker.frame.origin.x < max && horizontalLeftMarker.frame.origin.y > min{
-            animate(value: value)
-        } else if horizontalLeftMarker.frame.origin.y >= max {
-            stopAnimationDown(value: value)
-        } else if horizontalLeftMarker.frame.origin.y <= min {
-            stopAnimationUp(value: value)
-        }
+
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+            self.horizontalView.transform = CGAffineTransform(rotationAngle: zoomAngle.toRadians)
+            //self.verticalLeftView.transform = CGAffineTransform(rotationAngle: zoomAngle.toRadians)
+            //self.verticalRightView.transform = CGAffineTransform(rotationAngle: zoomAngle.toRadians)
+        })
     }
 }

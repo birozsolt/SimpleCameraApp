@@ -253,14 +253,12 @@ class CameraView: UIView {
                                                    width: previewView.frame.size.width,
                                                    height: 160)
 
-        //settingsViewController.view.setXCoordinate(to: 0)
         animateSettingsButton(toState: .open)
         isSettingsOpened = .open
     }
     
     /// Hide the setting menu.
     func hideSettings(){
-        //settingsViewController.view.setXCoordinate(to: 0 - previewView.frame.size.width)
         settingsViewController.view.frame = CGRect(x: 0 - previewView.frame.size.width,
                                                    y: settingsViewController.view.frame.origin.y,
                                                    width: previewView.frame.size.width,

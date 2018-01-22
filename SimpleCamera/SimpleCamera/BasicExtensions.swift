@@ -23,6 +23,13 @@ extension Double {
 
 extension CGFloat {
     /**
+     Converting radians to degrees.
+     */
+    var toDegrees: CGFloat {
+        return 180 / .pi * self
+    }
+    
+    /**
      Converting degrees to radians.
      */
     var toRadians: CGFloat {
@@ -56,5 +63,26 @@ extension UIView {
      */
     func setXCoordinate(to xValue: CGFloat) {
         self.frame = CGRect(x: xValue, y: self.frame.origin.y, width: self.frame.size.width, height: self.frame.size.height)
+    }
+    
+    /**
+     Change the view frame y-coordinate to the *values*.
+     - parameter yValue: The new value of the y-coordinate
+     */
+    func setYCoordinate(to yValue: CGFloat) {
+        self.frame = CGRect(x: self.frame.origin.x, y: yValue, width: self.frame.size.width, height: self.frame.size.height)
+    }
+    
+    /**
+     Change the marker color to *value*.
+     - parameter value: The marker direction.
+     */
+    func changeMarkerColor(to color: MarkerColor) {
+        switch color {
+        case .green:
+            self.backgroundColor = .green
+        case .orange:
+            self.backgroundColor = .orange
+        }
     }
 }
