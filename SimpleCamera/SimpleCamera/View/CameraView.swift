@@ -24,7 +24,7 @@ class CameraView: UIView {
     //MARK: - View variables
     
     /// The background view of the *CameraView*.
-    private var previewView = UIImageView()
+    static var previewView = UIImageView()
     
     /// This variable contains the videoPreview layer, where the camera is showed.
     var videoPreviewView = UIView()
@@ -33,7 +33,7 @@ class CameraView: UIView {
     static var onionEffectLayer = UIImageView()
     
     /// This variable initializes the *SettingsViewController*.
-    var settingsViewController = SettingsViewController()
+    static var settingsViewController = SettingsViewController()
     
     /// This variable initializes the *OrientationViewController*.
     static var orientationViewController = OrientationViewController()
@@ -52,10 +52,10 @@ class CameraView: UIView {
     //MARK: - Settings button variables
     
     /// The *toggleSettingsButton* arrow view component.
-    private var settingsButtonArrow = UIImageView()
+    private static var settingsButtonArrow = UIImageView()
     
     /// The *toggleSettingsButton* grid view component.
-    private var settingsButtonGridView = UIImageView()
+    private static var settingsButtonGridView = UIImageView()
     
     //MARK: - Setting menu state variables
     
@@ -63,7 +63,7 @@ class CameraView: UIView {
      Setting menu current state
      - default state: *.close*.
      */
-    var isSettingsOpened : SettingMenuState = .undefined
+    static var isSettingsOpened : SettingMenuState = .close
     
     /**
      Settings menu state.
@@ -80,14 +80,14 @@ class CameraView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(previewView)
-        insertSubview(captureButton, aboveSubview: previewView)
-        insertSubview(toggleCameraButton, aboveSubview: previewView)
-        insertSubview(toggleSettingsButton, aboveSubview: previewView)
-        insertSubview(settingsViewController.view, aboveSubview: previewView)
-        insertSubview(CameraView.orientationViewController.view, aboveSubview: previewView)
-        insertSubview(videoPreviewView, belowSubview: previewView)
-        insertSubview(CameraView.onionEffectLayer, belowSubview: previewView)
+        addSubview(CameraView.previewView)
+        insertSubview(captureButton, aboveSubview: CameraView.previewView)
+        insertSubview(toggleCameraButton, aboveSubview: CameraView.previewView)
+        insertSubview(toggleSettingsButton, aboveSubview: CameraView.previewView)
+        addSubview(CameraView.settingsViewController.view)
+        insertSubview(CameraView.orientationViewController.view, aboveSubview: CameraView.previewView)
+        insertSubview(videoPreviewView, belowSubview: CameraView.previewView)
+        insertSubview(CameraView.onionEffectLayer, belowSubview: CameraView.previewView)
         
         setupViews()
     }
@@ -100,10 +100,10 @@ class CameraView: UIView {
     
     /// It setting up camera screen views.
     private func setupViews(){
-        previewView.autoPinEdgesToSuperviewEdges()
-        previewView.isHidden = true
-        previewView.alpha = 0.0
-        previewView.backgroundColor = UIColor.black
+        CameraView.previewView.autoPinEdgesToSuperviewEdges()
+        CameraView.previewView.isHidden = true
+        CameraView.previewView.alpha = 0.0
+        CameraView.previewView.backgroundColor = UIColor.black
         
         videoPreviewView.autoPinEdgesToSuperviewEdges()
         
@@ -137,35 +137,35 @@ class CameraView: UIView {
     
     /// It setting up the settings button components
     private func setupSettingsButton(){
-        settingsButtonGridView = UIImageView(image: #imageLiteral(resourceName: "SettingView"))
-        settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowRight")
+        CameraView.settingsButtonGridView = UIImageView(image: #imageLiteral(resourceName: "SettingView"))
+        CameraView.settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowRight")
         
         toggleSettingsButton.autoAlignAxis(.horizontal, toSameAxisOf: captureButton)
         toggleSettingsButton.autoPinEdge(toSuperviewEdge: .left, withInset: 20)
         toggleSettingsButton.autoSetDimensions(to: CGSize(width: 40, height: 30))
         toggleSettingsButton.backgroundColor = UIColor.clear
-        toggleSettingsButton.addSubview(settingsButtonArrow)
-        toggleSettingsButton.addSubview(settingsButtonGridView)
+        toggleSettingsButton.addSubview(CameraView.settingsButtonArrow)
+        toggleSettingsButton.addSubview(CameraView.settingsButtonGridView)
         toggleSettingsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleSettings)))
         
-        settingsButtonArrow.autoPinEdge(.left, to: .left, of: toggleSettingsButton)
-        settingsButtonArrow.autoPinEdge(.bottom, to: .bottom, of: toggleSettingsButton)
-        settingsButtonArrow.autoPinEdge(.top, to: .top, of: toggleSettingsButton)
-        settingsButtonArrow.autoSetDimension(.width, toSize: 10)
-        settingsButtonArrow.contentMode = .scaleAspectFill
+        CameraView.settingsButtonArrow.autoPinEdge(.left, to: .left, of: toggleSettingsButton)
+        CameraView.settingsButtonArrow.autoPinEdge(.bottom, to: .bottom, of: toggleSettingsButton)
+        CameraView.settingsButtonArrow.autoPinEdge(.top, to: .top, of: toggleSettingsButton)
+        CameraView.settingsButtonArrow.autoSetDimension(.width, toSize: 10)
+        CameraView.settingsButtonArrow.contentMode = .scaleAspectFill
         
-        settingsButtonGridView.autoPinEdge(.left, to: .right, of: settingsButtonArrow)
-        settingsButtonGridView.autoPinEdge(.bottom, to: .bottom, of: toggleSettingsButton)
-        settingsButtonGridView.autoPinEdge(.top, to: .top, of: toggleSettingsButton)
-        settingsButtonGridView.autoSetDimension(.width, toSize: 30)
+        CameraView.settingsButtonGridView.autoPinEdge(.left, to: .right, of: CameraView.settingsButtonArrow)
+        CameraView.settingsButtonGridView.autoPinEdge(.bottom, to: .bottom, of: toggleSettingsButton)
+        CameraView.settingsButtonGridView.autoPinEdge(.top, to: .top, of: toggleSettingsButton)
+        CameraView.settingsButtonGridView.autoSetDimension(.width, toSize: 30)
     }
     
     /// It setting up the settings menu.
     private func setupSettingsView() {
-        settingsViewController.view.autoPinEdge(toSuperviewEdge: .left)
-        settingsViewController.view.autoPinEdge(.bottom, to: .top, of: captureButton, withOffset: -20)
-        settingsViewController.view.autoSetDimensions(to: CGSize(width: previewView.frame.size.width, height: 160))
-        settingsViewController.view.isHidden = true
+        CameraView.settingsViewController.view.autoPinEdge(toSuperviewEdge: .left)
+        CameraView.settingsViewController.view.autoPinEdge(.bottom, to: .top, of: captureButton, withOffset: -20)
+        CameraView.settingsViewController.view.autoSetDimensions(to: CGSize(width: self.bounds.width, height: 160))
+        CameraView.settingsViewController.view.isHidden = true
     }
     
     /// It setting up the orientation view.
@@ -188,7 +188,7 @@ class CameraView: UIView {
      It change the setting button arrow image.
      - parameter image: Change settings button arrow to *image*.
      */
-    private func changeArrowImage(to image: UIImage){
+    private static func changeArrowImage(to image: UIImage){
         settingsButtonArrow.image = image
     }
     
@@ -213,6 +213,9 @@ class CameraView: UIView {
      - Implemented in the class which adopted *CameraViewProtocol*.
      */
     func capturePhoto() {
+        if CameraView.isSettingsOpened != .close {
+            CameraView.hideSettings()
+        }
         delegate?.captureButtonTapped()
     }
     
@@ -221,56 +224,46 @@ class CameraView: UIView {
      - Implemented in the class which adopted *CameraViewProtocol*.
      */
     func toggleCamera(){
+        if CameraView.isSettingsOpened != .close {
+            CameraView.hideSettings()
+        }
         delegate?.toggleCameraButtonTapped()
     }
     
     /// It is called after touching the settings button.
     func toggleSettings() {
-        if isSettingsOpened == .undefined {
-            hideSettings()
-        }
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-            if self.isSettingsOpened == .close {
-                self.showSettings()
-            } else {
-                self.hideSettings()
-            }
-        }) { (finished) in
-            if self.isSettingsOpened == .close {
-                self.settingsViewController.view.isHidden = true
-            } else {
-                self.settingsViewController.view.isHidden = false
-            }
+        if CameraView.isSettingsOpened == .close {
+            CameraView.showSettings()
+        } else {
+            CameraView.hideSettings()
         }
     }
     
     // MARK: - Setting button and view animation functions
     
     /// Show the setting menu.
-    private func showSettings(){
-        settingsViewController.view.isHidden = false
-        settingsViewController.view.frame = CGRect(x: 0,
-                                                   y: settingsViewController.view.frame.origin.y,
-                                                   width: previewView.frame.size.width,
-                                                   height: 160)
-
-        animateSettingsButton(toState: .open)
-        isSettingsOpened = .open
+    private static func showSettings(){
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            settingsViewController.view.isHidden = false
+            settingsViewController.view.frame = CGRect(x: 0, y: settingsViewController.view.frame.origin.y, width: previewView.frame.width, height: settingsViewController.view.frame.height)
+            animateSettingsButton(toState: .open)
+            isSettingsOpened = .open
+        })
     }
-    
+
     /// Hide the setting menu.
-    func hideSettings(){
-        settingsViewController.view.frame = CGRect(x: 0 - previewView.frame.size.width,
-                                                   y: settingsViewController.view.frame.origin.y,
-                                                   width: previewView.frame.size.width,
-                                                   height: 160)
-
-        if isSettingsOpened != .undefined {
-            animateSettingsButton(toState: .close)
+    static func hideSettings(){
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            settingsViewController.view.frame = CGRect(x: 0 - previewView.bounds.width, y: settingsViewController.view.frame.origin.y, width: previewView.frame.width, height: settingsViewController.view.frame.height)
+            if isSettingsOpened != .undefined {
+                animateSettingsButton(toState: .close)
+            }
+            isSettingsOpened = .close
+        }) { (finished) in
+            CameraView.settingsViewController.view.isHidden = true
         }
-        isSettingsOpened = .close
     }
-    
+
     /**
      Animate the settings button.
      
@@ -278,7 +271,7 @@ class CameraView: UIView {
      - **.open** will animate the settingsView to opened state.
      - **.close** will animate the settingsView to closed state.
      */
-    private func animateSettingsButton(toState state: SettingMenuState) {
+    private static func animateSettingsButton(toState state: SettingMenuState) {
         switch state {
         case .open:
             changeArrowImage(to:#imageLiteral(resourceName: "ArrowLeft"))
@@ -289,9 +282,7 @@ class CameraView: UIView {
             settingsButtonArrow.moveXCoordinate(with: -30)
             settingsButtonGridView.moveXCoordinate(with: 10)
         case .undefined:
-            changeArrowImage(to:#imageLiteral(resourceName: "ArrowRight"))
-            settingsButtonArrow.moveXCoordinate(with: 0)
-            settingsButtonGridView.moveXCoordinate(with: 0)
+            break
         }
     }
 }

@@ -99,7 +99,6 @@ class SettingsView: UIView {
     private func setupBackground() {
         backgroundColor = UIColor.black
         alpha = 0.8
-        isHidden = true
         layer.cornerRadius = 20
     }
     
@@ -110,6 +109,7 @@ class SettingsView: UIView {
      */
     private func setupViews(for cell: SettingsCell, withType type: SettingsType, action selector: Selector){
         cell.autoSetDimensions(to: CGSize(width: 70, height: 70))
+        cell.layer.cornerRadius = 30
         cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: selector))
         
         cell.cellImage.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
@@ -235,6 +235,10 @@ class SettingsView: UIView {
      - Implemented in the class which adopted *SettingsViewProtocol*.
      */
     func buildTimeLapse(){
+        if CameraView.isSettingsOpened != .close {
+            CameraView.hideSettings()
+        }
+
         do {
             try delegate?.buildTimeLapse()
         }

@@ -46,6 +46,14 @@ extension UIView {
     }
     
     /**
+     Change the view frame x-coordinate to the *values*.
+     - parameter yValue: The new value of the x-coordinate
+     */
+    func setXCoordinate(to xValue: CGFloat) {
+        self.frame = CGRect(x: xValue, y: self.frame.origin.y, width: self.frame.size.width, height: self.frame.size.height)
+    }
+    
+    /**
      Change the marker color to *value*.
      - parameter value: The marker direction.
      */
