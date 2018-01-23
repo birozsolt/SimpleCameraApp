@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		082F111FF44680DEA1513BB4 /* Pods_SimpleCameraTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6495AB7E639FF15FF986CC10 /* Pods_SimpleCameraTests.framework */; };
 		39102D81200F7690004BB338 /* ArcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39102D80200F7690004BB338 /* ArcView.swift */; };
+		39102D83201726A3004BB338 /* BasicExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39102D82201726A3004BB338 /* BasicExtensions.swift */; };
 		3910519C1FB192EF0000774D /* SakerSansBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519A1FB192EF0000774D /* SakerSansBold.ttf */; };
 		3910519D1FB192EF0000774D /* SakerSansLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3910519B1FB192EF0000774D /* SakerSansLight.ttf */; };
 		391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391051A11FB454EF0000774D /* OrientationViewController.swift */; };
@@ -20,7 +21,6 @@
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
 		39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */; };
 		39A4E59C1FD80EE2001D374F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39A4E59B1FD80EE2001D374F /* Localizable.strings */; };
-		39A4E59E1FD80F7F001D374F /* BasicExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A4E59D1FD80F7F001D374F /* BasicExtensions.swift */; };
 		39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF3C271FBC4F4F00735F24 /* OrientationView.swift */; };
 		39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */; };
 		39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC61FA07D94006EB23C /* Assets.xcassets */; };
@@ -59,6 +59,7 @@
 		1E0C9186FD73CFFE5B48FF26 /* Pods-SimpleCameraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCameraTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCameraTests/Pods-SimpleCameraTests.debug.xcconfig"; sourceTree = "<group>"; };
 		27734CCF4391B03118BC779F /* Pods_SimpleCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		39102D80200F7690004BB338 /* ArcView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArcView.swift; path = Components/ArcView.swift; sourceTree = "<group>"; };
+		39102D82201726A3004BB338 /* BasicExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasicExtensions.swift; path = Extensions/BasicExtensions.swift; sourceTree = "<group>"; };
 		3910519A1FB192EF0000774D /* SakerSansBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansBold.ttf; path = Font/SakerSansBold.ttf; sourceTree = "<group>"; };
 		3910519B1FB192EF0000774D /* SakerSansLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansLight.ttf; path = Font/SakerSansLight.ttf; sourceTree = "<group>"; };
 		391051A11FB454EF0000774D /* OrientationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationViewController.swift; path = Controllers/OrientationViewController.swift; sourceTree = "<group>"; };
@@ -70,7 +71,6 @@
 		39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeLapseBuilder.swift; path = Components/TimeLapseBuilder.swift; sourceTree = "<group>"; };
 		39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPlayerViewController.swift; path = Controllers/VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		39A4E59B1FD80EE2001D374F /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../Localizable.strings; sourceTree = "<group>"; };
-		39A4E59D1FD80F7F001D374F /* BasicExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicExtensions.swift; sourceTree = "<group>"; };
 		39AF3C271FBC4F4F00735F24 /* OrientationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationView.swift; path = View/OrientationView.swift; sourceTree = "<group>"; };
 		39CF5CBC1FA07D94006EB23C /* SimpleCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -196,7 +196,6 @@
 				39A4E59B1FD80EE2001D374F /* Localizable.strings */,
 				39CF5CCB1FA07D94006EB23C /* Info.plist */,
 				391051951FB094A60000774D /* Font */,
-				39E620691FA1EA7E007E74C6 /* Assets */,
 			);
 			path = SimpleCamera;
 			sourceTree = "<group>";
@@ -222,7 +221,7 @@
 		39E620631FA1E87D007E74C6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				39A4E59D1FD80F7F001D374F /* BasicExtensions.swift */,
+				39102D82201726A3004BB338 /* BasicExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -233,13 +232,6 @@
 				39E620671FA1E8AC007E74C6 /* Globals.swift */,
 			);
 			name = Globals;
-			sourceTree = "<group>";
-		};
-		39E620691FA1EA7E007E74C6 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Assets;
 			sourceTree = "<group>";
 		};
 		39E6206C1FA86FA4007E74C6 /* View */ = {
@@ -579,6 +571,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */,
+				39102D83201726A3004BB338 /* BasicExtensions.swift in Sources */,
 				39102D81200F7690004BB338 /* ArcView.swift in Sources */,
 				394630521FE2ABFC00570D83 /* ErrorMessage.swift in Sources */,
 				39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */,
@@ -588,7 +581,6 @@
 				39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */,
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
 				394630541FE9152200570D83 /* RenderSettings.swift in Sources */,
-				39A4E59E1FD80F7F001D374F /* BasicExtensions.swift in Sources */,
 				39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */,
 				391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */,
 				39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */,

@@ -188,8 +188,6 @@ class OrientationView: UIView {
 
         UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
             self.horizontalView.transform = CGAffineTransform(rotationAngle: zoomAngle.toRadians)
-            //self.verticalLeftView.transform = CGAffineTransform(rotationAngle: zoomAngle.toRadians)
-            //self.verticalRightView.transform = CGAffineTransform(rotationAngle: zoomAngle.toRadians)
         })
     }
 }

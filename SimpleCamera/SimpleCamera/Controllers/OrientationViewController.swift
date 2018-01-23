@@ -75,16 +75,15 @@ class OrientationViewController: UIViewController {
         let quat = deviceMotion.attitude.quaternion
         
         // pitch (y-axis rotation)
-        let currentPitch = atan2(2 * (quat.x * quat.w + quat.y * quat.z), 1 - 2 * (quat.x * quat.x - quat.z * quat.z)).toDegrees
+        let currentPitch = CGFloat(atan2(2 * (quat.x * quat.w + quat.y * quat.z), 1 - 2 * (quat.x * quat.x - quat.z * quat.z))).toDegrees
         OperationQueue.main.addOperation {
-            self.orientationView.updateVerticalMarker(for: CGFloat(currentPitch))
+            self.orientationView.updateVerticalMarker(for: currentPitch)
         }
-        print(currentPitch)
         
         // roll (x-axis rotation)
-        let currentRoll = atan2(2 * (quat.y * quat.w - quat.x * quat.z), 1 - 2 * (quat.y * quat.y - quat.z*quat.z)).toDegrees
+        let currentRoll = CGFloat(atan2(2 * (quat.y * quat.w - quat.x * quat.z), 1 - 2 * (quat.y * quat.y - quat.z*quat.z))).toDegrees
         OperationQueue.main.addOperation {
-            self.orientationView.updateHorizontalMarker(to: CGFloat(currentRoll))
+            self.orientationView.updateHorizontalMarker(to: currentRoll)
         }
     }
 }
