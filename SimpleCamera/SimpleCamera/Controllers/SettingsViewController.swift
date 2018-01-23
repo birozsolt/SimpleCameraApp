@@ -126,11 +126,16 @@ extension SettingsViewController : SettingsViewProtocol {
         progressHUD.dismiss()
     }
     
-    func addOnionSkinning() throws {
-        if isOnionSkinHidden {
-            isOnionSkinHidden = false
+    func addOnionSkinning() {
+        if CameraView.onionEffectLayer.isHidden {
+            settingsView.changeOnionSkinCellImage(to: #imageLiteral(resourceName: "OnionSkinOn"))
+            CameraView.onionEffectLayer.isHidden = false
+            if CameraView.onionEffectLayer.image == nil {
+                ErrorMessage.sharedInstance.show(LocalizedKeys.titleWarning, message: LocalizedKeys.onionEffectLayerError)
+            }
         } else {
-            isOnionSkinHidden = true
+            settingsView.changeOnionSkinCellImage(to: #imageLiteral(resourceName: "OnionSkinOff"))
+            CameraView.onionEffectLayer.isHidden = true
         }
     }
 }

@@ -35,9 +35,8 @@ protocol SettingsViewProtocol {
     
     /**
      OnionSkin cell touch handler function.
-     - throws: *CameraControllerError* if no camera device available.
      */
-    func addOnionSkinning() throws
+    func addOnionSkinning()
 }
 
 /// UIView class for setting the settings view
@@ -141,7 +140,7 @@ class SettingsView: UIView {
             cell.cellImage.image = #imageLiteral(resourceName: "TimeLapse")
             cell.cellLabel.text = SettingsType.TimeLapse.rawValue
         case .OnionSkin:
-            cell.cellImage.image = #imageLiteral(resourceName: "OnionSkin")
+            cell.cellImage.image = #imageLiteral(resourceName: "OnionSkinOff")
             cell.cellLabel.text = SettingsType.OnionSkin.rawValue
         }
     }
@@ -166,6 +165,18 @@ class SettingsView: UIView {
             orientationCell.backgroundColor = .darkGray
         }
         orientationCell.cellImage.image = image
+    }
+    
+    /**
+     It change the onionSkin cell image.
+     */
+    func changeOnionSkinCellImage(to image: UIImage){
+        if image == #imageLiteral(resourceName: "OnionSkinOff") {
+            onionSkinningCell.backgroundColor = .clear
+        } else {
+            onionSkinningCell.backgroundColor = .darkGray
+        }
+        onionSkinningCell.cellImage.image = image
     }
     
     /**
@@ -237,11 +248,6 @@ class SettingsView: UIView {
      - Implemented in the class which adopted *SettingsViewProtocol*.
      */
     func addOnionSkinning(){
-        do {
-            try delegate?.addOnionSkinning()
-        }
-        catch {
-            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
-        }
+        delegate?.addOnionSkinning()
     }
 }

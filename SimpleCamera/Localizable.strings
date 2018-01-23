@@ -10,6 +10,7 @@
 
 camera = "Camera";
 titleError = "Error";
+titleWarning = "Warning";
 okButton = "Ok";
 cancelButton = "Cancel";
 videoPlayerError = "The hyperlapse video not found.";
@@ -17,6 +18,7 @@ noCamerasAvailable = "No available camera device.";
 timeLapseBuildError = "Not found any image for building timelapse video.";
 referenceFrameError = "The reference frame XArbitraryZVertical is not available.";
 motionServiceError = "No motion-service available.";
+onionEffectLayerError = "The onion skin takes on place when you capture an image!";
 
 // MARK: - VideoBuilder
 

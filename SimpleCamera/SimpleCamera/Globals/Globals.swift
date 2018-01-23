@@ -14,8 +14,6 @@ var gNavigationViewController : UINavigationController?
 ///Contains images for creating timelapse video.
 var imageArray = [UIImage]()
 
-var isOnionSkinHidden = true
-
 /**
  Font types used for texts.
  
@@ -75,6 +73,8 @@ enum LocalizedKeys: String {
     case photoSaveError
     case lightFont
     case boldFont
+    case onionEffectLayerError
+    case titleWarning
     
     func description() -> String {
         switch self {

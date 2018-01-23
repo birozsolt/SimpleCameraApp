@@ -30,7 +30,7 @@ class CameraView: UIView {
     var videoPreviewView = UIView()
     
     /// The layer where we show onion effect, (the previous captured image).
-    var onionEffectLayer = UIImageView()
+    static var onionEffectLayer = UIImageView()
     
     /// This variable initializes the *SettingsViewController*.
     var settingsViewController = SettingsViewController()
@@ -87,7 +87,7 @@ class CameraView: UIView {
         insertSubview(settingsViewController.view, aboveSubview: previewView)
         insertSubview(CameraView.orientationViewController.view, aboveSubview: previewView)
         insertSubview(videoPreviewView, belowSubview: previewView)
-        insertSubview(onionEffectLayer, belowSubview: previewView)
+        insertSubview(CameraView.onionEffectLayer, belowSubview: previewView)
         
         setupViews()
     }
@@ -107,9 +107,9 @@ class CameraView: UIView {
         
         videoPreviewView.autoPinEdgesToSuperviewEdges()
         
-        onionEffectLayer.autoPinEdgesToSuperviewEdges()
-        onionEffectLayer.alpha = 0.5
-        onionEffectLayer.isHidden = isOnionSkinHidden
+        CameraView.onionEffectLayer.autoPinEdgesToSuperviewEdges()
+        CameraView.onionEffectLayer.alpha = 0.5
+        CameraView.onionEffectLayer.isHidden = true
         
         setupSettingsView()
         setupOrientationView()
