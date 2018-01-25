@@ -6,6 +6,7 @@
 //  Copyright © 2017 Biro, Zsolt. All rights reserved.
 //
 import UIKit
+import LiquidFloatingActionButton
 
 /// CameraView protocol used for implementing button actions.
 protocol CameraViewProtocol {

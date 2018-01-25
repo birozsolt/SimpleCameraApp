@@ -7,6 +7,7 @@ target 'SimpleCamera' do
     pod 'PureLayout'
     pod 'SwiftLint'
     pod 'Player', '~> 0.7.0'
+    pod 'LiquidFloatingActionButton'
   # Pods for SimpleCamera
 
   target 'SimpleCameraTests' do

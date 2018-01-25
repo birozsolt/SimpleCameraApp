@@ -63,6 +63,7 @@
 		3910519A1FB192EF0000774D /* SakerSansBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansBold.ttf; path = Font/SakerSansBold.ttf; sourceTree = "<group>"; };
 		3910519B1FB192EF0000774D /* SakerSansLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansLight.ttf; path = Font/SakerSansLight.ttf; sourceTree = "<group>"; };
 		391051A11FB454EF0000774D /* OrientationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationViewController.swift; path = Controllers/OrientationViewController.swift; sourceTree = "<group>"; };
+		3938D1992017780100ECB8B5 /* SimpleCamera-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleCamera\U0010\U0010\U0010\U0010\U0010-Bridging\U0010-Header.h"; sourceTree = "<group>"; };
 		3946304F1FE1264A00570D83 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressHUD.swift; path = Components/ProgressHUD.swift; sourceTree = "<group>"; };
 		394630511FE2ABFC00570D83 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorMessage.swift; path = Components/ErrorMessage.swift; sourceTree = "<group>"; };
 		394630531FE9152200570D83 /* RenderSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderSettings.swift; path = Components/RenderSettings.swift; sourceTree = "<group>"; };
@@ -190,12 +191,13 @@
 				39E6206C1FA86FA4007E74C6 /* View */,
 				39E620661FA1E89A007E74C6 /* Globals */,
 				39E620631FA1E87D007E74C6 /* Extensions */,
+				391051951FB094A60000774D /* Font */,
 				39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */,
 				39CF5CC61FA07D94006EB23C /* Assets.xcassets */,
 				39CF5CC81FA07D94006EB23C /* LaunchScreen.storyboard */,
 				39A4E59B1FD80EE2001D374F /* Localizable.strings */,
 				39CF5CCB1FA07D94006EB23C /* Info.plist */,
-				391051951FB094A60000774D /* Font */,
+				3938D1992017780100ECB8B5 /* SimpleCamera-Bridging-Header.h */,
 			);
 			path = SimpleCamera;
 			sourceTree = "<group>";
@@ -469,11 +471,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/LiquidFloatingActionButton/LiquidFloatingActionButton.framework",
 				"${BUILT_PRODUCTS_DIR}/Player/Player.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LiquidFloatingActionButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Player.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 			);
@@ -741,6 +745,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SimpleCamera/SimpleCamera\U0010\U0010\U0010\U0010\U0010-Bridging\U0010-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -757,6 +762,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SimpleCamera/SimpleCamera\U0010\U0010\U0010\U0010\U0010-Bridging\U0010-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
