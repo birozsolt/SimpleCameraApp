@@ -59,10 +59,10 @@ class OrientationView: UIView {
         backgroundView.addSubview(horizontalView)
         horizontalView.addSubview(horizontalLeftMarker)
         horizontalView.addSubview(horizontalRightMarker)
-        horizontalView.addSubview(verticalLeftView)
+        backgroundView.addSubview(verticalLeftView)
         horizontalView.addSubview(verticalRightView)
-        backgroundView.addSubview(leftArcView)
-        backgroundView.addSubview(rightArcView)
+        backgroundView.insertSubview(leftArcView, belowSubview: horizontalView)
+        backgroundView.insertSubview(rightArcView, belowSubview: horizontalView)
         verticalLeftView.addSubview(verticalLeftMarker)
         verticalRightView.addSubview(verticalRightMarker)
         setupViews()
@@ -79,11 +79,11 @@ class OrientationView: UIView {
         
         backgroundView.autoPinEdgesToSuperviewEdges()
         backgroundView.backgroundColor = .clear
+        backgroundView.alpha = 0.5
         
         horizontalView.autoSetDimensions(to: CGSize(width: 170, height: 6))
         horizontalView.autoAlignAxis(.horizontal, toSameAxisOf: self, withOffset: 0)
         horizontalView.autoAlignAxis(toSuperviewAxis: .vertical)
-        horizontalView.alpha = 0.5
         horizontalView.backgroundColor = .lightGray
         
         setupHorizontalMarkerViews(for: horizontalLeftMarker)
@@ -132,7 +132,6 @@ class OrientationView: UIView {
         arcView.autoAlignAxis(toSuperviewAxis: .horizontal)
         arcView.startAngle = startAngle
         arcView.endAngle = endAngle
-        arcView.alpha = 0.5
         arcView.backgroundColor = .clear
     }
     

@@ -1,21 +1,21 @@
 PODS:
-  - LiquidFloatingActionButton (1.2.0)
+  - Floaty (3.0.1)
   - Player (0.7.0)
   - PureLayout (3.0.2)
   - SwiftLint (0.23.1)
 
 DEPENDENCIES:
-  - LiquidFloatingActionButton
+  - Floaty (~> 3.0.0)
   - Player (~> 0.7.0)
   - PureLayout
   - SwiftLint
 
 SPEC CHECKSUMS:
-  LiquidFloatingActionButton: 9c28961915754e08cf596ea6bdd60f9cd949f172
+  Floaty: bb7a353deee9ddcc14c584ca9c538efdc19669f2
   Player: f3a8a982e5c4a7cf6a8e4307b16597f2b7a7af0d
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
 
-PODFILE CHECKSUM: a0148f85a77cb897298dce2af7a29f41966e7334
+PODFILE CHECKSUM: 113f1e891dc9bd4583a370b257ebc96887ed103f
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0

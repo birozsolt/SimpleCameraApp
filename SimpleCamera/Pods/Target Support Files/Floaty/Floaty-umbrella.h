@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double LiquidFloatingActionButtonVersionNumber;
-FOUNDATION_EXPORT const unsigned char LiquidFloatingActionButtonVersionString[];
+FOUNDATION_EXPORT double FloatyVersionNumber;
+FOUNDATION_EXPORT const unsigned char FloatyVersionString[];
 
