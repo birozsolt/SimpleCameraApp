@@ -16,8 +16,6 @@
 		394630501FE1264A00570D83 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3946304F1FE1264A00570D83 /* ProgressHUD.swift */; };
 		394630521FE2ABFC00570D83 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394630511FE2ABFC00570D83 /* ErrorMessage.swift */; };
 		394630541FE9152200570D83 /* RenderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394630531FE9152200570D83 /* RenderSettings.swift */; };
-		39A41D9B1FCD5CAA002921B8 /* LoadingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D981FCD5CAA002921B8 /* LoadingBox.swift */; };
-		39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D991FCD5CAA002921B8 /* SettingsCell.swift */; };
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
 		39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */; };
 		39A4E59C1FD80EE2001D374F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39A4E59B1FD80EE2001D374F /* Localizable.strings */; };
@@ -32,8 +30,6 @@
 		39E620701FA87050007E74C6 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6206F1FA87050007E74C6 /* CameraView.swift */; };
 		39E620741FA87298007E74C6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620721FA87298007E74C6 /* CameraViewController.swift */; };
 		39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620731FA87298007E74C6 /* HomeViewController.swift */; };
-		39E620801FA88E51007E74C6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */; };
-		39E620821FA88E9C007E74C6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620811FA88E9C007E74C6 /* SettingsView.swift */; };
 		7FD12EE83255B0A3E8BA678A /* Pods_SimpleCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27734CCF4391B03118BC779F /* Pods_SimpleCamera.framework */; };
 		827C24EB0BCCD6C632EBA8C0 /* Pods_SimpleCameraUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC2C4EE97442A361B1BF6A4 /* Pods_SimpleCameraUITests.framework */; };
 /* End PBXBuildFile section */
@@ -67,8 +63,6 @@
 		3946304F1FE1264A00570D83 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressHUD.swift; path = Components/ProgressHUD.swift; sourceTree = "<group>"; };
 		394630511FE2ABFC00570D83 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorMessage.swift; path = Components/ErrorMessage.swift; sourceTree = "<group>"; };
 		394630531FE9152200570D83 /* RenderSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderSettings.swift; path = Components/RenderSettings.swift; sourceTree = "<group>"; };
-		39A41D981FCD5CAA002921B8 /* LoadingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingBox.swift; path = Components/LoadingBox.swift; sourceTree = "<group>"; };
-		39A41D991FCD5CAA002921B8 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsCell.swift; path = Components/SettingsCell.swift; sourceTree = "<group>"; };
 		39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeLapseBuilder.swift; path = Components/TimeLapseBuilder.swift; sourceTree = "<group>"; };
 		39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPlayerViewController.swift; path = Controllers/VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		39A4E59B1FD80EE2001D374F /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../Localizable.strings; sourceTree = "<group>"; };
@@ -89,8 +83,6 @@
 		39E6206F1FA87050007E74C6 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraView.swift; path = View/CameraView.swift; sourceTree = "<group>"; };
 		39E620721FA87298007E74C6 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraViewController.swift; path = Controllers/CameraViewController.swift; sourceTree = "<group>"; };
 		39E620731FA87298007E74C6 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Controllers/HomeViewController.swift; sourceTree = "<group>"; };
-		39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Controllers/SettingsViewController.swift; sourceTree = "<group>"; };
-		39E620811FA88E9C007E74C6 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = View/SettingsView.swift; sourceTree = "<group>"; };
 		4983C6890230FE123B604BB4 /* Pods-SimpleCameraUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCameraUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCameraUITests/Pods-SimpleCameraUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6495AB7E639FF15FF986CC10 /* Pods_SimpleCameraTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleCameraTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B614C67810B1AC4EBBB80B /* Pods-SimpleCameraTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCameraTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCameraTests/Pods-SimpleCameraTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -150,8 +142,6 @@
 		39A41D971FCD5C22002921B8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				39A41D981FCD5CAA002921B8 /* LoadingBox.swift */,
-				39A41D991FCD5CAA002921B8 /* SettingsCell.swift */,
 				39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */,
 				3946304F1FE1264A00570D83 /* ProgressHUD.swift */,
 				394630511FE2ABFC00570D83 /* ErrorMessage.swift */,
@@ -241,7 +231,6 @@
 			children = (
 				39E6206F1FA87050007E74C6 /* CameraView.swift */,
 				39E6206D1FA86FE3007E74C6 /* HomeView.swift */,
-				39E620811FA88E9C007E74C6 /* SettingsView.swift */,
 				39AF3C271FBC4F4F00735F24 /* OrientationView.swift */,
 			);
 			name = View;
@@ -252,7 +241,6 @@
 			children = (
 				39E620721FA87298007E74C6 /* CameraViewController.swift */,
 				39E620731FA87298007E74C6 /* HomeViewController.swift */,
-				39E6207F1FA88E51007E74C6 /* SettingsViewController.swift */,
 				391051A11FB454EF0000774D /* OrientationViewController.swift */,
 				39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */,
 			);
@@ -580,8 +568,6 @@
 				394630521FE2ABFC00570D83 /* ErrorMessage.swift in Sources */,
 				39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */,
 				394630501FE1264A00570D83 /* ProgressHUD.swift in Sources */,
-				39A41D9B1FCD5CAA002921B8 /* LoadingBox.swift in Sources */,
-				39A41D9C1FCD5CAA002921B8 /* SettingsCell.swift in Sources */,
 				39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */,
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
 				394630541FE9152200570D83 /* RenderSettings.swift in Sources */,
@@ -591,8 +577,6 @@
 				39E620681FA1E8AC007E74C6 /* Globals.swift in Sources */,
 				39E620741FA87298007E74C6 /* CameraViewController.swift in Sources */,
 				39E620701FA87050007E74C6 /* CameraView.swift in Sources */,
-				39E620801FA88E51007E74C6 /* SettingsViewController.swift in Sources */,
-				39E620821FA88E9C007E74C6 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
