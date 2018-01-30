@@ -51,7 +51,7 @@ class HomeView: UIView {
     /// It setting up home screen views.
     private func setupViews(){
         backgroundView.autoPinEdgesToSuperviewEdges()
-        backgroundView.backgroundColor = UIColor.brown
+        backgroundView.backgroundColor = UIColor.darkGray
         
         cameraButton.autoAlignAxis(.horizontal, toSameAxisOf: backgroundView, withOffset: 10)
         cameraButton.autoAlignAxis(.vertical, toSameAxisOf: backgroundView)

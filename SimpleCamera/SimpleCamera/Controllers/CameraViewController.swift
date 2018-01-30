@@ -226,10 +226,10 @@ class CameraViewController: UIViewController {
         videoPreviewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.portrait
         
         cameraView.videoPreviewView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-        CameraView.onionEffectLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        cameraView.onionEffectLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         videoPreviewLayer?.frame = CGRect(origin: CGPoint.zero, size: cameraView.videoPreviewView.frame.size)
         videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
-        CameraView.onionEffectLayer.contentMode = .scaleAspectFill
+        cameraView.onionEffectLayer.contentMode = .scaleAspectFill
         cameraView.videoPreviewView.layer.insertSublayer(videoPreviewLayer!, above: cameraView.videoPreviewView.layer)
     }
     
@@ -313,7 +313,7 @@ extension CameraViewController: CameraViewProtocol {
             }
             imageArray.append(image)
             //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-            CameraView.onionEffectLayer.image = image
+            self.cameraView.onionEffectLayer.image = image
         }
     }
     

@@ -235,9 +235,9 @@ class SettingsView: UIView {
      - Implemented in the class which adopted *SettingsViewProtocol*.
      */
     func buildTimeLapse(){
-        if CameraView.isSettingsOpened != .close {
-            CameraView.hideSettings()
-        }
+//        if CameraView.isSettingsOpened != .close {
+//            CameraView.hideSettings()
+//        }
 
         do {
             try delegate?.buildTimeLapse()

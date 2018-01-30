@@ -65,15 +65,15 @@ extension SettingsViewController : SettingsViewProtocol {
     }
     
     func orientationAssistTapped() {
-        if settingsView.getOrientationCellImage() == #imageLiteral(resourceName: "OrientationOff") {
-            CameraView.orientationViewController.startMotionUpdate()
-            CameraView.orientationViewController.view.isHidden = false
-            settingsView.changeOrientationCellImage(to: #imageLiteral(resourceName: "OrientationOn"))
-        } else {
-            CameraView.orientationViewController.stopMotionUpdate()
-            CameraView.orientationViewController.view.isHidden = true
-            settingsView.changeOrientationCellImage(to: #imageLiteral(resourceName: "OrientationOff"))
-        }
+//        if settingsView.getOrientationCellImage() == #imageLiteral(resourceName: "OrientationOff") {
+//            CameraView.orientationViewController.startMotionUpdate()
+//            CameraView.orientationViewController.view.isHidden = false
+//            settingsView.changeOrientationCellImage(to: #imageLiteral(resourceName: "OrientationOn"))
+//        } else {
+//            CameraView.orientationViewController.stopMotionUpdate()
+//            CameraView.orientationViewController.view.isHidden = true
+//            settingsView.changeOrientationCellImage(to: #imageLiteral(resourceName: "OrientationOff"))
+//        }
     }
     
     func flashTapped() throws {
@@ -127,15 +127,15 @@ extension SettingsViewController : SettingsViewProtocol {
     }
     
     func addOnionSkinning() {
-        if CameraView.onionEffectLayer.isHidden {
-            settingsView.changeOnionSkinCellImage(to: #imageLiteral(resourceName: "OnionSkinOn"))
-            CameraView.onionEffectLayer.isHidden = false
-            if CameraView.onionEffectLayer.image == nil {
-                ErrorMessage.sharedInstance.show(LocalizedKeys.titleWarning, message: LocalizedKeys.onionEffectLayerError)
-            }
-        } else {
-            settingsView.changeOnionSkinCellImage(to: #imageLiteral(resourceName: "OnionSkinOff"))
-            CameraView.onionEffectLayer.isHidden = true
-        }
+//        if CameraView.onionEffectLayer.isHidden {
+//            settingsView.changeOnionSkinCellImage(to: #imageLiteral(resourceName: "OnionSkinOn"))
+//            CameraView.onionEffectLayer.isHidden = false
+//            if CameraView.onionEffectLayer.image == nil {
+//                ErrorMessage.sharedInstance.show(LocalizedKeys.titleWarning, message: LocalizedKeys.onionEffectLayerError)
+//            }
+//        } else {
+//            settingsView.changeOnionSkinCellImage(to: #imageLiteral(resourceName: "OnionSkinOff"))
+//            CameraView.onionEffectLayer.isHidden = true
+//        }
     }
 }

@@ -6,7 +6,8 @@
 //  Copyright © 2017 Biro, Zsolt. All rights reserved.
 //
 import UIKit
-import LiquidFloatingActionButton
+import AVFoundation
+import Floaty
 
 /// CameraView protocol used for implementing button actions.
 protocol CameraViewProtocol {
@@ -31,13 +32,19 @@ class CameraView: UIView {
     var videoPreviewView = UIView()
     
     /// The layer where we show onion effect, (the previous captured image).
-    static var onionEffectLayer = UIImageView()
+    var onionEffectLayer = UIImageView()
     
     /// This variable initializes the *SettingsViewController*.
     static var settingsViewController = SettingsViewController()
     
     /// This variable initializes the *OrientationViewController*.
-    static var orientationViewController = OrientationViewController()
+    fileprivate var orientationViewController = OrientationViewController()
+    
+    ///The *VideoPlayerViewController* instance for playing videos.
+    fileprivate var videoViewController: VideoPlayerViewController?
+    
+    ///The settings of the video.
+    fileprivate let settings = RenderSettings()
     
     //MARK: - Button variables
     
@@ -57,6 +64,12 @@ class CameraView: UIView {
     
     /// The *toggleSettingsButton* grid view component.
     private static var settingsButtonGridView = UIImageView()
+    
+    /// The floating settings button variable.
+    private var floatingSettingsButton = Floaty()
+    
+    ///The capture device flash mode.
+    fileprivate var flashMode = AVCaptureFlashMode.off
     
     //MARK: - Setting menu state variables
     
@@ -84,11 +97,11 @@ class CameraView: UIView {
         addSubview(CameraView.previewView)
         insertSubview(captureButton, aboveSubview: CameraView.previewView)
         insertSubview(toggleCameraButton, aboveSubview: CameraView.previewView)
-        insertSubview(toggleSettingsButton, aboveSubview: CameraView.previewView)
-        addSubview(CameraView.settingsViewController.view)
-        insertSubview(CameraView.orientationViewController.view, aboveSubview: CameraView.previewView)
+//        insertSubview(toggleSettingsButton, aboveSubview: CameraView.previewView)
+//        addSubview(CameraView.settingsViewController.view)
+        insertSubview(orientationViewController.view, aboveSubview: CameraView.previewView)
         insertSubview(videoPreviewView, belowSubview: CameraView.previewView)
-        insertSubview(CameraView.onionEffectLayer, belowSubview: CameraView.previewView)
+        insertSubview(onionEffectLayer, belowSubview: CameraView.previewView)
         
         setupViews()
     }
@@ -108,11 +121,11 @@ class CameraView: UIView {
         
         videoPreviewView.autoPinEdgesToSuperviewEdges()
         
-        CameraView.onionEffectLayer.autoPinEdgesToSuperviewEdges()
-        CameraView.onionEffectLayer.alpha = 0.5
-        CameraView.onionEffectLayer.isHidden = true
+        onionEffectLayer.autoPinEdgesToSuperviewEdges()
+        onionEffectLayer.alpha = 0.5
+        onionEffectLayer.isHidden = true
         
-        setupSettingsView()
+//        setupSettingsView()
         setupOrientationView()
         
         captureButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20)
@@ -133,46 +146,68 @@ class CameraView: UIView {
         toggleCameraButton.layer.cornerRadius = 15
         toggleCameraButton.setImage(#imageLiteral(resourceName: "CameraRear"), for: .normal)
         
-        setupSettingsButton()
+        setupFloatingSettings()
+//        setupSettingsButton()
     }
     
-    /// It setting up the settings button components
-    private func setupSettingsButton(){
-        CameraView.settingsButtonGridView = UIImageView(image: #imageLiteral(resourceName: "SettingView"))
-        CameraView.settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowRight")
+    /// It setting up settings button.
+    private func setupFloatingSettings(){
+        floatingSettingsButton.autoCloseOnTap = false
+        floatingSettingsButton.openAnimationType = .fade
+        floatingSettingsButton.animationSpeed = 0.01
+        floatingSettingsButton.friendlyTap = true
+        floatingSettingsButton.buttonColor = .darkGray
+        floatingSettingsButton.plusColor = .white
+        floatingSettingsButton.itemTitleColor = .white
+        floatingSettingsButton.itemButtonColor = .darkGray
+        floatingSettingsButton.overlayColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+        floatingSettingsButton.addItem("Flash Mode", icon: #imageLiteral(resourceName: "FlashOff"), handler: flashHandler(_:))
+        floatingSettingsButton.addItem("Onion Effect", icon: #imageLiteral(resourceName: "OnionSkinOff"), handler: onionEffectHandler(_:))
+        floatingSettingsButton.addItem("Orientation Assist", icon: #imageLiteral(resourceName: "OrientationOff"), handler: orientationHandler(_:))
+        floatingSettingsButton.addItem("Time Lapse Builder", icon: #imageLiteral(resourceName: "TimeLapse"), handler: timeLapseHandler(_:))
+        floatingSettingsButton.addItem("Video Player", icon: #imageLiteral(resourceName: "VideoPlayer"), handler: videoPlayerHandler(_:))
         
-        toggleSettingsButton.autoAlignAxis(.horizontal, toSameAxisOf: captureButton)
-        toggleSettingsButton.autoPinEdge(toSuperviewEdge: .left, withInset: 20)
-        toggleSettingsButton.autoSetDimensions(to: CGSize(width: 40, height: 30))
-        toggleSettingsButton.backgroundColor = UIColor.clear
-        toggleSettingsButton.addSubview(CameraView.settingsButtonArrow)
-        toggleSettingsButton.addSubview(CameraView.settingsButtonGridView)
-        toggleSettingsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleSettings)))
-        
-        CameraView.settingsButtonArrow.autoPinEdge(.left, to: .left, of: toggleSettingsButton)
-        CameraView.settingsButtonArrow.autoPinEdge(.bottom, to: .bottom, of: toggleSettingsButton)
-        CameraView.settingsButtonArrow.autoPinEdge(.top, to: .top, of: toggleSettingsButton)
-        CameraView.settingsButtonArrow.autoSetDimension(.width, toSize: 10)
-        CameraView.settingsButtonArrow.contentMode = .scaleAspectFill
-        
-        CameraView.settingsButtonGridView.autoPinEdge(.left, to: .right, of: CameraView.settingsButtonArrow)
-        CameraView.settingsButtonGridView.autoPinEdge(.bottom, to: .bottom, of: toggleSettingsButton)
-        CameraView.settingsButtonGridView.autoPinEdge(.top, to: .top, of: toggleSettingsButton)
-        CameraView.settingsButtonGridView.autoSetDimension(.width, toSize: 30)
+        addSubview(floatingSettingsButton)
     }
+
     
-    /// It setting up the settings menu.
-    private func setupSettingsView() {
-        CameraView.settingsViewController.view.autoPinEdge(toSuperviewEdge: .left)
-        CameraView.settingsViewController.view.autoPinEdge(.bottom, to: .top, of: captureButton, withOffset: -20)
-        CameraView.settingsViewController.view.autoSetDimensions(to: CGSize(width: self.bounds.width, height: 160))
-        CameraView.settingsViewController.view.isHidden = true
-    }
+//    /// It setting up the settings button components
+//    private func setupSettingsButton(){
+//        CameraView.settingsButtonGridView = UIImageView(image: #imageLiteral(resourceName: "SettingView"))
+//        CameraView.settingsButtonArrow.image = #imageLiteral(resourceName: "ArrowRight")
+//        
+//        toggleSettingsButton.autoAlignAxis(.horizontal, toSameAxisOf: captureButton)
+//        toggleSettingsButton.autoPinEdge(toSuperviewEdge: .left, withInset: 20)
+//        toggleSettingsButton.autoSetDimensions(to: CGSize(width: 40, height: 30))
+//        toggleSettingsButton.backgroundColor = UIColor.clear
+//        toggleSettingsButton.addSubview(CameraView.settingsButtonArrow)
+//        toggleSettingsButton.addSubview(CameraView.settingsButtonGridView)
+//        toggleSettingsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleSettings)))
+//        
+//        CameraView.settingsButtonArrow.autoPinEdge(.left, to: .left, of: toggleSettingsButton)
+//        CameraView.settingsButtonArrow.autoPinEdge(.bottom, to: .bottom, of: toggleSettingsButton)
+//        CameraView.settingsButtonArrow.autoPinEdge(.top, to: .top, of: toggleSettingsButton)
+//        CameraView.settingsButtonArrow.autoSetDimension(.width, toSize: 10)
+//        CameraView.settingsButtonArrow.contentMode = .scaleAspectFill
+//        
+//        CameraView.settingsButtonGridView.autoPinEdge(.left, to: .right, of: CameraView.settingsButtonArrow)
+//        CameraView.settingsButtonGridView.autoPinEdge(.bottom, to: .bottom, of: toggleSettingsButton)
+//        CameraView.settingsButtonGridView.autoPinEdge(.top, to: .top, of: toggleSettingsButton)
+//        CameraView.settingsButtonGridView.autoSetDimension(.width, toSize: 30)
+//    }
+//    
+//    /// It setting up the settings menu.
+//    private func setupSettingsView() {
+//        CameraView.settingsViewController.view.autoPinEdge(toSuperviewEdge: .left)
+//        CameraView.settingsViewController.view.autoPinEdge(.bottom, to: .top, of: captureButton, withOffset: -20)
+//        CameraView.settingsViewController.view.autoSetDimensions(to: CGSize(width: self.bounds.width, height: 160))
+//        CameraView.settingsViewController.view.isHidden = true
+//    }
     
     /// It setting up the orientation view.
     private func setupOrientationView(){
-         CameraView.orientationViewController.view.autoCenterInSuperview()
-         CameraView.orientationViewController.view.isHidden = true
+         orientationViewController.view.autoCenterInSuperview()
+         orientationViewController.view.isHidden = true
     }
     
     //MARK: - Button image changer functions
@@ -214,9 +249,9 @@ class CameraView: UIView {
      - Implemented in the class which adopted *CameraViewProtocol*.
      */
     func capturePhoto() {
-        if CameraView.isSettingsOpened != .close {
-            CameraView.hideSettings()
-        }
+//        if CameraView.isSettingsOpened != .close {
+//            CameraView.hideSettings()
+//        }
         delegate?.captureButtonTapped()
     }
     
@@ -225,65 +260,205 @@ class CameraView: UIView {
      - Implemented in the class which adopted *CameraViewProtocol*.
      */
     func toggleCamera(){
-        if CameraView.isSettingsOpened != .close {
-            CameraView.hideSettings()
-        }
+//        if CameraView.isSettingsOpened != .close {
+//            CameraView.hideSettings()
+//        }
         delegate?.toggleCameraButtonTapped()
     }
     
     /// It is called after touching the settings button.
-    func toggleSettings() {
-        if CameraView.isSettingsOpened == .close {
-            CameraView.showSettings()
-        } else {
-            CameraView.hideSettings()
-        }
-    }
+//    func toggleSettings() {
+//        if CameraView.isSettingsOpened == .close {
+//            CameraView.showSettings()
+//        } else {
+//            CameraView.hideSettings()
+//        }
+//    }
     
     // MARK: - Setting button and view animation functions
     
-    /// Show the setting menu.
-    private static func showSettings(){
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-            settingsViewController.view.isHidden = false
-            settingsViewController.view.frame = CGRect(x: 0, y: settingsViewController.view.frame.origin.y, width: previewView.frame.width, height: settingsViewController.view.frame.height)
-            animateSettingsButton(toState: .open)
-            isSettingsOpened = .open
-        })
-    }
+//    /// Show the setting menu.
+//    private static func showSettings(){
+//        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+//            settingsViewController.view.isHidden = false
+//            settingsViewController.view.frame = CGRect(x: 0, y: settingsViewController.view.frame.origin.y, width: previewView.frame.width, height: settingsViewController.view.frame.height)
+//            animateSettingsButton(toState: .open)
+//            isSettingsOpened = .open
+//        })
+//    }
+//
+//    /// Hide the setting menu.
+//    static func hideSettings(){
+//        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+//            settingsViewController.view.frame = CGRect(x: 0 - previewView.bounds.width, y: settingsViewController.view.frame.origin.y, width: previewView.frame.width, height: settingsViewController.view.frame.height)
+//            if isSettingsOpened != .undefined {
+//                animateSettingsButton(toState: .close)
+//            }
+//            isSettingsOpened = .close
+//        }) { (finished) in
+//            CameraView.settingsViewController.view.isHidden = true
+//        }
+//    }
+//
+//    /**
+//     Animate the settings button.
+//     
+//     - parameter state: The state for opening or closing animation.
+//     - **.open** will animate the settingsView to opened state.
+//     - **.close** will animate the settingsView to closed state.
+//     */
+//    private static func animateSettingsButton(toState state: SettingMenuState) {
+//        switch state {
+//        case .open:
+//            changeArrowImage(to:#imageLiteral(resourceName: "ArrowLeft"))
+//            settingsButtonArrow.moveXCoordinate(with: 30)
+//            settingsButtonGridView.moveXCoordinate(with: -10)
+//        case .close:
+//            changeArrowImage(to:#imageLiteral(resourceName: "ArrowRight"))
+//            settingsButtonArrow.moveXCoordinate(with: -30)
+//            settingsButtonGridView.moveXCoordinate(with: 10)
+//        case .undefined:
+//            break
+//        }
+//    }
+}
 
-    /// Hide the setting menu.
-    static func hideSettings(){
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-            settingsViewController.view.frame = CGRect(x: 0 - previewView.bounds.width, y: settingsViewController.view.frame.origin.y, width: previewView.frame.width, height: settingsViewController.view.frame.height)
-            if isSettingsOpened != .undefined {
-                animateSettingsButton(toState: .close)
-            }
-            isSettingsOpened = .close
-        }) { (finished) in
-            CameraView.settingsViewController.view.isHidden = true
-        }
-    }
-
+extension CameraView: FloatyDelegate {
+    // MARK: - Floating button item touch handlers
     /**
-     Animate the settings button.
-     
-     - parameter state: The state for opening or closing animation.
-     - **.open** will animate the settingsView to opened state.
-     - **.close** will animate the settingsView to closed state.
+     It is called after touching the Flash Mode button.
      */
-    private static func animateSettingsButton(toState state: SettingMenuState) {
-        switch state {
-        case .open:
-            changeArrowImage(to:#imageLiteral(resourceName: "ArrowLeft"))
-            settingsButtonArrow.moveXCoordinate(with: 30)
-            settingsButtonGridView.moveXCoordinate(with: -10)
-        case .close:
-            changeArrowImage(to:#imageLiteral(resourceName: "ArrowRight"))
-            settingsButtonArrow.moveXCoordinate(with: -30)
-            settingsButtonGridView.moveXCoordinate(with: 10)
-        case .undefined:
-            break
+    func flashHandler(_ item: FloatyItem) -> Void {
+        guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
+            return
         }
+        
+        switch self.flashMode {
+        case .on:
+            self.flashMode = .off
+            item.icon = #imageLiteral(resourceName: "FlashOff")
+        case .auto:
+            self.flashMode = .on
+            item.icon = #imageLiteral(resourceName: "FlashOn")
+        case .off:
+            self.flashMode = .auto
+            item.icon = #imageLiteral(resourceName: "FlashAuto")
+        }
+        
+        if device.hasFlash {
+            do {
+                try device.lockForConfiguration()
+                device.flashMode = self.flashMode
+                device.unlockForConfiguration()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    /**
+     It is called after touching the Onion Effect button.
+     */
+    func onionEffectHandler(_ item: FloatyItem) -> Void {
+        if onionEffectLayer.isHidden {
+            item.icon = #imageLiteral(resourceName: "OnionSkinOn")
+            item.itemBackgroundColor = .lightGray
+            onionEffectLayer.isHidden = false
+            if onionEffectLayer.image == nil {
+                ErrorMessage.sharedInstance.show(LocalizedKeys.titleWarning, message: LocalizedKeys.onionEffectLayerError)
+            }
+        } else {
+            item.icon = #imageLiteral(resourceName: "OnionSkinOff")
+            item.itemBackgroundColor = .darkGray
+            onionEffectLayer.isHidden = true
+        }
+    }
+    
+    /**
+     It is called after touching the Orientation Assist button.
+     */
+    func orientationHandler(_ item: FloatyItem) -> Void {
+        if item.icon == #imageLiteral(resourceName: "OrientationOff") {
+            orientationViewController.startMotionUpdate()
+            orientationViewController.view.isHidden = false
+            item.icon = #imageLiteral(resourceName: "OrientationOn")
+            item.itemBackgroundColor = .lightGray
+            
+        } else {
+            orientationViewController.stopMotionUpdate()
+            orientationViewController.view.isHidden = true
+            item.icon = #imageLiteral(resourceName: "OrientationOff")
+            item.itemBackgroundColor = .darkGray
+        }
+    }
+    
+    /**
+     It is called after touching the Time Lapse Builder button.
+     */
+    func timeLapseHandler(_ item: FloatyItem) -> Void {
+        if imageArray.isEmpty {
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.timeLapseBuildError)
+            return
+        }
+        let progressHUD = ProgressHUD()
+        progressHUD.setTextLabel("Building your timelapse...")
+        progressHUD.setProgress(0, animated: true)
+        DispatchQueue.main.async {
+            progressHUD.show()
+        }
+        
+        let timeLapseBuilder = TimeLapseBuilder(renderSettings: settings)
+        timeLapseBuilder.render(
+            {(progress: Progress) in
+                let progressPercentage = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
+                progressHUD.setProgress(progressPercentage, animated: true)
+        },  completion: {
+            progressHUD.dismiss()
+        })
+        progressHUD.dismiss()
+        
+    }
+    
+    /**
+     It is called after touching the Video Player button.
+     */
+    func videoPlayerHandler(_ item: FloatyItem) -> Void {
+        guard let videoUrl = settings.outputURL, !Platform.isSimulator else {
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.videoPlayerError)
+            return
+        }
+        videoViewController = VideoPlayerViewController(videoUrl: videoUrl)
+        gNavigationViewController?.pushViewController(videoViewController!, animated: true)
+    }
+    
+    // MARK: - FloatyDelegate methodes
+    
+    func floatyClosed(_ floaty: Floaty) {
+        
+    }
+    
+    func floatyOpened(_ floaty: Floaty) {
+        
+    }
+    
+    func floatyDidOpen(_ floaty: Floaty) {
+        
+    }
+    
+    func floatyDidClose(_ floaty: Floaty) {
+        
+    }
+    
+    func floatyWillOpen(_ floaty: Floaty) {
+        
+    }
+    
+    func floatyWillClose(_ floaty: Floaty) {
+        
+    }
+    
+    func emptyFloatySelected(_ floaty: Floaty) {
+        
     }
 }
