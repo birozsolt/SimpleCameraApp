@@ -59,7 +59,7 @@ class OrientationView: UIView {
         backgroundView.addSubview(horizontalView)
         horizontalView.addSubview(horizontalLeftMarker)
         horizontalView.addSubview(horizontalRightMarker)
-        backgroundView.addSubview(verticalLeftView)
+        horizontalView.addSubview(verticalLeftView)
         horizontalView.addSubview(verticalRightView)
         backgroundView.insertSubview(leftArcView, belowSubview: horizontalView)
         backgroundView.insertSubview(rightArcView, belowSubview: horizontalView)

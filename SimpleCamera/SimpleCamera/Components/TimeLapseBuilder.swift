@@ -127,39 +127,50 @@ private class VideoWriter {
     //MARK: - Class functions
     
     fileprivate class func pixelBufferFromImage(image: UIImage, pixelBufferPool: CVPixelBufferPool, size: CGSize) -> CVPixelBuffer {
+        let ciimage = CIImage(image: image)
+        let tmpcontext = CIContext(options: nil)
+        let cgimage =  tmpcontext.createCGImage(ciimage!, from: ciimage!.extent)
         
-        var pixelBufferOut: CVPixelBuffer?
+        let cfnumPointer = UnsafeMutablePointer<UnsafeRawPointer>.allocate(capacity: 1)
+        let cfnum = CFNumberCreate(kCFAllocatorDefault, .intType, cfnumPointer)
+        let keys: [CFString] = [kCVPixelBufferCGImageCompatibilityKey, kCVPixelBufferCGBitmapContextCompatibilityKey, kCVPixelBufferBytesPerRowAlignmentKey]
+        let values: [CFTypeRef] = [kCFBooleanTrue, kCFBooleanTrue, cfnum!]
+        let keysPointer = UnsafeMutablePointer<UnsafeRawPointer?>.allocate(capacity: 1)
+        let valuesPointer =  UnsafeMutablePointer<UnsafeRawPointer?>.allocate(capacity: 1)
+        keysPointer.initialize(to: keys)
+        valuesPointer.initialize(to: values)
         
-        let status = CVPixelBufferPoolCreatePixelBuffer(kCFAllocatorDefault, pixelBufferPool, &pixelBufferOut)
+        let options = CFDictionaryCreate(kCFAllocatorDefault, keysPointer, valuesPointer, keys.count, nil, nil)
+        
+        let width = cgimage!.width
+        let height = cgimage!.height
+        
+        var pxbuffer: CVPixelBuffer?
+        // if pxbuffer = nil, you will get status = -6661
+        var status = CVPixelBufferCreate(kCFAllocatorDefault, width, height,
+                                         kCVPixelFormatType_32BGRA, options, &pxbuffer)
         if status != kCVReturnSuccess {
             fatalError("CVPixelBufferPoolCreatePixelBuffer() failed")
         }
+        status = CVPixelBufferLockBaseAddress(pxbuffer!, CVPixelBufferLockFlags(rawValue: 0));
         
-        let pixelBuffer = pixelBufferOut!
-        CVPixelBufferLockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: 0))
+        let bufferAddress = CVPixelBufferGetBaseAddress(pxbuffer!);
         
-        let data = CVPixelBufferGetBaseAddress(pixelBuffer)
-        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
-        let context = CGContext(data: data, width: Int(size.width), height: Int(size.height),
-                                bitsPerComponent: 8, bytesPerRow: CVPixelBufferGetBytesPerRow(pixelBuffer),
-                                space: rgbColorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue)
         
-        context!.clear(CGRect(x:0,y: 0,width: size.width,height: size.height))
+        let rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+        let bytesperrow = CVPixelBufferGetBytesPerRow(pxbuffer!)
+        let context = CGContext(data: bufferAddress,
+                                width: width,
+                                height: height,
+                                bitsPerComponent: 8,
+                                bytesPerRow: bytesperrow,
+                                space: rgbColorSpace,
+                                bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue);
+        context?.concatenate(CGAffineTransform(rotationAngle: 0))
+        context?.draw(cgimage!, in: CGRect(x:0, y:0, width:CGFloat(width), height:CGFloat(height)));
+        status = CVPixelBufferUnlockBaseAddress(pxbuffer!, CVPixelBufferLockFlags(rawValue: 0));
+        return pxbuffer!;
         
-        let horizontalRatio = size.width / image.size.width
-        let verticalRatio = size.height / image.size.height
-        let aspectRatio = max(horizontalRatio, verticalRatio) // ScaleAspectFill
-        //let aspectRatio = min(horizontalRatio, verticalRatio) // ScaleAspectFit
-        
-        let newSize = CGSize(width: image.size.width * aspectRatio, height: image.size.height * aspectRatio)
-        
-        let x = newSize.width < size.width ? (size.width - newSize.width) / 2 : 0
-        let y = newSize.height < size.height ? (size.height - newSize.height) / 2 : 0
-        
-        context?.draw(image.cgImage!, in: CGRect(x: x, y: y, width: newSize.width, height: newSize.height))
-        CVPixelBufferUnlockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: 0))
-        
-        return pixelBuffer
     }
     
     //MARK:- Object Lifecycle

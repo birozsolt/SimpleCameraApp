@@ -17,6 +17,8 @@ class VideoPlayerViewController: UIViewController {
     fileprivate let playbackProgressView = UIProgressView()
     fileprivate let playbackImage = UIImageView()
     
+    override var prefersStatusBarHidden: Bool {return true}
+    
     ///The path of the video for the *videoPlayer*.
     fileprivate var videoUrl : URL?
     
@@ -38,6 +40,7 @@ class VideoPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        gNavigationViewController?.isNavigationBarHidden = false
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         player.playerDelegate = self
@@ -68,13 +71,17 @@ class VideoPlayerViewController: UIViewController {
         playbackImage.isHidden = true
         
         player.url = videoUrl
-        
+        player.fillMode = PlayerFillMode.resizeAspectFill.avFoundationType
         player.playbackLoops = false
-        player.fillMode = PlayerFillMode.resizeAspectFit.avFoundationType
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
         tapGestureRecognizer.numberOfTapsRequired = 1
         player.view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        gNavigationViewController?.isNavigationBarHidden = true
     }
     
     fileprivate func showPlaybackImage(image: UIImage) {

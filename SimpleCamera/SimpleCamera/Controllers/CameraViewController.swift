@@ -76,6 +76,8 @@ class CameraViewController: UIViewController {
     ///The currently active camera position
     fileprivate var currentCameraPosition: CameraPosition?
     
+    override var prefersStatusBarHidden: Bool {return true}
+    
     // MARK: View Lifecycle
     
     override func loadView() {
@@ -126,7 +128,7 @@ class CameraViewController: UIViewController {
          */
         func configureCaptureDevices() throws {
             let session = AVCaptureSession()
-            session.sessionPreset = AVCaptureSessionPresetPhoto
+            session.sessionPreset = AVCaptureSessionPresetiFrame960x540
             
             guard let devices = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo), !devices.isEmpty else {
                 isCameraAlreadySetUp = false
@@ -143,7 +145,7 @@ class CameraViewController: UIViewController {
                     rearCamera = device
                     
                     try device.lockForConfiguration()
-                    device.focusMode = .autoFocus
+                    device.focusMode = .continuousAutoFocus
                     device.unlockForConfiguration()
                 }
             }
@@ -184,6 +186,7 @@ class CameraViewController: UIViewController {
             guard let captureSession = captureSession else { throw CameraControllerError.captureSessionIsMissing }
             
             photoOutput = AVCaptureStillImageOutput()
+            photoOutput!.isHighResolutionStillImageOutputEnabled = true
             photoOutput!.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
             
             if captureSession.canAddOutput(photoOutput) { captureSession.addOutput(photoOutput) }
@@ -225,9 +228,9 @@ class CameraViewController: UIViewController {
         videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
         videoPreviewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.portrait
         
-        cameraView.videoPreviewView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-        cameraView.onionEffectLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-        videoPreviewLayer?.frame = CGRect(origin: CGPoint.zero, size: cameraView.videoPreviewView.frame.size)
+        cameraView.videoPreviewView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+        cameraView.onionEffectLayer.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+        videoPreviewLayer?.frame = CGRect(origin: CGPoint.zero, size: cameraView.videoPreviewView.bounds.size)
         videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
         cameraView.onionEffectLayer.contentMode = .scaleAspectFill
         cameraView.videoPreviewView.layer.insertSublayer(videoPreviewLayer!, above: cameraView.videoPreviewView.layer)
@@ -312,7 +315,7 @@ extension CameraViewController: CameraViewProtocol {
                 return
             }
             imageArray.append(image)
-            //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+//            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
             self.cameraView.onionEffectLayer.image = image
         }
     }

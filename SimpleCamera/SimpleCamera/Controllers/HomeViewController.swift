@@ -17,10 +17,15 @@ class HomeViewController: UIViewController {
     ///The view that the *HomeViewController* manages.
     var homeView = HomeView(frame: CGRect.zero)
     
+    override var prefersStatusBarHidden: Bool {return true}
+    
     //MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        gNavigationViewController?.navigationBar.backgroundColor = .darkGray
+        gNavigationViewController?.navigationBar.barTintColor = .darkGray
+        gNavigationViewController?.isNavigationBarHidden = true
     }
     
     override func loadView() {

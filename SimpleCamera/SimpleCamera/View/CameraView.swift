@@ -120,9 +120,10 @@ class CameraView: UIView {
         floatingSettingsButton.openAnimationType = .fade
         floatingSettingsButton.animationSpeed = 0.01
         floatingSettingsButton.friendlyTap = true
+        floatingSettingsButton.itemSpace = 1
         floatingSettingsButton.buttonColor = .darkGray
         floatingSettingsButton.plusColor = .white
-        floatingSettingsButton.itemTitleColor = .white
+        floatingSettingsButton.itemTitleColor = .lightGray
         floatingSettingsButton.itemButtonColor = .darkGray
         floatingSettingsButton.overlayColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
         floatingSettingsButton.addItem("Flash Mode", icon: #imageLiteral(resourceName: "FlashOff"), handler: flashHandler(_:))
@@ -130,7 +131,6 @@ class CameraView: UIView {
         floatingSettingsButton.addItem("Orientation Assist", icon: #imageLiteral(resourceName: "OrientationOff"), handler: orientationHandler(_:))
         floatingSettingsButton.addItem("Time Lapse Builder", icon: #imageLiteral(resourceName: "TimeLapse"), handler: timeLapseHandler(_:))
         floatingSettingsButton.addItem("Video Player", icon: #imageLiteral(resourceName: "VideoPlayer"), handler: videoPlayerHandler(_:))
-        
         addSubview(floatingSettingsButton)
     }
     
@@ -188,7 +188,7 @@ extension CameraView: FloatyDelegate {
     /**
      It is called after touching the Flash Mode button.
      */
-    func flashHandler(_ item: FloatyItem) -> Void {
+    fileprivate func flashHandler(_ item: FloatyItem) -> Void {
         guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
             return
@@ -197,12 +197,15 @@ extension CameraView: FloatyDelegate {
         switch self.flashMode {
         case .on:
             self.flashMode = .off
+            item.titleColor = .lightGray
             item.icon = #imageLiteral(resourceName: "FlashOff")
         case .auto:
             self.flashMode = .on
+            item.titleColor = .white
             item.icon = #imageLiteral(resourceName: "FlashOn")
         case .off:
             self.flashMode = .auto
+            item.titleColor = .white
             item.icon = #imageLiteral(resourceName: "FlashAuto")
         }
         
@@ -220,10 +223,11 @@ extension CameraView: FloatyDelegate {
     /**
      It is called after touching the Onion Effect button.
      */
-    func onionEffectHandler(_ item: FloatyItem) -> Void {
+    fileprivate func onionEffectHandler(_ item: FloatyItem) -> Void {
         if onionEffectLayer.isHidden {
             item.icon = #imageLiteral(resourceName: "OnionSkinOn")
             item.itemBackgroundColor = .lightGray
+            item.titleColor = .white
             onionEffectLayer.isHidden = false
             if onionEffectLayer.image == nil {
                 ErrorMessage.sharedInstance.show(LocalizedKeys.titleWarning, message: LocalizedKeys.onionEffectLayerError)
@@ -231,6 +235,7 @@ extension CameraView: FloatyDelegate {
         } else {
             item.icon = #imageLiteral(resourceName: "OnionSkinOff")
             item.itemBackgroundColor = .darkGray
+            item.titleColor = .lightGray
             onionEffectLayer.isHidden = true
         }
     }
@@ -238,25 +243,28 @@ extension CameraView: FloatyDelegate {
     /**
      It is called after touching the Orientation Assist button.
      */
-    func orientationHandler(_ item: FloatyItem) -> Void {
+    fileprivate func orientationHandler(_ item: FloatyItem) -> Void {
         if item.icon == #imageLiteral(resourceName: "OrientationOff") {
             orientationViewController.startMotionUpdate()
             orientationViewController.view.isHidden = false
             item.icon = #imageLiteral(resourceName: "OrientationOn")
             item.itemBackgroundColor = .lightGray
-            
+            item.titleColor = .white
+        
         } else {
             orientationViewController.stopMotionUpdate()
             orientationViewController.view.isHidden = true
             item.icon = #imageLiteral(resourceName: "OrientationOff")
             item.itemBackgroundColor = .darkGray
+            item.titleColor = .lightGray
         }
     }
     
     /**
      It is called after touching the Time Lapse Builder button.
      */
-    func timeLapseHandler(_ item: FloatyItem) -> Void {
+    fileprivate func timeLapseHandler(_ item: FloatyItem) -> Void {
+        floatingSettingsButton.close()
         if imageArray.isEmpty {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.timeLapseBuildError)
             return
@@ -283,7 +291,7 @@ extension CameraView: FloatyDelegate {
     /**
      It is called after touching the Video Player button.
      */
-    func videoPlayerHandler(_ item: FloatyItem) -> Void {
+    fileprivate func videoPlayerHandler(_ item: FloatyItem) -> Void {
         guard let videoUrl = settings.outputURL, !Platform.isSimulator else {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.videoPlayerError)
             return
