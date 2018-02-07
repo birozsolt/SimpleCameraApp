@@ -143,10 +143,6 @@ class CameraViewController: UIViewController {
                 
                 if device.position == .back {
                     rearCamera = device
-                    
-                    try device.lockForConfiguration()
-                    device.focusMode = .continuousAutoFocus
-                    device.unlockForConfiguration()
                 }
             }
         }
@@ -358,5 +354,41 @@ extension CameraViewController: CameraViewProtocol {
         catch {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
         }
+    }
+    
+    func backgroundTapped(touchPoint: UITapGestureRecognizer) {
+        guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
+            return
+        }
+        let screenSize = self.view.bounds.size
+        let focusPoint = CGPoint(x: touchPoint.location(in: self.view).x / screenSize.width,
+                                 y: touchPoint.location(in: self.view).y / screenSize.height)
+        
+        let layer = CAShapeLayer()
+        let x = touchPoint.location(in: self.view).x - 50
+        let y = touchPoint.location(in: self.view).y - 50
+        layer.path = CGPath(rect: CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: 100, height: 100)), transform: nil)
+        layer.strokeColor = UIColor.red.cgColor
+        layer.fillColor = UIColor.clear.cgColor
+        layer.lineWidth = 1.0
+
+        if (cameraView.videoPreviewView.layer.sublayers?.count)! > 1 {
+            cameraView.videoPreviewView.layer.sublayers?.removeLast()
+        }
+        cameraView.videoPreviewView.layer.insertSublayer(layer, above: videoPreviewLayer)
+        do {
+            try device.lockForConfiguration()
+            if device.isFocusPointOfInterestSupported {
+                device.focusPointOfInterest = focusPoint
+                device.focusMode = .autoFocus
+            }
+            device.unlockForConfiguration()
+        }
+        catch {
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
+        }
+        cameraView.focusPreview.isHidden = false
+        cameraView.focusPreview.backgroundColor = .green
     }
 }

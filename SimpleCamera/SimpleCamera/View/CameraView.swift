@@ -16,6 +16,9 @@ protocol CameraViewProtocol {
     
     /// Camera switch button touch handler function.
     func toggleCameraButtonTapped()
+    
+    /// Background touch handler function.
+    func backgroundTapped(touchPoint: UITapGestureRecognizer)
 }
 
 /// UIView class for setting the camera screen view
@@ -25,11 +28,11 @@ class CameraView: UIView {
     
     //MARK: - View variables
     
-    /// The background view of the *CameraView*.
-    var previewView = UIImageView()
-    
     /// This variable contains the videoPreview layer, where the camera is showed.
     var videoPreviewView = UIView()
+    
+    /// The focused part of the videoPreviewView
+    var focusPreview = UIView()
     
     /// The layer where we show onion effect, (the previous captured image).
     var onionEffectLayer = UIImageView()
@@ -62,13 +65,13 @@ class CameraView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(previewView)
-        insertSubview(captureButton, aboveSubview: previewView)
-        insertSubview(toggleCameraButton, aboveSubview: previewView)
-        insertSubview(orientationViewController.view, aboveSubview: previewView)
-        insertSubview(videoPreviewView, belowSubview: previewView)
-        insertSubview(onionEffectLayer, belowSubview: previewView)
-        
+        addSubview(videoPreviewView)
+        addSubview(focusPreview)
+        insertSubview(captureButton, aboveSubview: focusPreview)
+        insertSubview(toggleCameraButton, aboveSubview: focusPreview)
+        insertSubview(orientationViewController.view, aboveSubview: focusPreview)
+        addSubview(onionEffectLayer)
+        addSubview(floatingSettingsButton)
         setupViews()
     }
     
@@ -80,16 +83,19 @@ class CameraView: UIView {
     
     /// It setting up camera screen views.
     private func setupViews(){
-        previewView.autoPinEdgesToSuperviewEdges()
-        previewView.isHidden = true
-        previewView.alpha = 0.0
-        previewView.backgroundColor = UIColor.black
         
         videoPreviewView.autoPinEdgesToSuperviewEdges()
+        videoPreviewView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addFocusPreview)))
         
         onionEffectLayer.autoPinEdgesToSuperviewEdges()
         onionEffectLayer.alpha = 0.5
         onionEffectLayer.isHidden = true
+        
+        focusPreview.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        focusPreview.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+        focusPreview.autoSetDimensions(to: CGSize(width: 100, height: 100))
+        focusPreview.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(moveFocusePreview)))
+        focusPreview.isHidden = true
         
         setupOrientationView()
         
@@ -131,13 +137,12 @@ class CameraView: UIView {
         floatingSettingsButton.addItem("Orientation Assist", icon: #imageLiteral(resourceName: "OrientationOff"), handler: orientationHandler(_:))
         floatingSettingsButton.addItem("Time Lapse Builder", icon: #imageLiteral(resourceName: "TimeLapse"), handler: timeLapseHandler(_:))
         floatingSettingsButton.addItem("Video Player", icon: #imageLiteral(resourceName: "VideoPlayer"), handler: videoPlayerHandler(_:))
-        addSubview(floatingSettingsButton)
     }
     
     /// It setting up the orientation view.
     private func setupOrientationView(){
-         orientationViewController.view.autoCenterInSuperview()
-         orientationViewController.view.isHidden = true
+        orientationViewController.view.autoCenterInSuperview()
+        orientationViewController.view.isHidden = true
     }
     
     //MARK: - Button image changer functions
@@ -164,6 +169,48 @@ class CameraView: UIView {
         })
     }
     
+    /// Methode for moving the focus preview
+    func moveFocusePreview(gesture: UIPanGestureRecognizer){
+        gesture.minimumNumberOfTouches = 1
+        gesture.maximumNumberOfTouches = 1
+        var velocityX : CGFloat = 0
+        let gestureLocation = gesture.location(in: videoPreviewView)
+        if gesture.state == .ended {
+            velocityX = gesture.velocity(in: videoPreviewView).x * 0.4
+        }
+        
+        let animationDuration = (abs(velocityX) * 0.0002) + 0.2
+        
+        UIView.animate(withDuration: TimeInterval(animationDuration), delay: 0, options: .curveLinear, animations: {
+            
+            if gestureLocation.x >= 60 && gestureLocation.y >= 60 && gestureLocation.x <= self.videoPreviewView.frame.size.width - 60 && gestureLocation.y <= self.videoPreviewView.frame.size.height - 60 {
+                self.focusPreview.center = gestureLocation
+            }
+
+            if gestureLocation.x < 60 && gestureLocation.y < 60 {
+                self.focusPreview.center = CGPoint(x: 60, y: 60)
+            } else if gestureLocation.x < 60 {
+                self.focusPreview.center = CGPoint(x: 60, y: gestureLocation.y)
+            } else if gestureLocation.y < 60 {
+                self.focusPreview.center = CGPoint(x: gestureLocation.x, y: 60)
+            }
+            
+            if gestureLocation.x > self.videoPreviewView.frame.size.width - 60 && gestureLocation.y > self.videoPreviewView.frame.size.height - 60 {
+                self.focusPreview.center = CGPoint(x: self.videoPreviewView.frame.size.width - 60, y: self.videoPreviewView.frame.size.height - 60 )
+            } else if gestureLocation.x > self.videoPreviewView.frame.size.width - 60 {
+                self.focusPreview.center = CGPoint(x: self.videoPreviewView.frame.size.width - 60, y: gestureLocation.y)
+            } else if gestureLocation.y > self.videoPreviewView.frame.size.height - 60 {
+                self.focusPreview.center = CGPoint(x: gestureLocation.x, y: self.videoPreviewView.frame.size.height - 60)
+            }
+            
+            if gestureLocation.x < 60 && gestureLocation.y > self.videoPreviewView.frame.size.height - 60 {
+                self.focusPreview.center = CGPoint(x: 60, y: self.videoPreviewView.frame.size.height - 60)
+            } else if gestureLocation.x > self.videoPreviewView.frame.size.width - 60 && gestureLocation.y < 60 {
+                self.focusPreview.center = CGPoint(x: self.videoPreviewView.frame.size.width - 60, y: 60)
+            }
+        })
+    }
+    
     // MARK: - Button touch handler functions
     
     /**
@@ -180,6 +227,14 @@ class CameraView: UIView {
      */
     func toggleCamera(){
         delegate?.toggleCameraButtonTapped()
+    }
+    
+    /**
+     It is called after touching the camera background view.
+     - Implemented in the class which adopted *CameraViewProtocol*.
+     */
+    func addFocusPreview(touchPoint: UITapGestureRecognizer) {
+        delegate?.backgroundTapped(touchPoint: touchPoint)
     }
 }
 
@@ -250,7 +305,7 @@ extension CameraView: FloatyDelegate {
             item.icon = #imageLiteral(resourceName: "OrientationOn")
             item.itemBackgroundColor = .lightGray
             item.titleColor = .white
-        
+            
         } else {
             orientationViewController.stopMotionUpdate()
             orientationViewController.view.isHidden = true
