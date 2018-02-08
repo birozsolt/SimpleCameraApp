@@ -15,6 +15,8 @@
 		394630501FE1264A00570D83 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3946304F1FE1264A00570D83 /* ProgressHUD.swift */; };
 		394630521FE2ABFC00570D83 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394630511FE2ABFC00570D83 /* ErrorMessage.swift */; };
 		394630541FE9152200570D83 /* RenderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394630531FE9152200570D83 /* RenderSettings.swift */; };
+		3985F085202C4BCB0028538D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3985F084202C4BCB0028538D /* XCTest.framework */; };
+		3985F086202C4BCB0028538D /* XCTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3985F084202C4BCB0028538D /* XCTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
 		39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */; };
 		39A4E59C1FD80EE2001D374F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39A4E59B1FD80EE2001D374F /* Localizable.strings */; };
@@ -51,6 +53,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		3985F083202C4B050028538D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3985F086202C4BCB0028538D /* XCTest.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		373824BD3B807B0688E813F3 /* Pods-SimpleCamera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCamera.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera.release.xcconfig"; sourceTree = "<group>"; };
 		39102D80200F7690004BB338 /* ArcView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArcView.swift; path = Components/ArcView.swift; sourceTree = "<group>"; };
@@ -58,10 +74,14 @@
 		3910519A1FB192EF0000774D /* SakerSansBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansBold.ttf; path = Font/SakerSansBold.ttf; sourceTree = "<group>"; };
 		3910519B1FB192EF0000774D /* SakerSansLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SakerSansLight.ttf; path = Font/SakerSansLight.ttf; sourceTree = "<group>"; };
 		391051A11FB454EF0000774D /* OrientationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationViewController.swift; path = Controllers/OrientationViewController.swift; sourceTree = "<group>"; };
+		392D2246202C46C500C2B871 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		392D224A202C47FC00C2B871 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "../../../Library/Developer/Xcode/DerivedData/SimpleCamera-euaxdflrckatnmbqrngmgspahzcs/Build/Products/Debug-iphonesimulator/Quick/Quick.framework"; sourceTree = "<group>"; };
+		392D224C202C480100C2B871 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "../../../Library/Developer/Xcode/DerivedData/SimpleCamera-euaxdflrckatnmbqrngmgspahzcs/Build/Products/Debug-iphonesimulator/Nimble/Nimble.framework"; sourceTree = "<group>"; };
 		3938D1992017780100ECB8B5 /* SimpleCamera-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleCamera\U0010\U0010\U0010\U0010\U0010-Bridging\U0010-Header.h"; sourceTree = "<group>"; };
 		3946304F1FE1264A00570D83 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressHUD.swift; path = Components/ProgressHUD.swift; sourceTree = "<group>"; };
 		394630511FE2ABFC00570D83 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorMessage.swift; path = Components/ErrorMessage.swift; sourceTree = "<group>"; };
 		394630531FE9152200570D83 /* RenderSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderSettings.swift; path = Components/RenderSettings.swift; sourceTree = "<group>"; };
+		3985F084202C4BCB0028538D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Pods/XCTest.framework; sourceTree = "<group>"; };
 		399936BC202C367100F067CD /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Quick/Quick.framework"; sourceTree = "<group>"; };
 		399936BE202C368100F067CD /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/../build/Debug-iphoneos/Nimble/Nimble.framework"; sourceTree = "<group>"; };
 		399936C0202C368E00F067CD /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Quick/Quick.framework"; sourceTree = "<group>"; };
@@ -102,6 +122,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6616F878EC63513CEDC370E8 /* Pods_SimpleCamera.framework in Frameworks */,
+				3985F085202C4BCB0028538D /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +148,9 @@
 		369C7CDC42A6C66C9C79E414 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				392D224C202C480100C2B871 /* Nimble.framework */,
+				392D224A202C47FC00C2B871 /* Quick.framework */,
+				392D2246202C46C500C2B871 /* XCTest.framework */,
 				399936C2202C369300F067CD /* Nimble.framework */,
 				399936C0202C368E00F067CD /* Quick.framework */,
 				399936BE202C368100F067CD /* Nimble.framework */,
@@ -162,6 +186,7 @@
 		39CF5CB31FA07D94006EB23C = {
 			isa = PBXGroup;
 			children = (
+				3985F084202C4BCB0028538D /* XCTest.framework */,
 				39CF5CBE1FA07D94006EB23C /* SimpleCamera */,
 				39CF5CD31FA07D94006EB23C /* SimpleCameraTests */,
 				39CF5CDE1FA07D94006EB23C /* SimpleCameraUITests */,
@@ -281,6 +306,7 @@
 				39CF5CBA1FA07D94006EB23C /* Resources */,
 				9287FF64B7C3CFBE6C65226E /* [CP] Embed Pods Frameworks */,
 				27D075795E845B1725307326 /* [CP] Copy Pods Resources */,
+				3985F083202C4B050028538D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -744,9 +770,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B21EA3AB42421D514F4FCB93 /* Pods-SimpleCamera.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 48NALRU3W3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods",
+				);
 				INFOPLIST_FILE = SimpleCamera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -762,9 +791,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 373824BD3B807B0688E813F3 /* Pods-SimpleCamera.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 48NALRU3W3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods",
+				);
 				INFOPLIST_FILE = SimpleCamera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -787,6 +819,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Quick",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Nimble",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = SimpleCameraTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -808,6 +841,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Quick",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Nimble",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = SimpleCameraTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -828,6 +862,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Quick",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Nimble",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = SimpleCameraUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -848,6 +883,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Quick",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Nimble",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = SimpleCameraUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
