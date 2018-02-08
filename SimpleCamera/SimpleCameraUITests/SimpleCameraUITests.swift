@@ -6,8 +6,9 @@
 //  Copyright © 2017 Biro, Zsolt. All rights reserved.
 //
 
+import Quick
+import Nimble
 import XCTest
-
 class SimpleCameraUITests: XCTestCase {
         
     override func setUp() {

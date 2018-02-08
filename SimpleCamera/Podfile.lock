@@ -1,21 +1,27 @@
 PODS:
   - Floaty (3.0.1)
+  - Nimble (7.0.3)
   - Player (0.7.0)
   - PureLayout (3.0.2)
+  - Quick (1.2.0)
   - SwiftLint (0.23.1)
 
 DEPENDENCIES:
   - Floaty (~> 3.0.0)
+  - Nimble
   - Player (~> 0.7.0)
   - PureLayout
+  - Quick
   - SwiftLint
 
 SPEC CHECKSUMS:
   Floaty: bb7a353deee9ddcc14c584ca9c538efdc19669f2
+  Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Player: f3a8a982e5c4a7cf6a8e4307b16597f2b7a7af0d
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
 
-PODFILE CHECKSUM: 113f1e891dc9bd4583a370b257ebc96887ed103f
+PODFILE CHECKSUM: e5062a10ed02b3c716c0e2a827c29c3c4d04bcfc
 
 COCOAPODS: 1.4.0

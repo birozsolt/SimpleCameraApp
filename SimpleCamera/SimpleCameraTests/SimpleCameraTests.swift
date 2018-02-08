@@ -6,10 +6,11 @@
 //  Copyright © 2017 Biro, Zsolt. All rights reserved.
 //
 
-import XCTest
+import Quick
+import Nimble
 @testable import SimpleCamera
 
-class SimpleCameraTests: XCTestCase {
+class SimpleCameraTests: QuickSpec {
     
     override func setUp() {
         super.setUp()
