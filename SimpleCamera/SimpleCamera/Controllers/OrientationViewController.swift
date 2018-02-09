@@ -37,7 +37,7 @@ class OrientationViewController: UIViewController {
      */
     func startMotionUpdate() {
         if (motionManager.isDeviceMotionAvailable && !motionManager.isDeviceMotionActive) {
-            motionManager.deviceMotionUpdateInterval = 1.0
+            motionManager.deviceMotionUpdateInterval = 0.1
             let myFrame = CMAttitudeReferenceFrame.xArbitraryZVertical
             guard CMMotionManager.availableAttitudeReferenceFrames().contains(myFrame) else {
                 ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.referenceFrameError)
