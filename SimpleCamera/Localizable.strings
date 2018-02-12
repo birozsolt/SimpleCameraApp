@@ -19,12 +19,14 @@ timeLapseBuildError = "Not found any image for building timelapse video.";
 referenceFrameError = "The reference frame XArbitraryZVertical is not available.";
 motionServiceError = "No motion-service available.";
 onionEffectLayerError = "The onion skin takes on place when you capture an image!";
+photoSaveError = "Could not save video to photo library:";
+albumCreateError = "Could not create a new album in the photo library:";
 
 // MARK: - VideoBuilder
 
 videoName = "timeLapseVideo";
 videoExt = "mp4";
-photoSaveError = "Could not save video to photo library:";
+photoAlbumName = "TimeLapsePhotos";
 
 // MARK: - Font types
 

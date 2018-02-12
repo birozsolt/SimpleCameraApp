@@ -12,10 +12,10 @@ import AVFoundation
 struct RenderSettings {
     
     ///Size of the output video
-    var size : CGSize = CGSize(width: 960, height: 540)
+    var size : CGSize = CGSize(width: 1920, height: 1080)
     
     ///Frame per second in the output video
-    var fps: Int32 = 6
+    var fps: Int32 = 18
     
     ///Specifies the video encoding key.
     var avCodecKey = AVVideoCodecH264

@@ -20,41 +20,8 @@ class TimeLapseBuilder {
     
     fileprivate var frameNum = 0
     
-    fileprivate let currentProgress = Progress(totalUnitCount: Int64(imageArray.count))
-    
-    //MARK:- Class functions
-    
-    /**
-     Save the video to the photo library.
-     - parameter videoURL: The path of the timelapse video.
-     */
-    class func saveToLibrary(videoURL: URL) {
-        PHPhotoLibrary.requestAuthorization { status in
-            guard status == .authorized else { return }
-            
-            PHPhotoLibrary.shared().performChanges({
-                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: videoURL)
-            }) { success, error in
-                if !success {
-                    ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.photoSaveError)
-                }
-            }
-        }
-    }
-    
-    /**
-     Delete the video from the photo library.
-     - parameter fileURL: The path of the timelapse video.
-     */
-    class func removeFileAtURL(fileURL: URL) {
-        do {
-            try FileManager.default.removeItem(atPath: fileURL.path)
-        }
-        catch _ as NSError {
-            // Assume file doesn't exist.
-        }
-    }
-    
+    fileprivate let currentProgress = Progress(totalUnitCount: Int64(PhotoAlbum.sharedInstance.imageArray.count))
+ 
     //MARK: - Object Lifecycle
     
     /**
@@ -73,12 +40,12 @@ class TimeLapseBuilder {
      */
     func render(_ progress: @escaping ((Progress) -> Void), completion: (()->Void)?) {
         // The VideoWriter will fail if a file exists at the URL, so clear it out first.
-        TimeLapseBuilder.removeFileAtURL(fileURL: settings.outputURL!)
+        PhotoAlbum.sharedInstance.removeFileAtURL(fileURL: settings.outputURL!)
         
         videoWriter.start()
         videoWriter.render(appendPixelBuffers: appendPixelBuffers) {
             progress(self.currentProgress)
-            TimeLapseBuilder.saveToLibrary(videoURL: self.settings.outputURL!)
+            PhotoAlbum.sharedInstance.saveVideo(videoURL: self.settings.outputURL!)
             completion?()
         }
     }
@@ -91,13 +58,13 @@ class TimeLapseBuilder {
     fileprivate func appendPixelBuffers(writer: VideoWriter) -> Bool {
         let frameDuration = CMTimeMake(Int64(TimeLapseBuilder.kTimescale / settings.fps), TimeLapseBuilder.kTimescale)
         
-        while !imageArray.isEmpty {
+        while !PhotoAlbum.sharedInstance.imageArray.isEmpty {
             
             if writer.isReadyForData == false {
                 // Inform writer we have more buffers to write.
                 return false
             }
-            let image = imageArray.removeFirst()
+            let image = PhotoAlbum.sharedInstance.imageArray.removeFirst()
             let presentationTime = CMTimeMultiply(frameDuration, Int32(frameNum))
             let success = videoWriter.addImage(image: image, withPresentationTime: presentationTime)
             if success == false {

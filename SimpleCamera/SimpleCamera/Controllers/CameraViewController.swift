@@ -9,7 +9,7 @@
 import UIKit
 import PureLayout
 import AVFoundation
-
+import Photos
 /**
  Camera position types.
  
@@ -128,7 +128,7 @@ class CameraViewController: UIViewController {
          */
         func configureCaptureDevices() throws {
             let session = AVCaptureSession()
-            session.sessionPreset = AVCaptureSessionPresetiFrame960x540
+            session.sessionPreset = AVCaptureSessionPresetPhoto
             
             guard let devices = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo), !devices.isEmpty else {
                 isCameraAlreadySetUp = false
@@ -310,9 +310,13 @@ extension CameraViewController: CameraViewProtocol {
                 print(error ?? "Image capture error")
                 return
             }
-            imageArray.append(image)
-//            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-            self.cameraView.onionEffectLayer.image = image
+            DispatchQueue.global(qos: .background).async {
+                PhotoAlbum.sharedInstance.imageArray.append(image)
+                PhotoAlbum.sharedInstance.saveImage(image: image)
+                DispatchQueue.main.async {
+                    self.cameraView.onionEffectLayer.image = image
+                }
+            }
         }
     }
     

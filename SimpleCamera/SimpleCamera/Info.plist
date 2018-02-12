@@ -22,6 +22,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>The application will use your camera to make hyperlapse videos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The application will use the photo library to save images and videos.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SakerSansLight.ttf</string>

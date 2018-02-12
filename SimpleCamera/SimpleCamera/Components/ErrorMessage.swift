@@ -13,8 +13,6 @@ class ErrorMessage: NSObject {
     
     static let sharedInstance = ErrorMessage()
     
-    private var alert = UIAlertController()
-    
     // MARK: - Object Lifecycle
     
     fileprivate override init() {
@@ -32,7 +30,7 @@ class ErrorMessage: NSObject {
         if Platform.isSimulator {
             print(message)
         } else {
-            alert = UIAlertController(title: title.description(), message: message.description(), preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: title.description(), message: message.description(), preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: LocalizedKeys.okButton.description(), style: UIAlertActionStyle.default, handler: nil))
             gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
         }

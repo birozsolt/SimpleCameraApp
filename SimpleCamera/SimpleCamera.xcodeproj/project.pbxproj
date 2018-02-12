@@ -15,6 +15,11 @@
 		394630501FE1264A00570D83 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3946304F1FE1264A00570D83 /* ProgressHUD.swift */; };
 		394630521FE2ABFC00570D83 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394630511FE2ABFC00570D83 /* ErrorMessage.swift */; };
 		394630541FE9152200570D83 /* RenderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394630531FE9152200570D83 /* RenderSettings.swift */; };
+		3985F0922031AC0F0028538D /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0912031AC0F0028538D /* PhotoAlbum.swift */; };
+		3985F0942031B4550028538D /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0932031B4550028538D /* Platform.swift */; };
+		3985F0962031B5BE0028538D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0952031B5BE0028538D /* Fonts.swift */; };
+		3985F0982031B77D0028538D /* LocalizedKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0972031B77D0028538D /* LocalizedKeys.swift */; };
+		3985F09A2031B8BA0028538D /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0992031B8BA0028538D /* Globals.swift */; };
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
 		39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */; };
 		39A4E59C1FD80EE2001D374F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39A4E59B1FD80EE2001D374F /* Localizable.strings */; };
@@ -24,7 +29,6 @@
 		39CF5CCA1FA07D94006EB23C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC81FA07D94006EB23C /* LaunchScreen.storyboard */; };
 		39CF5CD51FA07D94006EB23C /* SimpleCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CD41FA07D94006EB23C /* SimpleCameraTests.swift */; };
 		39CF5CE01FA07D94006EB23C /* SimpleCameraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CDF1FA07D94006EB23C /* SimpleCameraUITests.swift */; };
-		39E620681FA1E8AC007E74C6 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620671FA1E8AC007E74C6 /* Globals.swift */; };
 		39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6206D1FA86FE3007E74C6 /* HomeView.swift */; };
 		39E620701FA87050007E74C6 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E6206F1FA87050007E74C6 /* CameraView.swift */; };
 		39E620741FA87298007E74C6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E620721FA87298007E74C6 /* CameraViewController.swift */; };
@@ -65,6 +69,11 @@
 		3946304F1FE1264A00570D83 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressHUD.swift; path = Components/ProgressHUD.swift; sourceTree = "<group>"; };
 		394630511FE2ABFC00570D83 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorMessage.swift; path = Components/ErrorMessage.swift; sourceTree = "<group>"; };
 		394630531FE9152200570D83 /* RenderSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderSettings.swift; path = Components/RenderSettings.swift; sourceTree = "<group>"; };
+		3985F0912031AC0F0028538D /* PhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoAlbum.swift; path = Components/PhotoAlbum.swift; sourceTree = "<group>"; };
+		3985F0932031B4550028538D /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Platform.swift; path = Components/Platform.swift; sourceTree = "<group>"; };
+		3985F0952031B5BE0028538D /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Components/Fonts.swift; sourceTree = "<group>"; };
+		3985F0972031B77D0028538D /* LocalizedKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalizedKeys.swift; path = Components/LocalizedKeys.swift; sourceTree = "<group>"; };
+		3985F0992031B8BA0028538D /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = Globals/Globals.swift; sourceTree = "<group>"; };
 		399936BC202C367100F067CD /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Quick/Quick.framework"; sourceTree = "<group>"; };
 		399936BE202C368100F067CD /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/../build/Debug-iphoneos/Nimble/Nimble.framework"; sourceTree = "<group>"; };
 		399936C0202C368E00F067CD /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Quick/Quick.framework"; sourceTree = "<group>"; };
@@ -84,7 +93,6 @@
 		39CF5CDB1FA07D94006EB23C /* SimpleCameraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleCameraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CDF1FA07D94006EB23C /* SimpleCameraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCameraUITests.swift; sourceTree = "<group>"; };
 		39CF5CE11FA07D94006EB23C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		39E620671FA1E8AC007E74C6 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = Globals/Globals.swift; sourceTree = "<group>"; };
 		39E6206D1FA86FE3007E74C6 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = View/HomeView.swift; sourceTree = "<group>"; };
 		39E6206F1FA87050007E74C6 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraView.swift; path = View/CameraView.swift; sourceTree = "<group>"; };
 		39E620721FA87298007E74C6 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraViewController.swift; path = Controllers/CameraViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +161,14 @@
 			name = Font;
 			sourceTree = "<group>";
 		};
+		3985F09B2031B8BF0028538D /* Gobals */ = {
+			isa = PBXGroup;
+			children = (
+				3985F0992031B8BA0028538D /* Globals.swift */,
+			);
+			name = Gobals;
+			sourceTree = "<group>";
+		};
 		39A41D971FCD5C22002921B8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +177,10 @@
 				394630511FE2ABFC00570D83 /* ErrorMessage.swift */,
 				394630531FE9152200570D83 /* RenderSettings.swift */,
 				39102D80200F7690004BB338 /* ArcView.swift */,
+				3985F0912031AC0F0028538D /* PhotoAlbum.swift */,
+				3985F0932031B4550028538D /* Platform.swift */,
+				3985F0952031B5BE0028538D /* Fonts.swift */,
+				3985F0972031B77D0028538D /* LocalizedKeys.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -193,8 +213,8 @@
 				39A41D971FCD5C22002921B8 /* Components */,
 				39E620711FA87289007E74C6 /* Controllers */,
 				39E6206C1FA86FA4007E74C6 /* View */,
-				39E620661FA1E89A007E74C6 /* Globals */,
 				39E620631FA1E87D007E74C6 /* Extensions */,
+				3985F09B2031B8BF0028538D /* Gobals */,
 				391051951FB094A60000774D /* Font */,
 				39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */,
 				39CF5CC61FA07D94006EB23C /* Assets.xcassets */,
@@ -230,14 +250,6 @@
 				39102D82201726A3004BB338 /* BasicExtensions.swift */,
 			);
 			name = Extensions;
-			sourceTree = "<group>";
-		};
-		39E620661FA1E89A007E74C6 /* Globals */ = {
-			isa = PBXGroup;
-			children = (
-				39E620671FA1E8AC007E74C6 /* Globals.swift */,
-			);
-			name = Globals;
 			sourceTree = "<group>";
 		};
 		39E6206C1FA86FA4007E74C6 /* View */ = {
@@ -589,17 +601,21 @@
 				39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */,
 				39102D83201726A3004BB338 /* BasicExtensions.swift in Sources */,
 				39102D81200F7690004BB338 /* ArcView.swift in Sources */,
+				3985F0942031B4550028538D /* Platform.swift in Sources */,
+				3985F0982031B77D0028538D /* LocalizedKeys.swift in Sources */,
 				394630521FE2ABFC00570D83 /* ErrorMessage.swift in Sources */,
+				3985F09A2031B8BA0028538D /* Globals.swift in Sources */,
 				39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */,
 				394630501FE1264A00570D83 /* ProgressHUD.swift in Sources */,
+				3985F0922031AC0F0028538D /* PhotoAlbum.swift in Sources */,
 				39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */,
 				39E6206E1FA86FE3007E74C6 /* HomeView.swift in Sources */,
 				394630541FE9152200570D83 /* RenderSettings.swift in Sources */,
 				39E620751FA87298007E74C6 /* HomeViewController.swift in Sources */,
 				391051A21FB454EF0000774D /* OrientationViewController.swift in Sources */,
 				39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */,
-				39E620681FA1E8AC007E74C6 /* Globals.swift in Sources */,
 				39E620741FA87298007E74C6 /* CameraViewController.swift in Sources */,
+				3985F0962031B5BE0028538D /* Fonts.swift in Sources */,
 				39E620701FA87050007E74C6 /* CameraView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

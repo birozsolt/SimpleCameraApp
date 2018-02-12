@@ -320,7 +320,7 @@ extension CameraView: FloatyDelegate {
      */
     fileprivate func timeLapseHandler(_ item: FloatyItem) -> Void {
         floatingSettingsButton.close()
-        if imageArray.isEmpty {
+        if PhotoAlbum.sharedInstance.imageArray.isEmpty {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.timeLapseBuildError)
             return
         }

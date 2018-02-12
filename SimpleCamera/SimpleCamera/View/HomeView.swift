@@ -61,7 +61,7 @@ class HomeView: UIView {
         cameraButton.backgroundColor = UIColor.black
         cameraButton.setTitleColor(UIColor.white, for: .normal)
         cameraButton.setTitle(LocalizedKeys.camera.description(), for: .normal)
-        cameraButton.titleLabel?.font = getFont(.bold, withSize: 30)
+        cameraButton.titleLabel?.font = Fonts.bold.withSize(30)
     }
     
     //MARK: - Button touch handler function
