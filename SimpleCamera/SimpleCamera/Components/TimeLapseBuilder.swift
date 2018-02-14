@@ -169,11 +169,11 @@ private class VideoWriter {
         
         /// Create the asset writer.
         func createAssetWriter(outputURL: URL) -> AVAssetWriter {
-            guard let assetWriter = try? AVAssetWriter(outputURL: outputURL, fileType: AVFileTypeMPEG4) else {
+            guard let assetWriter = try? AVAssetWriter(outputURL: outputURL, fileType: AVFileType.mp4) else {
                 fatalError("AVAssetWriter() failed")
             }
             
-            guard assetWriter.canApply(outputSettings: avOutputSettings, forMediaType: AVMediaTypeVideo) else {
+            guard assetWriter.canApply(outputSettings: avOutputSettings, forMediaType: AVMediaType.video) else {
                 fatalError("canApplyOutputSettings() failed")
             }
             
@@ -181,7 +181,7 @@ private class VideoWriter {
         }
         
         videoWriter = createAssetWriter(outputURL: renderSettings.outputURL!)
-        videoWriterInput = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: avOutputSettings)
+        videoWriterInput = AVAssetWriterInput(mediaType: AVMediaType.video, outputSettings: avOutputSettings)
         videoWriterInput.transform = CGAffineTransform(rotationAngle: CGFloat(90).toRadians)
         if videoWriter.canAdd(videoWriterInput) {
             videoWriter.add(videoWriterInput)

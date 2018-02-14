@@ -68,7 +68,7 @@ public func postNotifications<T>(
     _ notificationsMatcher: T,
     fromNotificationCenter center: NotificationCenter = .default)
     -> Predicate<Any>
-    where T: Matcher, T.ValueType == [Notification]
+    where T: Predicate, T.ValueType == [Notification]
 {
     _ = mainThread // Force lazy-loading of this value
     let collector = NotificationCollector(notificationCenter: center)

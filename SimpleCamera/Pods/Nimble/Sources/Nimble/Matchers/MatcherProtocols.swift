@@ -12,7 +12,7 @@ public protocol Matcher {
     func doesNotMatch(_ actualExpression: Expression<ValueType>, failureMessage: FailureMessage) throws -> Bool
 }
 
-extension Matcher {
+extension Predicate {
     var predicate: Predicate<ValueType> {
         return Predicate.fromDeprecatedMatcher(self)
     }

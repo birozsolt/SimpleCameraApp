@@ -196,7 +196,7 @@ extension Predicate: Matcher {
 
     /// Compatibility layer for old Matcher API, deprecated.
     /// Same as calling .predicate on a MatcherFunc or NonNilMatcherFunc type.
-    public static func fromDeprecatedMatcher<M>(_ matcher: M) -> Predicate where M: Matcher, M.ValueType == T {
+    public static func fromDeprecatedMatcher<M>(_ matcher: M) -> Predicate where M: Predicate, M.ValueType == T {
         return self.fromDeprecatedFullClosure(matcher.toClosure)
     }
 

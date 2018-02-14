@@ -70,7 +70,7 @@ class HomeView: UIView {
      It is called after touching the camera button.
      - Implemented in the class which adopted *HomeViewProtocol* .
      */
-    func startCamera() {
+    @objc func startCamera() {
         delegate?.cameraButtonTapped()
     }
 }

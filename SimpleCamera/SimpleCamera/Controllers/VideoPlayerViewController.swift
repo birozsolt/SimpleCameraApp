@@ -106,7 +106,7 @@ class VideoPlayerViewController: UIViewController {
 // MARK: - UIGestureRecognizer extension
 extension VideoPlayerViewController {
     
-    func handleTapGestureRecognizer(_ gestureRecognizer: UITapGestureRecognizer) {
+    @objc func handleTapGestureRecognizer(_ gestureRecognizer: UITapGestureRecognizer) {
         switch (self.player.playbackState.rawValue) {
         case PlaybackState.stopped.rawValue:
             showPlaybackImage(image: #imageLiteral(resourceName: "PlayVideo"))

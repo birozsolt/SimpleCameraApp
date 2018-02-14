@@ -10,5 +10,5 @@
 
 @interface OpenCVWrapper : NSObject
     - (void)isThisWorking;
-    - (void)videoStab:(NSURL *)videoUrl;
+    - (void)videoStab:(NSString*)videoUrl;
 @end

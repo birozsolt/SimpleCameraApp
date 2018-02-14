@@ -38,8 +38,8 @@ private func async<T>(style: ExpectationStyle, predicate: Predicate<T>, timeout:
 }
 
 // Deprecated
-internal struct AsyncMatcherWrapper<T, U>: Matcher
-    where U: Matcher, U.ValueType == T {
+internal struct AsyncMatcherWrapper<T, U>: Predicate
+    where U: Predicate, U.ValueType == T {
     let fullMatcher: U
     let timeoutInterval: TimeInterval
     let pollInterval: TimeInterval
@@ -180,7 +180,7 @@ extension Expectation {
     /// This function manages the main run loop (`NSRunLoop.mainRunLoop()`) while this function
     /// is executing. Any attempts to touch the run loop may cause non-deterministic behavior.
     public func toEventually<U>(_ matcher: U, timeout: TimeInterval = AsyncDefaults.Timeout, pollInterval: TimeInterval = AsyncDefaults.PollInterval, description: String? = nil)
-        where U: Matcher, U.ValueType == T {
+        where U: Predicate, U.ValueType == T {
         if expression.isClosure {
             let (pass, msg) = expressionMatches(
                 expression,
@@ -204,7 +204,7 @@ extension Expectation {
     /// This function manages the main run loop (`NSRunLoop.mainRunLoop()`) while this function
     /// is executing. Any attempts to touch the run loop may cause non-deterministic behavior.
     public func toEventuallyNot<U>(_ matcher: U, timeout: TimeInterval = AsyncDefaults.Timeout, pollInterval: TimeInterval = AsyncDefaults.PollInterval, description: String? = nil)
-        where U: Matcher, U.ValueType == T {
+        where U: Predicate, U.ValueType == T {
         if expression.isClosure {
             let (pass, msg) = expressionDoesNotMatch(
                 expression,
@@ -230,7 +230,7 @@ extension Expectation {
     /// This function manages the main run loop (`NSRunLoop.mainRunLoop()`) while this function
     /// is executing. Any attempts to touch the run loop may cause non-deterministic behavior.
     public func toNotEventually<U>(_ matcher: U, timeout: TimeInterval = AsyncDefaults.Timeout, pollInterval: TimeInterval = AsyncDefaults.PollInterval, description: String? = nil)
-        where U: Matcher, U.ValueType == T {
+        where U: Predicate, U.ValueType == T {
         return toEventuallyNot(matcher, timeout: timeout, pollInterval: pollInterval, description: description)
     }
 }

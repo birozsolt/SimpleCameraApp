@@ -19,7 +19,7 @@ public func allPass<T, U>
 }
 
 public func allPass<S, M>(_ elementMatcher: M) -> Predicate<S>
-    where S: Sequence, M: Matcher, S.Iterator.Element == M.ValueType {
+    where S: Sequence, M: Predicate, S.Iterator.Element == M.ValueType {
         return createPredicate(elementMatcher.predicate)
 }
 

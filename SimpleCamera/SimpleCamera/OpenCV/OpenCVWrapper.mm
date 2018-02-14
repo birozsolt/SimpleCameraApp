@@ -61,14 +61,14 @@ struct Trajectory
     double a; // angle
 };
 
-- (void)videoStab:(NSString *) videoUrl {
+- (void)videoStab:(NSString*) videoUrl {
     // For further analysis
     ofstream out_transform("prev_to_cur_transformation.txt");
     ofstream out_trajectory("trajectory.txt");
     ofstream out_smoothed_trajectory("smoothed_trajectory.txt");
     ofstream out_new_transform("new_prev_to_cur_transformation.txt");
     
-    VideoCapture cap(videoUrl);
+    VideoCapture cap(std::string( videoUrl.UTF8String ));
     assert(cap.isOpened());
     
     Mat cur, cur_grey;
@@ -249,7 +249,7 @@ struct Trajectory
         
         // If too big to fit on the screen, then scale it down by 2, hopefully it'll fit :)
         if(canvas.cols > 1920) {
-            resize(canvas, canvas, Size(canvas.cols/2, canvas.rows/2));
+            resize(canvas, canvas, cv::Size(canvas.cols/2, canvas.rows/2));
         }
         
         imshow("before and after", canvas);
@@ -262,7 +262,5 @@ struct Trajectory
         
         k++;
     }
-    
-    return 0;
 }
 @end

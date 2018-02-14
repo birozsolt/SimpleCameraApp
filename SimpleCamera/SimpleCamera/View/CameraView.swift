@@ -58,7 +58,7 @@ class CameraView: UIView {
     fileprivate var floatingSettingsButton = Floaty()
     
     ///The capture device flash mode.
-    fileprivate var flashMode = AVCaptureFlashMode.off
+    fileprivate var flashMode = AVCaptureDevice.FlashMode.off
     
     //MARK: - Object Lifecycle
     
@@ -170,7 +170,7 @@ class CameraView: UIView {
     }
     
     /// Methode for moving the focus preview
-    func moveFocusePreview(gesture: UIPanGestureRecognizer){
+    @objc func moveFocusePreview(gesture: UIPanGestureRecognizer){
         gesture.minimumNumberOfTouches = 1
         gesture.maximumNumberOfTouches = 1
         var velocityX : CGFloat = 0
@@ -217,7 +217,7 @@ class CameraView: UIView {
      It is called after touching the capture button.
      - Implemented in the class which adopted *CameraViewProtocol*.
      */
-    func capturePhoto() {
+    @objc func capturePhoto() {
         delegate?.captureButtonTapped()
     }
     
@@ -225,7 +225,7 @@ class CameraView: UIView {
      It is called after touching the camera switch button.
      - Implemented in the class which adopted *CameraViewProtocol*.
      */
-    func toggleCamera(){
+    @objc func toggleCamera(){
         delegate?.toggleCameraButtonTapped()
     }
     
@@ -233,7 +233,7 @@ class CameraView: UIView {
      It is called after touching the camera background view.
      - Implemented in the class which adopted *CameraViewProtocol*.
      */
-    func addFocusPreview(touchPoint: UITapGestureRecognizer) {
+    @objc func addFocusPreview(touchPoint: UITapGestureRecognizer) {
         delegate?.backgroundTapped(touchPoint: touchPoint)
     }
 }
@@ -244,11 +244,10 @@ extension CameraView: FloatyDelegate {
      It is called after touching the Flash Mode button.
      */
     fileprivate func flashHandler(_ item: FloatyItem) -> Void {
-        guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
             return
         }
-        
         switch self.flashMode {
         case .on:
             self.flashMode = .off
