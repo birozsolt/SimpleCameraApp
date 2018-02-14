@@ -24,6 +24,7 @@
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
 		39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */; };
 		39A4E59C1FD80EE2001D374F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39A4E59B1FD80EE2001D374F /* Localizable.strings */; };
+		39AE04EE203452470016B41D /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39AE04ED203452470016B41D /* opencv2.framework */; };
 		39AF3C281FBC4F4F00735F24 /* OrientationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AF3C271FBC4F4F00735F24 /* OrientationView.swift */; };
 		39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */; };
 		39CF5CC71FA07D94006EB23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39CF5CC61FA07D94006EB23C /* Assets.xcassets */; };
@@ -84,6 +85,7 @@
 		39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeLapseBuilder.swift; path = Components/TimeLapseBuilder.swift; sourceTree = "<group>"; };
 		39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPlayerViewController.swift; path = Controllers/VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		39A4E59B1FD80EE2001D374F /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../Localizable.strings; sourceTree = "<group>"; };
+		39AE04ED203452470016B41D /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../opencv2.framework; sourceTree = "<group>"; };
 		39AF3C271FBC4F4F00735F24 /* OrientationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationView.swift; path = View/OrientationView.swift; sourceTree = "<group>"; };
 		39CF5CBC1FA07D94006EB23C /* SimpleCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39AE04EE203452470016B41D /* opencv2.framework in Frameworks */,
 				6616F878EC63513CEDC370E8 /* Pods_SimpleCamera.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,6 +144,7 @@
 		369C7CDC42A6C66C9C79E414 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				39AE04ED203452470016B41D /* opencv2.framework */,
 				392D224C202C480100C2B871 /* Nimble.framework */,
 				392D224A202C47FC00C2B871 /* Quick.framework */,
 				392D2246202C46C500C2B871 /* XCTest.framework */,
