@@ -20,6 +20,7 @@
 		3985F0962031B5BE0028538D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0952031B5BE0028538D /* Fonts.swift */; };
 		3985F0982031B77D0028538D /* LocalizedKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0972031B77D0028538D /* LocalizedKeys.swift */; };
 		3985F09A2031B8BA0028538D /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0992031B8BA0028538D /* Globals.swift */; };
+		3985F0AB2031D0D40028538D /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0AA2031D0D40028538D /* OpenCVWrapper.mm */; };
 		39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9A1FCD5CAA002921B8 /* TimeLapseBuilder.swift */; };
 		39A41D9F1FCD5CE0002921B8 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A41D9E1FCD5CE0002921B8 /* VideoPlayerViewController.swift */; };
 		39A4E59C1FD80EE2001D374F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39A4E59B1FD80EE2001D374F /* Localizable.strings */; };
@@ -65,7 +66,6 @@
 		392D2246202C46C500C2B871 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		392D224A202C47FC00C2B871 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "../../../Library/Developer/Xcode/DerivedData/SimpleCamera-euaxdflrckatnmbqrngmgspahzcs/Build/Products/Debug-iphonesimulator/Quick/Quick.framework"; sourceTree = "<group>"; };
 		392D224C202C480100C2B871 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "../../../Library/Developer/Xcode/DerivedData/SimpleCamera-euaxdflrckatnmbqrngmgspahzcs/Build/Products/Debug-iphonesimulator/Nimble/Nimble.framework"; sourceTree = "<group>"; };
-		3938D1992017780100ECB8B5 /* SimpleCamera-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleCamera\U0010\U0010\U0010\U0010\U0010-Bridging\U0010-Header.h"; sourceTree = "<group>"; };
 		3946304F1FE1264A00570D83 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressHUD.swift; path = Components/ProgressHUD.swift; sourceTree = "<group>"; };
 		394630511FE2ABFC00570D83 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorMessage.swift; path = Components/ErrorMessage.swift; sourceTree = "<group>"; };
 		394630531FE9152200570D83 /* RenderSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderSettings.swift; path = Components/RenderSettings.swift; sourceTree = "<group>"; };
@@ -74,6 +74,9 @@
 		3985F0952031B5BE0028538D /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Components/Fonts.swift; sourceTree = "<group>"; };
 		3985F0972031B77D0028538D /* LocalizedKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalizedKeys.swift; path = Components/LocalizedKeys.swift; sourceTree = "<group>"; };
 		3985F0992031B8BA0028538D /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = Globals/Globals.swift; sourceTree = "<group>"; };
+		3985F0A82031D0D30028538D /* SimpleCamera-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleCamera-Bridging-Header.h"; sourceTree = "<group>"; };
+		3985F0A92031D0D40028538D /* OpenCVWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenCVWrapper.h; path = OpenCV/OpenCVWrapper.h; sourceTree = "<group>"; };
+		3985F0AA2031D0D40028538D /* OpenCVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OpenCVWrapper.mm; path = OpenCV/OpenCVWrapper.mm; sourceTree = "<group>"; };
 		399936BC202C367100F067CD /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Quick/Quick.framework"; sourceTree = "<group>"; };
 		399936BE202C368100F067CD /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/../build/Debug-iphoneos/Nimble/Nimble.framework"; sourceTree = "<group>"; };
 		399936C0202C368E00F067CD /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Quick/Quick.framework"; sourceTree = "<group>"; };
@@ -169,6 +172,16 @@
 			name = Gobals;
 			sourceTree = "<group>";
 		};
+		3985F0A12031CDDA0028538D /* OpenCV */ = {
+			isa = PBXGroup;
+			children = (
+				3985F0A92031D0D40028538D /* OpenCVWrapper.h */,
+				3985F0AA2031D0D40028538D /* OpenCVWrapper.mm */,
+				3985F0A82031D0D30028538D /* SimpleCamera-Bridging-Header.h */,
+			);
+			name = OpenCV;
+			sourceTree = "<group>";
+		};
 		39A41D971FCD5C22002921B8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,11 +230,11 @@
 				3985F09B2031B8BF0028538D /* Gobals */,
 				391051951FB094A60000774D /* Font */,
 				39CF5CBF1FA07D94006EB23C /* AppDelegate.swift */,
+				3985F0A12031CDDA0028538D /* OpenCV */,
 				39CF5CC61FA07D94006EB23C /* Assets.xcassets */,
 				39CF5CC81FA07D94006EB23C /* LaunchScreen.storyboard */,
 				39A4E59B1FD80EE2001D374F /* Localizable.strings */,
 				39CF5CCB1FA07D94006EB23C /* Info.plist */,
-				3938D1992017780100ECB8B5 /* SimpleCamera-Bridging-Header.h */,
 			);
 			path = SimpleCamera;
 			sourceTree = "<group>";
@@ -364,6 +377,7 @@
 					39CF5CBB1FA07D94006EB23C = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 48NALRU3W3;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					39CF5CCF1FA07D94006EB23C = {
@@ -598,6 +612,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3985F0AB2031D0D40028538D /* OpenCVWrapper.mm in Sources */,
 				39CF5CC01FA07D94006EB23C /* AppDelegate.swift in Sources */,
 				39102D83201726A3004BB338 /* BasicExtensions.swift in Sources */,
 				39102D81200F7690004BB338 /* ArcView.swift in Sources */,
@@ -763,17 +778,20 @@
 			baseConfigurationReference = B21EA3AB42421D514F4FCB93 /* Pods-SimpleCamera.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 48NALRU3W3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SimpleCamera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "SimpleCamera/SimpleCamera\U0010\U0010\U0010\U0010\U0010-Bridging\U0010-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SimpleCamera/SimpleCamera-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -784,17 +802,19 @@
 			baseConfigurationReference = 373824BD3B807B0688E813F3 /* Pods-SimpleCamera.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 48NALRU3W3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SimpleCamera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "SimpleCamera/SimpleCamera\U0010\U0010\U0010\U0010\U0010-Bridging\U0010-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SimpleCamera/SimpleCamera-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
