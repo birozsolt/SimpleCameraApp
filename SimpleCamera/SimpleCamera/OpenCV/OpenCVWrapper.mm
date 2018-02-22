@@ -6,8 +6,8 @@
 //  Copyright © 2018 Biro, Zsolt. All rights reserved.
 //
 
-#import "OpenCVWrapper.h"
 #include <opencv2/opencv.hpp>
+#import "OpenCVWrapper.h"
 #include <iostream>
 #include <cassert>
 #include <cmath>
@@ -122,7 +122,7 @@ struct Trajectory {
     
     vector <Trajectory> trajectory; // trajectory at all frames
     
-    for(size_t i=0; i < prev_to_cur_transform.size(); i++) {
+    for(int i=0; i < prev_to_cur_transform.size(); i++) {
         x += prev_to_cur_transform[i].dx;
         y += prev_to_cur_transform[i].dy;
         a += prev_to_cur_transform[i].da;
@@ -133,7 +133,7 @@ struct Trajectory {
     // Step 3 - Smooth out the trajectory using an averaging window
     vector <Trajectory> smoothed_trajectory; // trajectory at all frames
     
-    for(size_t i=0; i < trajectory.size(); i++) {
+    for(int i=0; i < trajectory.size(); i++) {
         double sum_x = 0;
         double sum_y = 0;
         double sum_a = 0;
@@ -188,10 +188,7 @@ struct Trajectory {
     Mat T(2,3,CV_64F);
     
     int ex = static_cast<int>(cap.get(CV_CAP_PROP_FOURCC));     // Get Codec Type- Int form
-    
     VideoWriter writer(result.path.UTF8String, ex, 18, cv::Size(height,width), true);
-    
-    //writer.open(resultFile, VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(width, height));
     
     if (!writer.isOpened()) {
         cout << "Could not open file for writing";
@@ -201,9 +198,7 @@ struct Trajectory {
     cap.release();
     
     VideoCapture cap2(videoUrl.path.UTF8String);
-    
     assert(cap2.isOpened());
-    
     
     while(k < frames-1) { // don't process the very last frame, no valid transform
         cap2 >> cur;
@@ -224,14 +219,11 @@ struct Trajectory {
         warpAffine(cur, cur2, T, cur.size());
         transpose(cur2, cur2);
         flip(cur2, cur2, 1);
-        // Resize cur2 back to cur size, for better side by side comparison
-        resize(cur2, cur2, cur.size());
         
         double diffx = width * 0.2;
         double diffy = height * 0.2;
         
         cv::Rect myROI((diffx/2),(diffy/2),width-(diffx),height-(diffy));
-//        cv::RotatedRect myROI(Point2f((diffx/2),(diffy/2)),Size2f(width-(diffx),height-(diffy)),90);
         Mat fin = cur2(myROI);
         resize(fin, fin, cv::Size(height,width));
         writer.write(fin);

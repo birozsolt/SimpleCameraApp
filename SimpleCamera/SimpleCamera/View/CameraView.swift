@@ -365,8 +365,8 @@ extension CameraView: FloatyDelegate {
         }
         DispatchQueue.global().async {
             PhotoAlbum.sharedInstance.removeFileAtURL(fileURL: self.settings.stabilizedOutputURL!)
-            let url = OpenCVWrapper.videoStab(self.settings.outputURL, self.settings.stabilizedOutputURL)
-            PhotoAlbum.sharedInstance.saveVideo(videoURL: url!)
+            OpenCVWrapper.videoStab(self.settings.outputURL, self.settings.stabilizedOutputURL)
+            //PhotoAlbum.sharedInstance.saveVideo(videoURL: url!)
             DispatchQueue.main.async {
                 progressHUD.dismiss()
             }
