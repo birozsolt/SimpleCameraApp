@@ -137,6 +137,7 @@ class CameraView: UIView {
         floatingSettingsButton.addItem("Orientation Assist", icon: #imageLiteral(resourceName: "OrientationOff"), handler: orientationHandler(_:))
         floatingSettingsButton.addItem("Time Lapse Builder", icon: #imageLiteral(resourceName: "TimeLapse"), handler: timeLapseHandler(_:))
         floatingSettingsButton.addItem("Video Player", icon: #imageLiteral(resourceName: "VideoPlayer"), handler: videoPlayerHandler(_:))
+        floatingSettingsButton.addItem("Video Stabilizer", icon: #imageLiteral(resourceName: "VideoPlayer"), handler: videoStabilizer(_:))
     }
     
     /// It setting up the orientation view.
@@ -186,7 +187,7 @@ class CameraView: UIView {
             if gestureLocation.x >= 60 && gestureLocation.y >= 60 && gestureLocation.x <= self.videoPreviewView.frame.size.width - 60 && gestureLocation.y <= self.videoPreviewView.frame.size.height - 60 {
                 self.focusPreview.center = gestureLocation
             }
-
+            
             if gestureLocation.x < 60 && gestureLocation.y < 60 {
                 self.focusPreview.center = CGPoint(x: 60, y: 60)
             } else if gestureLocation.x < 60 {
@@ -326,9 +327,7 @@ extension CameraView: FloatyDelegate {
         let progressHUD = ProgressHUD()
         progressHUD.setTextLabel("Building your timelapse...")
         progressHUD.setProgress(0, animated: true)
-        DispatchQueue.main.async {
-            progressHUD.show()
-        }
+        
         
         let timeLapseBuilder = TimeLapseBuilder(renderSettings: settings)
         timeLapseBuilder.render(
@@ -339,7 +338,6 @@ extension CameraView: FloatyDelegate {
             progressHUD.dismiss()
         })
         progressHUD.dismiss()
-        
     }
     
     /**
@@ -353,6 +351,27 @@ extension CameraView: FloatyDelegate {
         floatingSettingsButton.close()
         videoViewController = VideoPlayerViewController(videoUrl: videoUrl)
         gNavigationViewController?.pushViewController(videoViewController!, animated: true)
+    }
+    
+    /**
+     It is called after touching the Video stabilizer button.
+     */
+    fileprivate func videoStabilizer(_ item: FloatyItem) -> Void {
+        let progressHUD = ProgressHUD()
+        progressHUD.setTextLabel("Stabilizing your timelapse video...")
+        progressHUD.setProgress(0, animated: true)
+        DispatchQueue.main.async {
+            progressHUD.show()
+        }
+        DispatchQueue.global().async {
+            PhotoAlbum.sharedInstance.removeFileAtURL(fileURL: self.settings.stabilizedOutputURL!)
+            let url = OpenCVWrapper.videoStab(self.settings.outputURL, self.settings.stabilizedOutputURL)
+            PhotoAlbum.sharedInstance.saveVideo(videoURL: url!)
+            DispatchQueue.main.async {
+                progressHUD.dismiss()
+            }
+        }
+        progressHUD.dismiss()
     }
     
     // MARK: - FloatyDelegate methodes

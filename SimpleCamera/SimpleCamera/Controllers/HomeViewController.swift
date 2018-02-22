@@ -26,9 +26,6 @@ class HomeViewController: UIViewController {
         gNavigationViewController?.navigationBar.backgroundColor = .darkGray
         gNavigationViewController?.navigationBar.barTintColor = .darkGray
         gNavigationViewController?.isNavigationBarHidden = true
-        
-        let openCVWrapper = OpenCVWrapper()
-        openCVWrapper.isThisWorking()
     }
     
     override func loadView() {

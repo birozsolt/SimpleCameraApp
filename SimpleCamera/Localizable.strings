@@ -25,6 +25,7 @@ albumCreateError = "Could not create a new album in the photo library:";
 // MARK: - VideoBuilder
 
 videoName = "timeLapseVideo";
+stabVideoName = "stabilizedTimeLapseVideo";
 videoExt = "mp4";
 photoAlbumName = "TimeLapsePhotos";
 

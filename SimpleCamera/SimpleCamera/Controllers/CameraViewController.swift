@@ -315,7 +315,7 @@ extension CameraViewController: CameraViewProtocol {
             }
             DispatchQueue.global(qos: .background).async {
                 PhotoAlbum.sharedInstance.imageArray.append(image)
-                PhotoAlbum.sharedInstance.saveImage(image: image)
+                //PhotoAlbum.sharedInstance.saveImage(image: image)
                 DispatchQueue.main.async {
                     self.cameraView.onionEffectLayer.image = image
                 }

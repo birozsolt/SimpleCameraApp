@@ -37,4 +37,16 @@ struct RenderSettings {
             return nil
         }
     }
+    
+    ///The output URL where the stabilized video file will be saved
+    var stabilizedOutputURL: URL? {
+        // Use the CachesDirectory so the rendered video file sticks around as long as we need it to.
+        // Using the CachesDirectory ensures the file won't be included in a backup of the app.
+        let fileManager = FileManager.default
+        if let tmpDirURL = try? fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true) {
+            return tmpDirURL.appendingPathComponent(LocalizedKeys.stabVideoName.description()).appendingPathExtension(videoFilenameExt)
+        } else {
+            return nil
+        }
+    }
 }

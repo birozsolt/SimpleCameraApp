@@ -16,16 +16,9 @@
 using namespace std;
 using namespace cv;
 
-@implementation OpenCVWrapper
-    - (void) isThisWorking {
-        cout << "Hey" << endl;
-    }
-
-
 // This video stablisation smooths the global trajectory using a sliding average window
 
 const int SMOOTHING_RADIUS = 30; // In frames. The larger the more stable the video, but less reactive to sudden panning
-const int HORIZONTAL_BORDER_CROP = 20; // In pixels. Crops the border to reduce the black borders from stabilisation being too noticeable.
 
 // 1. Get previous to current frame transformation (dx, dy, da) for all frames
 // 2. Accumulate the transformations to get the image trajectory
@@ -33,46 +26,34 @@ const int HORIZONTAL_BORDER_CROP = 20; // In pixels. Crops the border to reduce 
 // 4. Generate new set of previous to current transform, such that the trajectory ends up being the same as the smoothed trajectory
 // 5. Apply the new transformation to the video
 
-struct TransformParam
-{
+struct TransformParam {
     TransformParam() {}
     TransformParam(double _dx, double _dy, double _da) {
         dx = _dx;
         dy = _dy;
         da = _da;
     }
-    
-    double dx;
-    double dy;
-    double da; // angle
+    double dx, dy, da;
 };
 
-struct Trajectory
-{
+struct Trajectory {
     Trajectory() {}
     Trajectory(double _x, double _y, double _a) {
         x = _x;
         y = _y;
         a = _a;
     }
-    
-    double x;
-    double y;
-    double a; // angle
+    double x, y, a;
 };
 
-- (void)videoStab:(NSString*) videoUrl {
-    // For further analysis
-    ofstream out_transform("prev_to_cur_transformation.txt");
-    ofstream out_trajectory("trajectory.txt");
-    ofstream out_smoothed_trajectory("smoothed_trajectory.txt");
-    ofstream out_new_transform("new_prev_to_cur_transformation.txt");
+@implementation OpenCVWrapper
++ (NSURL*)videoStab:(NSURL*)videoUrl : (NSURL*)result {
+    VideoCapture cap(videoUrl.path.UTF8String);
+    if(!cap.isOpened())  // check if we succeeded
+        cout << "Failed open";
     
-    VideoCapture cap(std::string( videoUrl.UTF8String ));
-    assert(cap.isOpened());
-    
-    Mat cur, cur_grey;
-    Mat prev, prev_grey;
+    Mat cur, cur_grey, cur_orig;
+    Mat prev, prev_grey, prev_orig;
     
     cap >> prev;
     cvtColor(prev, prev_grey, COLOR_BGR2GRAY);
@@ -80,8 +61,7 @@ struct Trajectory
     // Step 1 - Get previous to current frame transformation (dx, dy, da) for all frames
     vector <TransformParam> prev_to_cur_transform; // previous to current
     
-    int k=1;
-    int max_frames = cap.get(CV_CAP_PROP_FRAME_COUNT);
+    int frames=1;
     Mat last_T;
     
     while(true) {
@@ -127,13 +107,10 @@ struct Trajectory
         
         prev_to_cur_transform.push_back(TransformParam(dx, dy, da));
         
-        out_transform << k << " " << dx << " " << dy << " " << da << endl;
-        
         cur.copyTo(prev);
         cur_grey.copyTo(prev_grey);
         
-        cout << "Frame: " << k << "/" << max_frames << " - good optical flow: " << prev_corner2.size() << endl;
-        k++;
+        frames++;
     }
     
     // Step 2 - Accumulate the transformations to get the image trajectory
@@ -151,8 +128,6 @@ struct Trajectory
         a += prev_to_cur_transform[i].da;
         
         trajectory.push_back(Trajectory(x,y,a));
-        
-        out_trajectory << (i+1) << " " << x << " " << y << " " << a << endl;
     }
     
     // Step 3 - Smooth out the trajectory using an averaging window
@@ -179,10 +154,7 @@ struct Trajectory
         double avg_y = sum_y / count;
         
         smoothed_trajectory.push_back(Trajectory(avg_x, avg_y, avg_a));
-        
-        out_smoothed_trajectory << (i+1) << " " << avg_x << " " << avg_y << " " << avg_a << endl;
     }
-    
     // Step 4 - Generate new set of previous to current transform, such that the trajectory ends up being the same as the smoothed trajectory
     vector <TransformParam> new_prev_to_cur_transform;
     
@@ -206,19 +178,35 @@ struct Trajectory
         double da = prev_to_cur_transform[i].da + diff_a;
         
         new_prev_to_cur_transform.push_back(TransformParam(dx, dy, da));
-        
-        out_new_transform << (i+1) << " " << dx << " " << dy << " " << da << endl;
     }
     
     // Step 5 - Apply the new transformation to the video
     cap.set(CV_CAP_PROP_POS_FRAMES, 0);
+    
+    double width = prev.size().width;
+    double height = prev.size().height;
     Mat T(2,3,CV_64F);
     
-    int vert_border = HORIZONTAL_BORDER_CROP * prev.rows / prev.cols; // get the aspect ratio correct
+    int ex = static_cast<int>(cap.get(CV_CAP_PROP_FOURCC));     // Get Codec Type- Int form
     
-    k=0;
-    while(k < max_frames-1) { // don't process the very last frame, no valid transform
-        cap >> cur;
+    VideoWriter writer(result.path.UTF8String, ex, 18, cv::Size(height,width), true);
+    
+    //writer.open(resultFile, VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(width, height));
+    
+    if (!writer.isOpened()) {
+        cout << "Could not open file for writing";
+    }
+    
+    int k=0;
+    cap.release();
+    
+    VideoCapture cap2(videoUrl.path.UTF8String);
+    
+    assert(cap2.isOpened());
+    
+    
+    while(k < frames-1) { // don't process the very last frame, no valid transform
+        cap2 >> cur;
         
         if(cur.data == NULL) {
             break;
@@ -233,34 +221,26 @@ struct Trajectory
         T.at<double>(1,2) = new_prev_to_cur_transform[k].dy;
         
         Mat cur2;
-        
         warpAffine(cur, cur2, T, cur.size());
-        
-        cur2 = cur2(Range(vert_border, cur2.rows-vert_border), Range(HORIZONTAL_BORDER_CROP, cur2.cols-HORIZONTAL_BORDER_CROP));
-        
+        transpose(cur2, cur2);
+        flip(cur2, cur2, 1);
         // Resize cur2 back to cur size, for better side by side comparison
         resize(cur2, cur2, cur.size());
         
-        // Now draw the original and stablised side by side for coolness
-        Mat canvas = Mat::zeros(cur.rows, cur.cols*2+10, cur.type());
+        double diffx = width * 0.2;
+        double diffy = height * 0.2;
         
-        cur.copyTo(canvas(Range::all(), Range(0, cur2.cols)));
-        cur2.copyTo(canvas(Range::all(), Range(cur2.cols+10, cur2.cols*2+10)));
-        
-        // If too big to fit on the screen, then scale it down by 2, hopefully it'll fit :)
-        if(canvas.cols > 1920) {
-            resize(canvas, canvas, cv::Size(canvas.cols/2, canvas.rows/2));
-        }
-        
-        imshow("before and after", canvas);
-        
-        //char str[256];
-        //sprintf(str, "images/%08d.jpg", k);
-        //imwrite(str, canvas);
-        
-        waitKey(20);
+        cv::Rect myROI((diffx/2),(diffy/2),width-(diffx),height-(diffy));
+//        cv::RotatedRect myROI(Point2f((diffx/2),(diffy/2)),Size2f(width-(diffx),height-(diffy)),90);
+        Mat fin = cur2(myROI);
+        resize(fin, fin, cv::Size(height,width));
+        writer.write(fin);
         
         k++;
     }
+    cap2.release();
+    writer.release();
+    cout << "Video Stabilization Complete";
+    return result;
 }
 @end

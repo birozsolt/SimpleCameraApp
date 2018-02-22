@@ -9,6 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface OpenCVWrapper : NSObject
-    - (void)isThisWorking;
-    - (void)videoStab:(NSString*)videoUrl;
+    + (NSURL*)videoStab:(NSURL*)videoUrl : (NSURL*)result;
 @end

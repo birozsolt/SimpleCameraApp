@@ -121,7 +121,7 @@ private class VideoWriter {
         }
         status = CVPixelBufferLockBaseAddress(pxbuffer!, CVPixelBufferLockFlags(rawValue: 0));
         
-        let bufferAddress = CVPixelBufferGetBaseAddress(pxbuffer!);
+        let bufferAddress = CVPixelBufferGetBaseAddressOfPlane(pxbuffer!, 0) //CVPixelBufferGetBaseAddress(pxbuffer!);
         
         
         let rgbColorSpace = CGColorSpaceCreateDeviceRGB();
@@ -137,7 +137,6 @@ private class VideoWriter {
         context?.draw(cgimage!, in: CGRect(x:0, y:0, width:CGFloat(width), height:CGFloat(height)));
         status = CVPixelBufferUnlockBaseAddress(pxbuffer!, CVPixelBufferLockFlags(rawValue: 0));
         return pxbuffer!;
-        
     }
     
     //MARK:- Object Lifecycle
@@ -159,7 +158,7 @@ private class VideoWriter {
         /// Create the pixel buffer adaptor.
         func createPixelBufferAdaptor() {
             let sourcePixelBufferAttributesDictionary = [
-                kCVPixelBufferPixelFormatTypeKey as String: NSNumber(value: kCVPixelFormatType_32ARGB),
+                kCVPixelBufferPixelFormatTypeKey as String: NSNumber(value: kCVPixelFormatType_420YpCbCr8Planar),
                 kCVPixelBufferWidthKey as String: NSNumber(value: Float(renderSettings.size.width)),
                 kCVPixelBufferHeightKey as String: NSNumber(value: Float(renderSettings.size.height))
             ]
@@ -176,7 +175,6 @@ private class VideoWriter {
             guard assetWriter.canApply(outputSettings: avOutputSettings, forMediaType: AVMediaType.video) else {
                 fatalError("canApplyOutputSettings() failed")
             }
-            
             return assetWriter
         }
         
