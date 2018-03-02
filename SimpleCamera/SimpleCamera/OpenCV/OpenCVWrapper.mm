@@ -19,7 +19,7 @@ using namespace cv;
 // This video stablisation smooths the global trajectory using a sliding average window
 
 const int SMOOTHING_RADIUS = 30; // In frames. The larger the more stable the video, but less reactive to sudden panning
-
+const int HORIZONTAL_BORDER_CROP = 20; // In pixels. Crops the border to reduce the black borders from stabilisation being too noticeable.
 // 1. Get previous to current frame transformation (dx, dy, da) for all frames
 // 2. Accumulate the transformations to get the image trajectory
 // 3. Smooth out the trajectory using an averaging window
@@ -47,8 +47,8 @@ struct Trajectory {
 };
 
 @implementation OpenCVWrapper
-+ (NSURL*)videoStab:(NSURL*)videoUrl : (NSURL*)result {
-    VideoCapture cap(videoUrl.path.UTF8String);
++ (void)stabilizeVideoAtUrl:(NSURL*)inputUrl outputUrl: (NSURL*)outputUrl {
+    VideoCapture cap(inputUrl.path.UTF8String);
     if(!cap.isOpened())  // check if we succeeded
         cout << "Failed open";
     
@@ -77,10 +77,10 @@ struct Trajectory {
         vector <Point2f> prev_corner, cur_corner;
         vector <Point2f> prev_corner2, cur_corner2;
         vector <uchar> status;
-        vector <float> err;
+        vector <float> error;
         
         goodFeaturesToTrack(prev_grey, prev_corner, 200, 0.01, 30);
-        calcOpticalFlowPyrLK(prev_grey, cur_grey, prev_corner, cur_corner, status, err);
+        calcOpticalFlowPyrLK(prev_grey, cur_grey, prev_corner, cur_corner, status, error);
         
         // weed out bad matches
         for(size_t i=0; i < status.size(); i++) {
@@ -183,12 +183,13 @@ struct Trajectory {
     // Step 5 - Apply the new transformation to the video
     cap.set(CV_CAP_PROP_POS_FRAMES, 0);
     
-    double width = prev.size().width;
-    double height = prev.size().height;
+    double width = 960;
+    double height = 540;
     Mat T(2,3,CV_64F);
     
+    int vert_border = HORIZONTAL_BORDER_CROP * prev.rows / prev.cols;
     int ex = static_cast<int>(cap.get(CV_CAP_PROP_FOURCC));     // Get Codec Type- Int form
-    VideoWriter writer(result.path.UTF8String, ex, 18, cv::Size(height,width), true);
+    VideoWriter writer(outputUrl.path.UTF8String, ex, 18, cv::Size(height,width), true);
     
     if (!writer.isOpened()) {
         cout << "Could not open file for writing";
@@ -197,12 +198,11 @@ struct Trajectory {
     int k=0;
     cap.release();
     
-    VideoCapture cap2(videoUrl.path.UTF8String);
+    VideoCapture cap2(inputUrl.path.UTF8String);
     assert(cap2.isOpened());
     
     while(k < frames-1) { // don't process the very last frame, no valid transform
         cap2 >> cur;
-        
         if(cur.data == NULL) {
             break;
         }
@@ -217,9 +217,12 @@ struct Trajectory {
         
         Mat cur2;
         warpAffine(cur, cur2, T, cur.size());
+        
+        cur2 = cur2(Range(vert_border, cur2.rows-vert_border), Range(HORIZONTAL_BORDER_CROP, cur2.cols - HORIZONTAL_BORDER_CROP));
+        
         transpose(cur2, cur2);
         flip(cur2, cur2, 1);
-        
+        resize(cur2, cur2, cur.size());
         double diffx = width * 0.2;
         double diffy = height * 0.2;
         
@@ -233,6 +236,6 @@ struct Trajectory {
     cap2.release();
     writer.release();
     cout << "Video Stabilization Complete";
-    return result;
+    //return outputUrl;
 }
 @end

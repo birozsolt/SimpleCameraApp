@@ -16,7 +16,7 @@ class PhotoAlbum: NSObject {
     private var assetCollection: PHAssetCollection!
     
     ///Contains images for creating timelapse video.
-    var imageArray = [UIImage]()
+    var imageArray = Array<UIImage>()
     
     fileprivate override init() {
         super.init()

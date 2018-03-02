@@ -12,7 +12,7 @@ import Floaty
 /// CameraView protocol used for implementing button actions.
 protocol CameraViewProtocol {
     /// Capture button handler touch handler function.
-    func captureButtonTapped()
+    func captureButtonTapped(motionData : MotionData)
     
     /// Camera switch button touch handler function.
     func toggleCameraButtonTapped()
@@ -219,7 +219,7 @@ class CameraView: UIView {
      - Implemented in the class which adopted *CameraViewProtocol*.
      */
     @objc func capturePhoto() {
-        delegate?.captureButtonTapped()
+        delegate?.captureButtonTapped(motionData: orientationViewController.getMotionData())
     }
     
     /**
@@ -327,7 +327,9 @@ extension CameraView: FloatyDelegate {
         let progressHUD = ProgressHUD()
         progressHUD.setTextLabel("Building your timelapse...")
         progressHUD.setProgress(0, animated: true)
-        
+        DispatchQueue.main.async {
+            progressHUD.show()
+        }
         
         let timeLapseBuilder = TimeLapseBuilder(renderSettings: settings)
         timeLapseBuilder.render(
@@ -336,6 +338,8 @@ extension CameraView: FloatyDelegate {
                 progressHUD.setProgress(progressPercentage, animated: true)
         },  completion: {
             progressHUD.dismiss()
+            self.onionEffectLayer.isHidden = true
+            self.onionEffectLayer.image = nil
         })
         progressHUD.dismiss()
     }
@@ -362,11 +366,12 @@ extension CameraView: FloatyDelegate {
         progressHUD.setProgress(0, animated: true)
         DispatchQueue.main.async {
             progressHUD.show()
+            self.floatingSettingsButton.close()
         }
         DispatchQueue.global().async {
             PhotoAlbum.sharedInstance.removeFileAtURL(fileURL: self.settings.stabilizedOutputURL!)
-            OpenCVWrapper.videoStab(self.settings.outputURL, self.settings.stabilizedOutputURL)
-            //PhotoAlbum.sharedInstance.saveVideo(videoURL: url!)
+            OpenCVWrapper.stabilizeVideo(at: self.settings.outputURL, outputUrl: self.settings.stabilizedOutputURL)
+            PhotoAlbum.sharedInstance.saveVideo(videoURL: self.settings.stabilizedOutputURL!)
             DispatchQueue.main.async {
                 progressHUD.dismiss()
             }

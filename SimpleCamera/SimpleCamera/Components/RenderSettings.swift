@@ -12,7 +12,7 @@ import AVFoundation
 struct RenderSettings {
     
     ///Size of the output video
-    var size : CGSize = CGSize(width: 1920, height: 1080)
+    var size : CGSize = CGSize(width: 1280, height: 720) // 1920x1080 // 1280x720 // 960x540
     
     ///Frame per second in the output video
     var fps: Int32 = 18

@@ -21,7 +21,7 @@ class TimeLapseBuilder {
     fileprivate var frameNum = 0
     
     fileprivate let currentProgress = Progress(totalUnitCount: Int64(PhotoAlbum.sharedInstance.imageArray.count))
- 
+    
     //MARK: - Object Lifecycle
     
     /**
@@ -41,7 +41,6 @@ class TimeLapseBuilder {
     func render(_ progress: @escaping ((Progress) -> Void), completion: (()->Void)?) {
         // The VideoWriter will fail if a file exists at the URL, so clear it out first.
         PhotoAlbum.sharedInstance.removeFileAtURL(fileURL: settings.outputURL!)
-        
         videoWriter.start()
         videoWriter.render(appendPixelBuffers: appendPixelBuffers) {
             progress(self.currentProgress)
@@ -57,7 +56,6 @@ class TimeLapseBuilder {
      */
     fileprivate func appendPixelBuffers(writer: VideoWriter) -> Bool {
         let frameDuration = CMTimeMake(Int64(TimeLapseBuilder.kTimescale / settings.fps), TimeLapseBuilder.kTimescale)
-        
         while !PhotoAlbum.sharedInstance.imageArray.isEmpty {
             
             if writer.isReadyForData == false {
@@ -94,37 +92,41 @@ private class VideoWriter {
     //MARK: - Class functions
     
     fileprivate class func pixelBufferFromImage(image: UIImage, pixelBufferPool: CVPixelBufferPool, size: CGSize) -> CVPixelBuffer {
-        let ciimage = CIImage(image: image)
-        let tmpcontext = CIContext(options: nil)
-        let cgimage =  tmpcontext.createCGImage(ciimage!, from: ciimage!.extent)
+        var ciimage = CIImage(image: image)
+        //print(PhotoAlbum.sharedInstance.imageArray.averageRoll)
+        guard let motionData = image.motionData else {
+            fatalError()
+        }
+        var transform = CATransform3DIdentity
+        transform.m34 = 1.0 / -500.0
+        transform = CATransform3DRotate(transform, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averageRoll).toRadians, 1, 0, 0)
+        ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
+        print(PhotoAlbum.sharedInstance.imageArray.averageRoll, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averageRoll))
         
-        let cfnumPointer = UnsafeMutablePointer<UnsafeRawPointer>.allocate(capacity: 1)
-        let cfnum = CFNumberCreate(kCFAllocatorDefault, .intType, cfnumPointer)
-        let keys: [CFString] = [kCVPixelBufferCGImageCompatibilityKey, kCVPixelBufferCGBitmapContextCompatibilityKey, kCVPixelBufferBytesPerRowAlignmentKey]
-        let values: [CFTypeRef] = [kCFBooleanTrue, kCFBooleanTrue, cfnum!]
-        let keysPointer = UnsafeMutablePointer<UnsafeRawPointer?>.allocate(capacity: 1)
-        let valuesPointer =  UnsafeMutablePointer<UnsafeRawPointer?>.allocate(capacity: 1)
-        keysPointer.initialize(to: keys)
-        valuesPointer.initialize(to: values)
+        transform = CATransform3DIdentity
+        transform.m34 = 1.0 / -500.0
+        transform = CATransform3DRotate(transform, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averagePitch).toRadians, 0, 1, 0)
+        ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
+
+        transform = CATransform3DIdentity
+        transform.m34 = 1.0 / -500.0
+        transform = CATransform3DRotate(transform, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averageYaw).toRadians, 0, 0, 1)
+        ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
         
-        let options = CFDictionaryCreate(kCFAllocatorDefault, keysPointer, valuesPointer, keys.count, nil, nil)
-        
-        let width = cgimage!.width
-        let height = cgimage!.height
+        let width: Int = Int(size.width)
+        let height: Int = Int(size.height)
         
         var pxbuffer: CVPixelBuffer?
         // if pxbuffer = nil, you will get status = -6661
-        var status = CVPixelBufferCreate(kCFAllocatorDefault, width, height,
-                                         kCVPixelFormatType_32BGRA, options, &pxbuffer)
+        let status =  CVPixelBufferPoolCreatePixelBuffer(kCFAllocatorDefault, pixelBufferPool, &pxbuffer)
         if status != kCVReturnSuccess {
             fatalError("CVPixelBufferPoolCreatePixelBuffer() failed")
         }
-        status = CVPixelBufferLockBaseAddress(pxbuffer!, CVPixelBufferLockFlags(rawValue: 0));
+        CVPixelBufferLockBaseAddress(pxbuffer!, CVPixelBufferLockFlags(rawValue: 0))
         
-        let bufferAddress = CVPixelBufferGetBaseAddressOfPlane(pxbuffer!, 0) //CVPixelBufferGetBaseAddress(pxbuffer!);
+        let bufferAddress = CVPixelBufferGetBaseAddress(pxbuffer!)
         
-        
-        let rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
         let bytesperrow = CVPixelBufferGetBytesPerRow(pxbuffer!)
         let context = CGContext(data: bufferAddress,
                                 width: width,
@@ -132,11 +134,15 @@ private class VideoWriter {
                                 bitsPerComponent: 8,
                                 bytesPerRow: bytesperrow,
                                 space: rgbColorSpace,
-                                bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue);
+                                bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
+        context?.clear(CGRect(x:0, y:0, width:CGFloat(width), height:CGFloat(height)))
+        let tmpcontext = CIContext(options: nil)
+        
+        let cgimage =  tmpcontext.createCGImage(ciimage!, from: ciimage!.extent)
         context?.concatenate(CGAffineTransform(rotationAngle: 0))
-        context?.draw(cgimage!, in: CGRect(x:0, y:0, width:CGFloat(width), height:CGFloat(height)));
-        status = CVPixelBufferUnlockBaseAddress(pxbuffer!, CVPixelBufferLockFlags(rawValue: 0));
-        return pxbuffer!;
+        context?.draw(cgimage!, in: CGRect(x:0, y:0, width:CGFloat(width), height:CGFloat(height)))
+        CVPixelBufferUnlockBaseAddress(pxbuffer!, CVPixelBufferLockFlags(rawValue: 0))
+        return pxbuffer!
     }
     
     //MARK:- Object Lifecycle
@@ -158,7 +164,7 @@ private class VideoWriter {
         /// Create the pixel buffer adaptor.
         func createPixelBufferAdaptor() {
             let sourcePixelBufferAttributesDictionary = [
-                kCVPixelBufferPixelFormatTypeKey as String: NSNumber(value: kCVPixelFormatType_420YpCbCr8Planar),
+                kCVPixelBufferPixelFormatTypeKey as String: NSNumber(value: kCVPixelFormatType_32BGRA),
                 kCVPixelBufferWidthKey as String: NSNumber(value: Float(renderSettings.size.width)),
                 kCVPixelBufferHeightKey as String: NSNumber(value: Float(renderSettings.size.height))
             ]

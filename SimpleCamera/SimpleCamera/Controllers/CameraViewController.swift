@@ -307,18 +307,18 @@ class CameraViewController: UIViewController {
 
 extension CameraViewController: CameraViewProtocol {
     
-    func captureButtonTapped() {
+    func captureButtonTapped(motionData: MotionData) {
         captureImage{ (image, error) in
             guard let image = image else {
                 print(error ?? "Image capture error")
                 return
             }
-            DispatchQueue.global(qos: .background).async {
-                PhotoAlbum.sharedInstance.imageArray.append(image)
-                //PhotoAlbum.sharedInstance.saveImage(image: image)
-                DispatchQueue.main.async {
-                    self.cameraView.onionEffectLayer.image = image
-                }
+            image.motionData = motionData
+            PhotoAlbum.sharedInstance.imageArray.addImage(image)
+            print(image.motionData!)
+            //PhotoAlbum.sharedInstance.saveImage(image: image)
+            DispatchQueue.main.async {
+                self.cameraView.onionEffectLayer.image = image
             }
         }
     }
@@ -380,7 +380,7 @@ extension CameraViewController: CameraViewProtocol {
         layer.strokeColor = UIColor.red.cgColor
         layer.fillColor = UIColor.clear.cgColor
         layer.lineWidth = 1.0
-
+        
         if (cameraView.videoPreviewView.layer.sublayers?.count)! > 1 {
             cameraView.videoPreviewView.layer.sublayers?.removeLast()
         }
