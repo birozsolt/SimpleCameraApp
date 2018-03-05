@@ -353,7 +353,11 @@ extension CameraView: FloatyDelegate {
             return
         }
         floatingSettingsButton.close()
-        videoViewController = VideoPlayerViewController(videoUrl: videoUrl)
+        if let stabVideo = settings.stabilizedOutputURL {
+            videoViewController = VideoPlayerViewController(videoUrl: stabVideo)
+        } else {
+            videoViewController = VideoPlayerViewController(videoUrl: videoUrl)
+        }
         gNavigationViewController?.pushViewController(videoViewController!, animated: true)
     }
     
@@ -368,7 +372,7 @@ extension CameraView: FloatyDelegate {
             progressHUD.show()
             self.floatingSettingsButton.close()
         }
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .userInitiated).async {
             PhotoAlbum.sharedInstance.removeFileAtURL(fileURL: self.settings.stabilizedOutputURL!)
             OpenCVWrapper.stabilizeVideo(at: self.settings.outputURL, outputUrl: self.settings.stabilizedOutputURL)
             PhotoAlbum.sharedInstance.saveVideo(videoURL: self.settings.stabilizedOutputURL!)

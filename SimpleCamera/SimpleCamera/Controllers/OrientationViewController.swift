@@ -9,6 +9,7 @@
 import CoreMotion
 import UIKit
 
+/// Storing motion informations
 struct MotionData {
     /// Rotation around x - axis
     var roll: CGFloat = 0
@@ -18,6 +19,14 @@ struct MotionData {
     
     ///Rotation around z - axis
     var yaw: CGFloat = 0
+    
+    // Total and average roll, pitch, yaw values of captured images
+    var totalRoll : CGFloat = 0
+    var averageRoll : CGFloat = 0
+    var totalPitch : CGFloat = 0
+    var averagePitch : CGFloat = 0
+    var totalYaw : CGFloat = 0
+    var averageYaw : CGFloat = 0
     
     init() {
         self.roll = 0

@@ -67,11 +67,19 @@ extension UIView {
     }
 }
 
+//MARK: UIImage extension
+
 extension UIImage {
+    /**
+     Private struct for storing device motion information with image
+     */
     private struct Motion{
         static var motionData : MotionData = MotionData(roll: 0, pitch: 0, yaw: 0)
     }
     
+    /**
+     Public variable for setting and getting motion information of the UIImage
+     */
     var motionData: MotionData? {
         get{
             return objc_getAssociatedObject(self, &Motion.motionData) as? MotionData
@@ -84,72 +92,67 @@ extension UIImage {
     }
 }
 
-struct Something {
-    var totalRoll : CGFloat = 0
-    var averageRoll : CGFloat = 0
-    var totalPitch : CGFloat = 0
-    var averagePitch : CGFloat = 0
-    var totalYaw : CGFloat = 0
-    var averageYaw : CGFloat = 0
-}
-
-var something = Something()
+//MARK: Array extension
 
 extension Array where Element: UIImage{
     var totalRoll : CGFloat{
         set{
-            something.totalRoll += newValue
+            motion.totalRoll += newValue
         }
         get{
-            return something.totalRoll
+            return motion.totalRoll
         }
     }
     
     var averageRoll : CGFloat{
         get{
-            return something.averageRoll
+            return motion.averageRoll
         }
     }
     
     var totalPitch : CGFloat{
         set{
-            something.totalPitch += newValue
+            motion.totalPitch += newValue
         }
         get{
-            return something.totalPitch
+            return motion.totalPitch
         }
     }
     
     var averagePitch : CGFloat{
         get{
-            return something.averagePitch
+            return motion.averagePitch
         }
     }
     
     var totalYaw : CGFloat{
         set{
-            something.totalYaw += newValue
+            motion.totalYaw += newValue
         }
         get{
-            return something.totalYaw
+            return motion.totalYaw
         }
     }
     
     var averageYaw : CGFloat{
         get{
-            return something.averageYaw
+            return motion.averageYaw
         }
     }
     
-    mutating func addImage(_ newElement: Element) {
-        self.append(newElement)
-        if let motion = newElement.motionData {
-            totalRoll = motion.roll
-            totalPitch = motion.pitch
-            totalYaw = motion.yaw
-            something.averageRoll = something.totalRoll / CGFloat(self.count)
-            something.averagePitch = something.totalPitch / CGFloat(self.count)
-            something.averageYaw = something.totalYaw / CGFloat(self.count)
+    /**
+     Adding image to the array and calculating average motion data.
+     - parameter newElement: The new image which we want to add to the Array
+     */
+    mutating func addImage(_ image: Element) {
+        self.append(image)
+        if let data = image.motionData {
+            totalRoll = data.roll
+            totalPitch = data.pitch
+            totalYaw = data.yaw
+            motion.averageRoll = motion.totalRoll / CGFloat(self.count)
+            motion.averagePitch = motion.totalPitch / CGFloat(self.count)
+            motion.averageYaw = motion.totalYaw / CGFloat(self.count)
         }
     }
 }

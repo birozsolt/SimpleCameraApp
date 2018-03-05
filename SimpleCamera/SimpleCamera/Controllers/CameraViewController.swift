@@ -315,7 +315,6 @@ extension CameraViewController: CameraViewProtocol {
             }
             image.motionData = motionData
             PhotoAlbum.sharedInstance.imageArray.addImage(image)
-            print(image.motionData!)
             //PhotoAlbum.sharedInstance.saveImage(image: image)
             DispatchQueue.main.async {
                 self.cameraView.onionEffectLayer.image = image

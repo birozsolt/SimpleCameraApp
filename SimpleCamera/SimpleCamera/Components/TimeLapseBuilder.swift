@@ -41,11 +41,13 @@ class TimeLapseBuilder {
     func render(_ progress: @escaping ((Progress) -> Void), completion: (()->Void)?) {
         // The VideoWriter will fail if a file exists at the URL, so clear it out first.
         PhotoAlbum.sharedInstance.removeFileAtURL(fileURL: settings.outputURL!)
-        videoWriter.start()
-        videoWriter.render(appendPixelBuffers: appendPixelBuffers) {
-            progress(self.currentProgress)
-            PhotoAlbum.sharedInstance.saveVideo(videoURL: self.settings.outputURL!)
-            completion?()
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.videoWriter.start()
+            self.videoWriter.render(appendPixelBuffers: self.appendPixelBuffers) {
+                progress(self.currentProgress)
+                PhotoAlbum.sharedInstance.saveVideo(videoURL: self.settings.outputURL!)
+                completion?()
+            }
         }
     }
     
@@ -63,14 +65,15 @@ class TimeLapseBuilder {
                 return false
             }
             let image = PhotoAlbum.sharedInstance.imageArray.removeFirst()
-            let presentationTime = CMTimeMultiply(frameDuration, Int32(frameNum))
+            let presentationTime = CMTimeMultiply(frameDuration, Int32(self.frameNum))
             let success = videoWriter.addImage(image: image, withPresentationTime: presentationTime)
             if success == false {
                 fatalError("addImage() failed")
             }
-            currentProgress.completedUnitCount = Int64(frameNum)
-            frameNum += 1
+            self.currentProgress.completedUnitCount = Int64(self.frameNum)
+            self.frameNum += 1
         }
+        
         // Inform writer all buffers have been written.
         return true
     }
@@ -101,16 +104,16 @@ private class VideoWriter {
         transform.m34 = 1.0 / -500.0
         transform = CATransform3DRotate(transform, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averageRoll).toRadians, 1, 0, 0)
         ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
-        print(PhotoAlbum.sharedInstance.imageArray.averageRoll, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averageRoll))
+        //        print(PhotoAlbum.sharedInstance.imageArray.averageRoll, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averageRoll))
         
         transform = CATransform3DIdentity
         transform.m34 = 1.0 / -500.0
-        transform = CATransform3DRotate(transform, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averagePitch).toRadians, 0, 1, 0)
+        transform = CATransform3DRotate(transform, motionData.pitch.distance(to: PhotoAlbum.sharedInstance.imageArray.averagePitch).toRadians, 0, 1, 0)
         ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
-
+        
         transform = CATransform3DIdentity
         transform.m34 = 1.0 / -500.0
-        transform = CATransform3DRotate(transform, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averageYaw).toRadians, 0, 0, 1)
+        transform = CATransform3DRotate(transform, motionData.yaw.distance(to: PhotoAlbum.sharedInstance.imageArray.averageYaw).toRadians, 0, 0, 1)
         ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
         
         let width: Int = Int(size.width)
@@ -237,7 +240,6 @@ private class VideoWriter {
     fileprivate func addImage(image: UIImage, withPresentationTime presentationTime: CMTime) -> Bool {
         
         precondition(pixelBufferAdaptor != nil, "Call start() to initialze the writer")
-        
         let pixelBuffer = VideoWriter.pixelBufferFromImage(image: image, pixelBufferPool: pixelBufferAdaptor.pixelBufferPool!, size: renderSettings.size)
         return pixelBufferAdaptor.append(pixelBuffer, withPresentationTime: presentationTime)
     }
