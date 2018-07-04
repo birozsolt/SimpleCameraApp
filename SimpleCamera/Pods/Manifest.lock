@@ -1,7 +1,12 @@
 PODS:
+  - Bolts/Tasks (1.9.0)
   - Floaty (3.0.1)
   - Nimble (7.0.3)
   - OpenCV2 (3.2.0)
+  - Parse (1.16.0):
+    - Parse/Core (= 1.16.0)
+  - Parse/Core (1.16.0):
+    - Bolts/Tasks (~> 1.9)
   - Player (0.7.0)
   - PureLayout (3.0.2)
   - Quick (1.2.0)
@@ -11,20 +16,23 @@ DEPENDENCIES:
   - Floaty (~> 3.0.0)
   - Nimble
   - OpenCV2
+  - Parse
   - Player (~> 0.7.0)
   - PureLayout
   - Quick
   - SwiftLint
 
 SPEC CHECKSUMS:
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Floaty: bb7a353deee9ddcc14c584ca9c538efdc19669f2
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   OpenCV2: b28a4d61c9999ec741ec67c961267fde74b9c2c5
+  Parse: 5b36dc2c2f0a2fd82a257ae018bc3d68cf2c24e7
   Player: f3a8a982e5c4a7cf6a8e4307b16597f2b7a7af0d
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
 
-PODFILE CHECKSUM: 29764a29bb151c6ad832a31cbaa678d6bfd2b84d
+PODFILE CHECKSUM: 70beecba054e33b8c7d67f99698aa8c41b95ce0a
 
 COCOAPODS: 1.4.0

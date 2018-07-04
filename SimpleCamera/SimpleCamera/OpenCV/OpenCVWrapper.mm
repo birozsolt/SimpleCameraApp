@@ -52,11 +52,12 @@ struct Trajectory {
     if(!cap.isOpened())  // check if we succeeded
         cout << "Failed open";
     
-    Mat cur, cur_grey, cur_orig;
-    Mat prev, prev_grey, prev_orig;
-    
-    cap >> prev;
-    cvtColor(prev, prev_grey, COLOR_BGR2GRAY);
+    Mat currentFrame, currentGrey;
+    Mat firstFrame, firstGrey;
+    vector <Point2f> firstCorners, currentCorner;
+    vector <Point2f> goodNew, goodOld;
+    vector <uchar> status;
+    vector <float> error;
     
     // Step 1 - Get previous to current frame transformation (dx, dy, da) for all frames
     vector <TransformParam> prev_to_cur_transform; // previous to current
@@ -64,34 +65,36 @@ struct Trajectory {
     int frames=1;
     Mat last_T;
     
+    // Take first frame and find corners in it
+    cap >> firstFrame;
+    cvtColor(firstFrame, firstGrey, COLOR_BGR2GRAY);
+    
+    
     while(true) {
-        cap >> cur;
+        cap >> currentFrame;
         
-        if(cur.data == NULL) {
+        if(currentFrame.data == NULL) {
             break;
         }
+        bilateralFilter( currentFrame, currentGrey, 9, 50, 50 );
+        bilateralFilter( firstFrame, firstGrey, 9, 50, 50 );
         
-        cvtColor(cur, cur_grey, COLOR_BGR2GRAY);
+        cvtColor(currentFrame, currentGrey, COLOR_BGR2GRAY);
         
         // vector from prev to cur
-        vector <Point2f> prev_corner, cur_corner;
-        vector <Point2f> prev_corner2, cur_corner2;
-        vector <uchar> status;
-        vector <float> error;
-        
-        goodFeaturesToTrack(prev_grey, prev_corner, 200, 0.01, 30);
-        calcOpticalFlowPyrLK(prev_grey, cur_grey, prev_corner, cur_corner, status, error);
+        goodFeaturesToTrack(firstFrame, firstCorners, 100, 0.3, 7);
+        calcOpticalFlowPyrLK(firstGrey, currentGrey, firstCorners, currentCorner, status, error);
         
         // weed out bad matches
         for(size_t i=0; i < status.size(); i++) {
             if(status[i]) {
-                prev_corner2.push_back(prev_corner[i]);
-                cur_corner2.push_back(cur_corner[i]);
+                goodNew.push_back(currentCorner[i]);
+                goodOld.push_back(firstCorners[i]);
             }
         }
         
         // translation + rotation only
-        Mat T = estimateRigidTransform(prev_corner2, cur_corner2, false); // false = rigid transform, no scaling/shearing
+        Mat T = estimateRigidTransform(goodOld, goodNew, false);
         
         // in rare cases no transform is found. We'll just use the last known good transform.
         if(T.data == NULL) {
@@ -107,11 +110,14 @@ struct Trajectory {
         
         prev_to_cur_transform.push_back(TransformParam(dx, dy, da));
         
-        cur.copyTo(prev);
-        cur_grey.copyTo(prev_grey);
+        currentFrame.copyTo(firstFrame);
+        currentGrey.copyTo(firstGrey);
         
         frames++;
     }
+    
+    currentGrey.release();
+    firstGrey.release();
     
     // Step 2 - Accumulate the transformations to get the image trajectory
     
@@ -187,7 +193,7 @@ struct Trajectory {
     double height = 540;
     Mat T(2,3,CV_64F);
     
-    int vert_border = HORIZONTAL_BORDER_CROP * prev.rows / prev.cols;
+    int vert_border = HORIZONTAL_BORDER_CROP * firstFrame.rows / firstFrame.cols;
     int ex = static_cast<int>(cap.get(CV_CAP_PROP_FOURCC));     // Get Codec Type- Int form
     VideoWriter writer(outputUrl.path.UTF8String, ex, 18, cv::Size(height,width), true);
     
@@ -202,8 +208,8 @@ struct Trajectory {
     assert(cap2.isOpened());
     
     while(k < frames-1) { // don't process the very last frame, no valid transform
-        cap2 >> cur;
-        if(cur.data == NULL) {
+        cap2 >> currentFrame;
+        if(currentFrame.data == NULL) {
             break;
         }
         
@@ -216,13 +222,13 @@ struct Trajectory {
         T.at<double>(1,2) = new_prev_to_cur_transform[k].dy;
         
         Mat cur2;
-        warpAffine(cur, cur2, T, cur.size());
+        warpAffine(currentFrame, cur2, T, currentFrame.size(),INTER_NEAREST|WARP_INVERSE_MAP, BORDER_CONSTANT);
         
         cur2 = cur2(Range(vert_border, cur2.rows-vert_border), Range(HORIZONTAL_BORDER_CROP, cur2.cols - HORIZONTAL_BORDER_CROP));
         
         transpose(cur2, cur2);
         flip(cur2, cur2, 1);
-        resize(cur2, cur2, cur.size());
+        resize(cur2, cur2, currentFrame.size());
         double diffx = width * 0.2;
         double diffy = height * 0.2;
         
@@ -233,6 +239,7 @@ struct Trajectory {
         
         k++;
     }
+    currentFrame.release();
     cap2.release();
     writer.release();
     cout << "Video Stabilization Complete";

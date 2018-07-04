@@ -76,6 +76,8 @@ class CameraViewController: UIViewController {
     ///The currently active camera position
     fileprivate var currentCameraPosition: CameraPosition?
     
+    fileprivate var sessionQueue = DispatchQueue(label: "SessionQueue")
+    
     override var prefersStatusBarHidden: Bool {return true}
     
     // MARK: View Lifecycle
@@ -120,6 +122,7 @@ class CameraViewController: UIViewController {
         /// Initiate the *captureSession* object.
         func createCaptureSession() {
             captureSession = AVCaptureSession()
+            captureSession!.sessionPreset = AVCaptureSession.Preset.photo
         }
         
         /**
@@ -127,9 +130,6 @@ class CameraViewController: UIViewController {
          - throws: *CameraControllerError* if no camera available.
          */
         func configureCaptureDevices() throws {
-            let session = AVCaptureSession()
-            session.sessionPreset = AVCaptureSession.Preset.photo
-            
             let devices = AVCaptureDevice.devices(for: AVMediaType.video)
             if devices.isEmpty {
                 isCameraAlreadySetUp = false
@@ -189,7 +189,7 @@ class CameraViewController: UIViewController {
             captureSession.startRunning()
         }
         
-        DispatchQueue(label: "prepare").async {
+        sessionQueue.async {
             do {
                 createCaptureSession()
                 try configureCaptureDevices()
@@ -292,11 +292,16 @@ class CameraViewController: UIViewController {
         
         switch currentCameraPosition {
         case .front:
-            cameraView.flipCameraSwitchButton(to: #imageLiteral(resourceName: "CameraFront"))
             try switchToRearCamera()
+            DispatchQueue.main.async {
+                self.cameraView.flipCameraSwitchButton(to: #imageLiteral(resourceName: "CameraFront"))
+            }
+            
         case .rear:
             try switchToFrontCamera()
-            cameraView.flipCameraSwitchButton(to: #imageLiteral(resourceName: "CameraRear"))
+            DispatchQueue.main.async {
+                self.cameraView.flipCameraSwitchButton(to: #imageLiteral(resourceName: "CameraRear"))
+            }
         }
         captureSession.commitConfiguration()
     }
@@ -308,16 +313,19 @@ class CameraViewController: UIViewController {
 extension CameraViewController: CameraViewProtocol {
     
     func captureButtonTapped(motionData: MotionData) {
-        captureImage{ (image, error) in
-            guard let image = image else {
-                print(error ?? "Image capture error")
-                return
-            }
-            image.motionData = motionData
-            PhotoAlbum.sharedInstance.imageArray.addImage(image)
-            //PhotoAlbum.sharedInstance.saveImage(image: image)
-            DispatchQueue.main.async {
-                self.cameraView.onionEffectLayer.image = image
+        sessionQueue.async {
+            self.captureImage{ (image, error) in
+                guard let image = image else {
+                    ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
+                    return
+                }
+                
+                image.motionData = motionData
+                //PhotoAlbum.sharedInstance.imageArray.addImage(image)
+                PhotoAlbum.sharedInstance.saveImage(image: image)
+                DispatchQueue.main.async {
+                    self.cameraView.onionEffectLayer.image = image
+                }
             }
         }
     }
@@ -354,11 +362,13 @@ extension CameraViewController: CameraViewProtocol {
     }//swiftlint:enable force_cast
     
     func toggleCameraButtonTapped() {
-        do {
-            try switchCameras()
-        }
-        catch {
-            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
+        sessionQueue.async {
+            do {
+                try self.switchCameras()
+            }
+            catch {
+                ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
+            }
         }
     }
     

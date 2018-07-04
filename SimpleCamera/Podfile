@@ -9,6 +9,7 @@ target 'SimpleCamera' do
     pod 'Player', '~> 0.7.0'
     pod 'Floaty', '~> 3.0.0' # Use version 4.0.0 for Swift 4.0
     pod 'OpenCV2'
+    pod 'Parse'
 
     target 'SimpleCameraTests' do
         inherit! :search_paths

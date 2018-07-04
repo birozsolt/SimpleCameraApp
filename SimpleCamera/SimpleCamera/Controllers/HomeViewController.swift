@@ -46,7 +46,9 @@ extension HomeViewController : HomeViewProtocol{
      Open *CameraViewController* after tapped.
      */
     func cameraButtonTapped() {
+        autoreleasepool {
         cameraViewController = CameraViewController()
         gNavigationViewController?.pushViewController(cameraViewController, animated: true)
+        }
     }
 }

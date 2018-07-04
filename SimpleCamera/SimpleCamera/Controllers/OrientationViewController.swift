@@ -9,38 +9,6 @@
 import CoreMotion
 import UIKit
 
-/// Storing motion informations
-struct MotionData {
-    /// Rotation around x - axis
-    var roll: CGFloat = 0
-    
-    /// Rotation around y - axis
-    var pitch: CGFloat = 0
-    
-    ///Rotation around z - axis
-    var yaw: CGFloat = 0
-    
-    // Total and average roll, pitch, yaw values of captured images
-    var totalRoll : CGFloat = 0
-    var averageRoll : CGFloat = 0
-    var totalPitch : CGFloat = 0
-    var averagePitch : CGFloat = 0
-    var totalYaw : CGFloat = 0
-    var averageYaw : CGFloat = 0
-    
-    init() {
-        self.roll = 0
-        self.pitch = 0
-        self.yaw = 0
-    }
-    
-    init(roll: CGFloat, pitch: CGFloat, yaw: CGFloat) {
-        self.roll = roll
-        self.pitch = pitch
-        self.yaw = yaw
-    }
-}
-
 ///UIViewController class where *CoreMotion* framework used for calculating the device orientation in space.
 class OrientationViewController: UIViewController {
     
@@ -52,9 +20,7 @@ class OrientationViewController: UIViewController {
 
     ///The view that the *OrientationViewController* manages.
     let orientationView = OrientationView(frame: CGRect.zero)
-
-    /// The motion data which will be used for saving motion information on image capture
-    private var motionData = MotionData(roll: 0, pitch: 0, yaw: 0)
+    
     //MARK: - View Lifecycle
     
     override func loadView() {
@@ -122,12 +88,8 @@ class OrientationViewController: UIViewController {
         
         let currentYaw = CGFloat(asin(2 * quat.x * quat.y + 2 * quat.z * quat.w)).toDegrees
         
-        motionData.pitch = currentPitch
-        motionData.roll = currentRoll
-        motionData.yaw = currentYaw
-    }
-    
-    func getMotionData() -> MotionData {
-        return motionData
+        MotionData.shared.pitch = currentPitch
+        MotionData.shared.roll = currentRoll
+        MotionData.shared.yaw = currentYaw
     }
 }

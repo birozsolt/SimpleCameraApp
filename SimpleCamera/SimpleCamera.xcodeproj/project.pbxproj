@@ -15,6 +15,7 @@
 		394630501FE1264A00570D83 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3946304F1FE1264A00570D83 /* ProgressHUD.swift */; };
 		394630521FE2ABFC00570D83 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394630511FE2ABFC00570D83 /* ErrorMessage.swift */; };
 		394630541FE9152200570D83 /* RenderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394630531FE9152200570D83 /* RenderSettings.swift */; };
+		39787AC220515A11009A8C65 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39787AC120515A11009A8C65 /* MotionData.swift */; };
 		3985F0922031AC0F0028538D /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0912031AC0F0028538D /* PhotoAlbum.swift */; };
 		3985F0942031B4550028538D /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0932031B4550028538D /* Platform.swift */; };
 		3985F0962031B5BE0028538D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0952031B5BE0028538D /* Fonts.swift */; };
@@ -69,6 +70,7 @@
 		3946304F1FE1264A00570D83 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressHUD.swift; path = Components/ProgressHUD.swift; sourceTree = "<group>"; };
 		394630511FE2ABFC00570D83 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorMessage.swift; path = Components/ErrorMessage.swift; sourceTree = "<group>"; };
 		394630531FE9152200570D83 /* RenderSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderSettings.swift; path = Components/RenderSettings.swift; sourceTree = "<group>"; };
+		39787AC120515A11009A8C65 /* MotionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MotionData.swift; path = Components/MotionData.swift; sourceTree = "<group>"; };
 		3985F0912031AC0F0028538D /* PhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoAlbum.swift; path = Components/PhotoAlbum.swift; sourceTree = "<group>"; };
 		3985F0932031B4550028538D /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Platform.swift; path = Components/Platform.swift; sourceTree = "<group>"; };
 		3985F0952031B5BE0028538D /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Components/Fonts.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				3985F0932031B4550028538D /* Platform.swift */,
 				3985F0952031B5BE0028538D /* Fonts.swift */,
 				3985F0972031B77D0028538D /* LocalizedKeys.swift */,
+				39787AC120515A11009A8C65 /* MotionData.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -554,13 +557,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Floaty/Floaty.framework",
+				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
 				"${BUILT_PRODUCTS_DIR}/Player/Player.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Floaty.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Player.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 			);
@@ -621,6 +628,7 @@
 				3985F0942031B4550028538D /* Platform.swift in Sources */,
 				3985F0982031B77D0028538D /* LocalizedKeys.swift in Sources */,
 				394630521FE2ABFC00570D83 /* ErrorMessage.swift in Sources */,
+				39787AC220515A11009A8C65 /* MotionData.swift in Sources */,
 				3985F09A2031B8BA0028538D /* Globals.swift in Sources */,
 				39A41D9D1FCD5CAA002921B8 /* TimeLapseBuilder.swift in Sources */,
 				394630501FE1264A00570D83 /* ProgressHUD.swift in Sources */,
@@ -794,6 +802,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 48NALRU3W3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -805,6 +815,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SimpleCamera/SimpleCamera-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -819,6 +830,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 48NALRU3W3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -830,6 +843,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SimpleCamera/SimpleCamera-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

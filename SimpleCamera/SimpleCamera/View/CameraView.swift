@@ -219,7 +219,7 @@ class CameraView: UIView {
      - Implemented in the class which adopted *CameraViewProtocol*.
      */
     @objc func capturePhoto() {
-        delegate?.captureButtonTapped(motionData: orientationViewController.getMotionData())
+        delegate?.captureButtonTapped(motionData: MotionData.shared.getCurrentState())
     }
     
     /**
@@ -319,11 +319,11 @@ extension CameraView: FloatyDelegate {
      It is called after touching the Time Lapse Builder button.
      */
     fileprivate func timeLapseHandler(_ item: FloatyItem) -> Void {
-        floatingSettingsButton.close()
-        if PhotoAlbum.sharedInstance.imageArray.isEmpty {
+        guard !Platform.isSimulator, PhotoAlbum.sharedInstance.getPhotoAlbumSize() > 1 else {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.timeLapseBuildError)
             return
         }
+        floatingSettingsButton.close()
         let progressHUD = ProgressHUD()
         progressHUD.setTextLabel("Building your timelapse...")
         progressHUD.setProgress(0, animated: true)
@@ -365,6 +365,10 @@ extension CameraView: FloatyDelegate {
      It is called after touching the Video stabilizer button.
      */
     fileprivate func videoStabilizer(_ item: FloatyItem) -> Void {
+        guard let videoUrl = settings.outputURL, !Platform.isSimulator else {
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.videoStabilizerError)
+            return
+        }
         let progressHUD = ProgressHUD()
         progressHUD.setTextLabel("Stabilizing your timelapse video...")
         progressHUD.setProgress(0, animated: true)
@@ -374,7 +378,7 @@ extension CameraView: FloatyDelegate {
         }
         DispatchQueue.global(qos: .userInitiated).async {
             PhotoAlbum.sharedInstance.removeFileAtURL(fileURL: self.settings.stabilizedOutputURL!)
-            OpenCVWrapper.stabilizeVideo(at: self.settings.outputURL, outputUrl: self.settings.stabilizedOutputURL)
+            OpenCVWrapper.stabilizeVideo(at: videoUrl, outputUrl: self.settings.stabilizedOutputURL)
             PhotoAlbum.sharedInstance.saveVideo(videoURL: self.settings.stabilizedOutputURL!)
             DispatchQueue.main.async {
                 progressHUD.dismiss()

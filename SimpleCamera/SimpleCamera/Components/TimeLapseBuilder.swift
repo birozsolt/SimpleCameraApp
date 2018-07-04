@@ -20,7 +20,9 @@ class TimeLapseBuilder {
     
     fileprivate var frameNum = 0
     
-    fileprivate let currentProgress = Progress(totalUnitCount: Int64(PhotoAlbum.sharedInstance.imageArray.count))
+    let builderQueue = DispatchQueue(label: "mediaInputQueue")
+    
+    fileprivate let currentProgress = Progress(totalUnitCount: Int64(PhotoAlbum.sharedInstance.getPhotoAlbumSize()))
     
     //MARK: - Object Lifecycle
     
@@ -41,13 +43,11 @@ class TimeLapseBuilder {
     func render(_ progress: @escaping ((Progress) -> Void), completion: (()->Void)?) {
         // The VideoWriter will fail if a file exists at the URL, so clear it out first.
         PhotoAlbum.sharedInstance.removeFileAtURL(fileURL: settings.outputURL!)
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.videoWriter.start()
-            self.videoWriter.render(appendPixelBuffers: self.appendPixelBuffers) {
-                progress(self.currentProgress)
-                PhotoAlbum.sharedInstance.saveVideo(videoURL: self.settings.outputURL!)
-                completion?()
-            }
+        self.videoWriter.start()
+        self.videoWriter.render(appendPixelBuffers: self.appendPixelBuffers) {
+            progress(self.currentProgress)
+            PhotoAlbum.sharedInstance.saveVideo(videoURL: self.settings.outputURL!)
+            completion?()
         }
     }
     
@@ -58,20 +58,24 @@ class TimeLapseBuilder {
      */
     fileprivate func appendPixelBuffers(writer: VideoWriter) -> Bool {
         let frameDuration = CMTimeMake(Int64(TimeLapseBuilder.kTimescale / settings.fps), TimeLapseBuilder.kTimescale)
-        while !PhotoAlbum.sharedInstance.imageArray.isEmpty {
+        while PhotoAlbum.sharedInstance.getPhotoAlbumSize() > 0 {
             
             if writer.isReadyForData == false {
                 // Inform writer we have more buffers to write.
                 return false
             }
-            let image = PhotoAlbum.sharedInstance.imageArray.removeFirst()
-            let presentationTime = CMTimeMultiply(frameDuration, Int32(self.frameNum))
-            let success = videoWriter.addImage(image: image, withPresentationTime: presentationTime)
-            if success == false {
-                fatalError("addImage() failed")
+            autoreleasepool {
+                let image = PhotoAlbum.sharedInstance.imageArray.removeFirst()
+                
+                let presentationTime = CMTimeMultiply(frameDuration, Int32(self.frameNum))
+                let success = videoWriter.addImage(image: image, withPresentationTime: presentationTime)
+                if success == false {
+                    fatalError("addImage() failed")
+                }
             }
             self.currentProgress.completedUnitCount = Int64(self.frameNum)
             self.frameNum += 1
+            
         }
         
         // Inform writer all buffers have been written.
@@ -87,7 +91,7 @@ private class VideoWriter {
     fileprivate var videoWriter: AVAssetWriter!
     fileprivate var videoWriterInput: AVAssetWriterInput!
     fileprivate var pixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor!
-    
+    fileprivate let mediaQueue = DispatchQueue(label: "mediaInputQueue")
     fileprivate var isReadyForData: Bool {
         return videoWriterInput?.isReadyForMoreMediaData ?? false
     }
@@ -100,22 +104,23 @@ private class VideoWriter {
         guard let motionData = image.motionData else {
             fatalError()
         }
-        var transform = CATransform3DIdentity
-        transform.m34 = 1.0 / -500.0
-        transform = CATransform3DRotate(transform, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averageRoll).toRadians, 1, 0, 0)
-        ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
-        //        print(PhotoAlbum.sharedInstance.imageArray.averageRoll, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averageRoll))
-        
-        transform = CATransform3DIdentity
-        transform.m34 = 1.0 / -500.0
-        transform = CATransform3DRotate(transform, motionData.pitch.distance(to: PhotoAlbum.sharedInstance.imageArray.averagePitch).toRadians, 0, 1, 0)
-        ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
-        
-        transform = CATransform3DIdentity
-        transform.m34 = 1.0 / -500.0
-        transform = CATransform3DRotate(transform, motionData.yaw.distance(to: PhotoAlbum.sharedInstance.imageArray.averageYaw).toRadians, 0, 0, 1)
-        ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
-        
+        autoreleasepool{
+            var transform = CATransform3DIdentity
+            transform.m34 = 1.0 / -500.0
+            transform = CATransform3DRotate(transform, motionData.roll.distance(to: MotionData.shared.averageRoll).toRadians, 1, 0, 0)
+            ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
+            //        print(PhotoAlbum.sharedInstance.imageArray.averageRoll, motionData.roll.distance(to: PhotoAlbum.sharedInstance.imageArray.averageRoll))
+            
+            transform = CATransform3DIdentity
+            transform.m34 = 1.0 / -500.0
+            transform = CATransform3DRotate(transform, motionData.pitch.distance(to: MotionData.shared.averagePitch).toRadians, 0, 1, 0)
+            ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
+            
+            transform = CATransform3DIdentity
+            transform.m34 = 1.0 / -500.0
+            transform = CATransform3DRotate(transform, motionData.yaw.distance(to: MotionData.shared.averageYaw).toRadians, 0, 0, 1)
+            ciimage = ciimage?.transformed(by: CATransform3DGetAffineTransform(transform))
+        }
         let width: Int = Int(size.width)
         let height: Int = Int(size.height)
         
@@ -126,26 +131,29 @@ private class VideoWriter {
             fatalError("CVPixelBufferPoolCreatePixelBuffer() failed")
         }
         CVPixelBufferLockBaseAddress(pxbuffer!, CVPixelBufferLockFlags(rawValue: 0))
-        
-        let bufferAddress = CVPixelBufferGetBaseAddress(pxbuffer!)
-        
-        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
-        let bytesperrow = CVPixelBufferGetBytesPerRow(pxbuffer!)
-        let context = CGContext(data: bufferAddress,
-                                width: width,
-                                height: height,
-                                bitsPerComponent: 8,
-                                bytesPerRow: bytesperrow,
-                                space: rgbColorSpace,
-                                bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
-        context?.clear(CGRect(x:0, y:0, width:CGFloat(width), height:CGFloat(height)))
-        let tmpcontext = CIContext(options: nil)
-        
-        let cgimage =  tmpcontext.createCGImage(ciimage!, from: ciimage!.extent)
-        context?.concatenate(CGAffineTransform(rotationAngle: 0))
-        context?.draw(cgimage!, in: CGRect(x:0, y:0, width:CGFloat(width), height:CGFloat(height)))
+        autoreleasepool{
+            let bufferAddress = CVPixelBufferGetBaseAddress(pxbuffer!)
+            
+            let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+            let bytesperrow = CVPixelBufferGetBytesPerRow(pxbuffer!)
+            let context = CGContext(data: bufferAddress,
+                                    width: width,
+                                    height: height,
+                                    bitsPerComponent: 8,
+                                    bytesPerRow: bytesperrow,
+                                    space: rgbColorSpace,
+                                    bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
+            context?.clear(CGRect(x:0, y:0, width:CGFloat(width), height:CGFloat(height)))
+            let tmpcontext = CIContext(options: nil)
+            
+            let cgimage =  tmpcontext.createCGImage(ciimage!, from: ciimage!.extent)
+            
+            context?.concatenate(CGAffineTransform(rotationAngle: 0))
+            context?.draw(cgimage!, in: CGRect(x:0, y:0, width:CGFloat(width), height:CGFloat(height)))
+        }
         CVPixelBufferUnlockBaseAddress(pxbuffer!, CVPixelBufferLockFlags(rawValue: 0))
         return pxbuffer!
+        
     }
     
     //MARK:- Object Lifecycle
@@ -156,22 +164,22 @@ private class VideoWriter {
     
     /// Set up and start the asset writing.
     fileprivate func start() {
-        
+//        mediaQueue.async {
         /// The ouput settings for the assetWriter.
         let avOutputSettings: [String: Any] = [
-            AVVideoCodecKey: renderSettings.avCodecKey,
-            AVVideoWidthKey: NSNumber(value: Float(renderSettings.size.width)),
-            AVVideoHeightKey: NSNumber(value: Float(renderSettings.size.height))
+            AVVideoCodecKey: self.renderSettings.avCodecKey,
+            AVVideoWidthKey: NSNumber(value: Float(self.renderSettings.size.width)),
+            AVVideoHeightKey: NSNumber(value: Float(self.renderSettings.size.height))
         ]
         
         /// Create the pixel buffer adaptor.
         func createPixelBufferAdaptor() {
             let sourcePixelBufferAttributesDictionary = [
                 kCVPixelBufferPixelFormatTypeKey as String: NSNumber(value: kCVPixelFormatType_32BGRA),
-                kCVPixelBufferWidthKey as String: NSNumber(value: Float(renderSettings.size.width)),
-                kCVPixelBufferHeightKey as String: NSNumber(value: Float(renderSettings.size.height))
+                kCVPixelBufferWidthKey as String: NSNumber(value: Float(self.renderSettings.size.width)),
+                kCVPixelBufferHeightKey as String: NSNumber(value: Float(self.renderSettings.size.height))
             ]
-            pixelBufferAdaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: videoWriterInput,
+            self.pixelBufferAdaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: self.videoWriterInput,
                                                                       sourcePixelBufferAttributes: sourcePixelBufferAttributesDictionary)
         }
         
@@ -187,11 +195,11 @@ private class VideoWriter {
             return assetWriter
         }
         
-        videoWriter = createAssetWriter(outputURL: renderSettings.outputURL!)
-        videoWriterInput = AVAssetWriterInput(mediaType: AVMediaType.video, outputSettings: avOutputSettings)
-        videoWriterInput.transform = CGAffineTransform(rotationAngle: CGFloat(90).toRadians)
-        if videoWriter.canAdd(videoWriterInput) {
-            videoWriter.add(videoWriterInput)
+        self.videoWriter = createAssetWriter(outputURL: self.renderSettings.outputURL!)
+        self.videoWriterInput = AVAssetWriterInput(mediaType: AVMediaType.video, outputSettings: avOutputSettings)
+        self.videoWriterInput.transform = CGAffineTransform(rotationAngle: CGFloat(90).toRadians)
+        if self.videoWriter.canAdd(self.videoWriterInput) {
+            self.videoWriter.add(self.videoWriterInput)
         }
         else {
             fatalError("canAddInput() returned false")
@@ -200,22 +208,21 @@ private class VideoWriter {
         // The pixel buffer adaptor must be created before we start writing.
         createPixelBufferAdaptor()
         
-        if videoWriter.startWriting() == false {
+        if self.videoWriter.startWriting() == false {
             fatalError("startWriting() failed")
         }
         
-        videoWriter.startSession(atSourceTime: kCMTimeZero)
+        self.videoWriter.startSession(atSourceTime: kCMTimeZero)
         
-        precondition(pixelBufferAdaptor.pixelBufferPool != nil, "nil pixelBufferPool")
+        precondition(self.pixelBufferAdaptor.pixelBufferPool != nil, "nil pixelBufferPool")
+//        }
     }
     
     ///Render the video and finish writing.
     fileprivate func render(appendPixelBuffers: ((VideoWriter)->Bool)?, completion: (()->Void)?) {
-        
         precondition(videoWriter != nil, "Call start() to initialze the writer")
         
-        let queue = DispatchQueue(label: "mediaInputQueue")
-        videoWriterInput.requestMediaDataWhenReady(on: queue) {
+        videoWriterInput.requestMediaDataWhenReady(on: mediaQueue) {
             let isFinished = appendPixelBuffers?(self) ?? false
             if isFinished {
                 self.videoWriterInput.markAsFinished()
@@ -238,8 +245,8 @@ private class VideoWriter {
      - returns: *true* if the pixel buffer was successfully appended, otherwise *false*.
      */
     fileprivate func addImage(image: UIImage, withPresentationTime presentationTime: CMTime) -> Bool {
-        
         precondition(pixelBufferAdaptor != nil, "Call start() to initialze the writer")
+        
         let pixelBuffer = VideoWriter.pixelBufferFromImage(image: image, pixelBufferPool: pixelBufferAdaptor.pixelBufferPool!, size: renderSettings.size)
         return pixelBufferAdaptor.append(pixelBuffer, withPresentationTime: presentationTime)
     }

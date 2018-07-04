@@ -29,6 +29,7 @@ enum LocalizedKeys: String {
     case albumCreateError
     case photoAlbumName
     case stabVideoName
+    case videoStabilizerError
     
     func description() -> String {
         switch self {

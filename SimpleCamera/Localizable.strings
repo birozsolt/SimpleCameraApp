@@ -14,6 +14,7 @@ titleWarning = "Warning";
 okButton = "Ok";
 cancelButton = "Cancel";
 videoPlayerError = "The hyperlapse video not found.";
+videoStabilizerError = "The hyperlapse video not found for stabilization.";
 noCamerasAvailable = "No available camera device.";
 timeLapseBuildError = "Not found any image for building timelapse video.";
 referenceFrameError = "The reference frame XArbitraryZVertical is not available.";

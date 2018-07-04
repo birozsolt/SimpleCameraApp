@@ -10,6 +10,3 @@ import UIKit
 
 ///NavigationViewController reference of the project.
 var gNavigationViewController : UINavigationController?
-
-/// An instance of MotionData, where motion information stored.
-var motion = MotionData()

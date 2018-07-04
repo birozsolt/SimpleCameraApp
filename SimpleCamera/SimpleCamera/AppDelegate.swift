@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +23,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = gNavigationViewController
         window?.makeKeyAndVisible()
         
+        let configuration = ParseClientConfiguration {
+            $0.applicationId = "AxONcr1GAGaenjOCu8Eqq8Iq3TlFnn7Z54hVkyZZ"
+            $0.clientKey = "LDcfPio8Pr3JcCNcoUTmrHmPPWESvjDfMTo3XfhD"
+            $0.server = "https://parseapi.back4app.com"
+        }
+        Parse.initialize(with: configuration)
+        saveInstallationObject()
         return true
+    }
+    
+    func saveInstallationObject(){
+        if let installation = PFInstallation.current(){
+            installation.saveInBackground {
+                (success: Bool, error: Error?) in
+                if (success) {
+                    print("You have successfully connected your app to Back4App!")
+                } else {
+                    if let myError = error{
+                        print(myError.localizedDescription)
+                    }else{
+                        print("Uknown error")
+                    }
+                }
+            }
+        }
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

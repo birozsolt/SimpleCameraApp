@@ -11,9 +11,9 @@ import UIKit
 class ProgressHUD: NSObject {
     
     private var backgroundView: UIView!
-    private let activityIndicator: UIActivityIndicatorView!
+    private var activityIndicator: UIActivityIndicatorView!
     private var progressView : UIProgressView!
-    private let progressLabel : UILabel!
+    private var progressLabel : UILabel!
     
     // MARK: - Object Lifecycle
     
@@ -41,6 +41,12 @@ class ProgressHUD: NSObject {
         progressLabel.textColor = .white
     }
     
+    deinit {
+        backgroundView = nil
+        activityIndicator = nil
+        progressView = nil
+        progressLabel = nil
+    }
     // MARK: - Methods
     
     /// Set the progress view to selected progress
