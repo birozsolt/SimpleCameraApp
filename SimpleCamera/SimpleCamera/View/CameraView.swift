@@ -245,10 +245,6 @@ extension CameraView: FloatyDelegate {
      It is called after touching the Flash Mode button.
      */
     fileprivate func flashHandler(_ item: FloatyItem) -> Void {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
-            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
-            return
-        }
         switch self.flashMode {
         case .on:
             self.flashMode = .off
@@ -263,16 +259,30 @@ extension CameraView: FloatyDelegate {
             item.titleColor = .white
             item.icon = #imageLiteral(resourceName: "FlashAuto")
         }
+    }
+    
+    /**
+     Returns the current flash mode settings
+     */
+    func getFlashSettings() -> AVCapturePhotoSettings {
+        guard let camera = AVCaptureDevice.default(for: AVMediaType.video) else {
+            ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
+            return AVCapturePhotoSettings()
+        }
         
-        if device.hasFlash {
-            do {
-                try device.lockForConfiguration()
-                device.flashMode = self.flashMode
-                device.unlockForConfiguration()
-            } catch {
-                print(error)
+        let settings = AVCapturePhotoSettings()
+        
+        if camera.hasFlash {
+            switch self.flashMode {
+            case .auto:
+                settings.flashMode = .auto
+            case .off:
+                settings.flashMode = .off
+            case .on:
+                settings.flashMode = .on
             }
         }
+        return settings
     }
     
     /**

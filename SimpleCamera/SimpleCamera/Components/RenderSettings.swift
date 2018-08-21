@@ -18,7 +18,7 @@ struct RenderSettings {
     var fps: Int32 = 18
     
     ///Specifies the video encoding key.
-    var avCodecKey = AVVideoCodecH264
+    var avCodecKey = AVVideoCodecType.h264
     
     ///The file name as the video will be saved
     var videoFilename = LocalizedKeys.videoName.description()

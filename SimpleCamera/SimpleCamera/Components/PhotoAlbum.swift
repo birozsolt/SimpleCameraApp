@@ -114,7 +114,8 @@ class PhotoAlbum: NSObject {
      */
     func removeFileAtURL(fileURL: URL) {
         PHPhotoLibrary.shared().performChanges({
-            let imageToDelete = PHAsset.fetchAssets(withALAssetURLs: [fileURL], options: nil)
+            let options = PHFetchOptions()
+            let imageToDelete = PHAsset.fetchAssets(with: options) //PHAsset.fetchAssets(withALAssetURLs: [fileURL], options: nil)
             PHAssetChangeRequest.deleteAssets(imageToDelete)
         }, completionHandler: {success, error in
             if !success {
@@ -131,7 +132,6 @@ class PhotoAlbum: NSObject {
         let photoAssets = PHAsset.fetchAssets(in: assetCollection, options: nil)
         let manager = PHCachingImageManager()
         photoAssets.enumerateObjects { (object, idx, stop) -> Void in
-            if object is PHAsset {
                 let asset = object
                 
                 let initialRequestOptions = PHImageRequestOptions()
@@ -150,7 +150,6 @@ class PhotoAlbum: NSObject {
                         }
                     })
                 })
-            }
         }
         print(photoAssets.count)
     }
