@@ -30,9 +30,9 @@ class VideoPlayerViewController: UIViewController {
     }
     
     deinit {
-        player.willMove(toParentViewController: self)
+		player.willMove(toParent: self)
         player.view.removeFromSuperview()
-        player.removeFromParentViewController()
+		player.removeFromParent()
     }
     
     // MARK: - View Lifecycle
@@ -47,9 +47,9 @@ class VideoPlayerViewController: UIViewController {
         player.playbackDelegate = self
         player.view.frame = view.bounds
         
-        addChildViewController(player)
+		addChild(player)
         view.addSubview(player.view)
-        player.didMove(toParentViewController: self)
+		player.didMove(toParent: self)
         
         view.insertSubview(timeRemainingLabel, aboveSubview: player.view)
         timeRemainingLabel.textColor = .white
@@ -71,7 +71,7 @@ class VideoPlayerViewController: UIViewController {
         playbackImage.isHidden = true
         
         player.url = videoUrl
-        player.fillMode = PlayerFillMode.resizeAspectFill.avFoundationType
+        player.fillMode = PlayerFillMode.resizeAspectFill
         player.playbackLoops = false
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
@@ -90,7 +90,7 @@ class VideoPlayerViewController: UIViewController {
     }
     
     fileprivate func animatePlaybackImage(){
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+		UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
             self.playbackImage.isHidden = false
             self.playbackImage.alpha = 0.0
             self.playbackImage.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
@@ -134,6 +134,9 @@ extension VideoPlayerViewController {
 
 // MARK: - PlayerDelegate extension
 extension VideoPlayerViewController: PlayerDelegate {
+	func player(_ player: Player, didFailWithError error: Error?) {
+		
+	}
     
     func playerReady(_ player: Player) {
         player.playFromBeginning()

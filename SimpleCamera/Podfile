@@ -1,25 +1,21 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '9.3'
+platform :ios, '11.0'
 use_frameworks!
 inhibit_all_warnings!
 
 target 'SimpleCamera' do
     pod 'PureLayout'
     pod 'SwiftLint'
-    pod 'Player', '~> 0.7.0'
-    pod 'Floaty', '~> 3.0.0' # Use version 4.0.0 for Swift 4.0
+    pod 'Player'
+    pod 'Floaty'
     pod 'OpenCV2'
     pod 'Parse'
 
     target 'SimpleCameraTests' do
         inherit! :search_paths
-        pod 'Quick'
-        pod 'Nimble'
     end
     
     target 'SimpleCameraUITests' do
         inherit! :search_paths
-        pod 'Quick'
-        pod 'Nimble'
     end
 end

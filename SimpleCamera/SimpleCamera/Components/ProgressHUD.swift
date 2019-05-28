@@ -21,7 +21,7 @@ class ProgressHUD: NSObject {
         backgroundView = UIView()
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+		activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
         activityIndicator.center = backgroundView.center
         activityIndicator.startAnimating()
         backgroundView.addSubview(activityIndicator)

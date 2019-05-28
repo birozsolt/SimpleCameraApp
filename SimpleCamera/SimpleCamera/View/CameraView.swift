@@ -49,10 +49,10 @@ class CameraView: UIView {
     //MARK: - Button variables
     
     /// The capture button variable.
-    fileprivate var captureButton = UIButton(type: UIButtonType.custom)
+	fileprivate var captureButton = UIButton(type: .custom)
     
     /// The camera switch button variable.
-    fileprivate var toggleCameraButton = UIButton(type: UIButtonType.custom)
+	fileprivate var toggleCameraButton = UIButton(type: .custom)
     
     /// The floating settings button variable.
     fileprivate var floatingSettingsButton = Floaty()
@@ -163,7 +163,7 @@ class CameraView: UIView {
     func flipCameraSwitchButton(to image: UIImage){
         UIView.transition(with: toggleCameraButton,
                           duration: 0.3,
-                          options: UIViewAnimationOptions.transitionFlipFromLeft,
+						  options: .transitionFlipFromLeft,
                           animations: nil,
                           completion: { (finished) -> Void in
                             self.changeCameraImage(to: image)
@@ -258,7 +258,11 @@ extension CameraView: FloatyDelegate {
             self.flashMode = .auto
             item.titleColor = .white
             item.icon = #imageLiteral(resourceName: "FlashAuto")
-        }
+		@unknown default:
+			self.flashMode = .auto
+			item.titleColor = .white
+			item.icon = #imageLiteral(resourceName: "FlashAuto")
+		}
     }
     
     /**
@@ -280,7 +284,9 @@ extension CameraView: FloatyDelegate {
                 settings.flashMode = .off
             case .on:
                 settings.flashMode = .on
-            }
+			@unknown default:
+				settings.flashMode = .off
+			}
         }
         return settings
     }

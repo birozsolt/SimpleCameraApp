@@ -27,7 +27,7 @@ class HomeView: UIView {
     //MARK: - Button variables
     
     /// The camera button variable.
-    private var cameraButton = UIButton(type: UIButtonType.custom)
+	private var cameraButton = UIButton(type: .custom)
     
     //MARK: - Object Lifecycle
     

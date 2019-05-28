@@ -314,7 +314,6 @@
 				39CF5CB91FA07D94006EB23C /* Frameworks */,
 				39CF5CBA1FA07D94006EB23C /* Resources */,
 				9287FF64B7C3CFBE6C65226E /* [CP] Embed Pods Frameworks */,
-				27D075795E845B1725307326 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -333,8 +332,6 @@
 				39CF5CCC1FA07D94006EB23C /* Sources */,
 				39CF5CCD1FA07D94006EB23C /* Frameworks */,
 				39CF5CCE1FA07D94006EB23C /* Resources */,
-				E8AB849E57C9413C698879A4 /* [CP] Embed Pods Frameworks */,
-				5A393BB98A99A9D76746C02F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -354,8 +351,6 @@
 				39CF5CD71FA07D94006EB23C /* Sources */,
 				39CF5CD81FA07D94006EB23C /* Frameworks */,
 				39CF5CD91FA07D94006EB23C /* Resources */,
-				3F68DB8C8E9427B28C19ACE2 /* [CP] Embed Pods Frameworks */,
-				20F92B50A9CA835290486BC2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -380,20 +375,20 @@
 					39CF5CBB1FA07D94006EB23C = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = PWRRV23QUF;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					39CF5CCF1FA07D94006EB23C = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 9L2TPWUVEQ;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 39CF5CBB1FA07D94006EB23C;
 					};
 					39CF5CDA1FA07D94006EB23C = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 9L2TPWUVEQ;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 39CF5CBB1FA07D94006EB23C;
 					};
@@ -401,7 +396,7 @@
 			};
 			buildConfigurationList = 39CF5CB71FA07D94006EB23C /* Build configuration list for PBXProject "SimpleCamera" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -449,71 +444,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		20F92B50A9CA835290486BC2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCameraUITests/Pods-SimpleCameraUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		27D075795E845B1725307326 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3F68DB8C8E9427B28C19ACE2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCameraUITests/Pods-SimpleCameraUITests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCameraUITests/Pods-SimpleCameraUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5A393BB98A99A9D76746C02F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCameraTests/Pods-SimpleCameraTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6DCD018F9A6244008ED0293C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -556,7 +486,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Floaty/Floaty.framework",
 				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
@@ -573,7 +503,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimpleCamera/Pods-SimpleCamera-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A3F9916050A57F1FC4BF34AA /* [CP] Check Pods Manifest.lock */ = {
@@ -592,26 +522,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E8AB849E57C9413C698879A4 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCameraTests/Pods-SimpleCameraTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCameraTests/Pods-SimpleCameraTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -822,8 +732,8 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SimpleCamera/SimpleCamera-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -849,8 +759,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SimpleCamera/SimpleCamera-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -864,16 +774,13 @@
 				DEVELOPMENT_TEAM = 9L2TPWUVEQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/Quick",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/Nimble",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = SimpleCameraTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCameraTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleCamera.app/SimpleCamera";
 			};
 			name = Debug;
@@ -888,16 +795,13 @@
 				DEVELOPMENT_TEAM = 9L2TPWUVEQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/Quick",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/Nimble",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = SimpleCameraTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCameraTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleCamera.app/SimpleCamera";
 			};
 			name = Release;
@@ -911,16 +815,13 @@
 				DEVELOPMENT_TEAM = 9L2TPWUVEQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/Quick",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/Nimble",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = SimpleCameraUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCameraUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = SimpleCamera;
 			};
 			name = Debug;
@@ -934,16 +835,13 @@
 				DEVELOPMENT_TEAM = 9L2TPWUVEQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/Quick",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/Nimble",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = SimpleCameraUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zsoltbiro.SimpleCameraUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = SimpleCamera;
 			};
 			name = Release;

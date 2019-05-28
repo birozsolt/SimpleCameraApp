@@ -157,7 +157,7 @@ class OrientationView: UIView {
             verticalRightMarker.changeMarkerColor(to: .orange)
         }
         
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+		UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
             self.verticalLeftMarker.setYCoordinate(to: zoomAngle)
             self.verticalRightMarker.setYCoordinate(to: zoomAngle)
         })
@@ -185,7 +185,7 @@ class OrientationView: UIView {
             horizontalRightMarker.changeMarkerColor(to: .orange)
         }
 
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+		UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
             self.horizontalView.transform = CGAffineTransform(rotationAngle: zoomAngle.toRadians)
         })
     }

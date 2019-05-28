@@ -6,10 +6,9 @@
 //  Copyright © 2017 Biro, Zsolt. All rights reserved.
 //
 
-import Quick
-import Nimble
+import XCTest
 
-class SimpleCameraUITests: QuickSpec {
+class SimpleCameraUITests: XCTestCase {
     
     var app = XCUIApplication()
     override func setUp() {

@@ -94,7 +94,7 @@ struct Trajectory {
         }
         
         // translation + rotation only
-        Mat T = estimateRigidTransform(goodOld, goodNew, false);
+		Mat T = estimateAffine2D(goodOld, goodNew);
         
         // in rare cases no transform is found. We'll just use the last known good transform.
         if(T.data == NULL) {
@@ -187,14 +187,14 @@ struct Trajectory {
     }
     
     // Step 5 - Apply the new transformation to the video
-    cap.set(CV_CAP_PROP_POS_FRAMES, 0);
+	cap.set(CAP_PROP_POS_FRAMES, 0);
     
     double width = 960;
     double height = 540;
     Mat T(2,3,CV_64F);
     
     int vert_border = HORIZONTAL_BORDER_CROP * firstFrame.rows / firstFrame.cols;
-    int ex = static_cast<int>(cap.get(CV_CAP_PROP_FOURCC));     // Get Codec Type- Int form
+	int ex = static_cast<int>(cap.get(CAP_PROP_FOURCC));     // Get Codec Type- Int form
     VideoWriter writer(outputUrl.path.UTF8String, ex, 18, cv::Size(height,width), true);
     
     if (!writer.isOpened()) {

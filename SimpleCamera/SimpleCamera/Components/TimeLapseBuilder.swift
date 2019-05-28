@@ -57,7 +57,7 @@ class TimeLapseBuilder {
      - returns: *False* if there is more image to write. *True* if all image added to the video.
      */
     fileprivate func appendPixelBuffers(writer: VideoWriter) -> Bool {
-        let frameDuration = CMTimeMake(Int64(TimeLapseBuilder.kTimescale / settings.fps), TimeLapseBuilder.kTimescale)
+		let frameDuration = CMTimeMake(value: Int64(TimeLapseBuilder.kTimescale / settings.fps), timescale: TimeLapseBuilder.kTimescale)
         while PhotoAlbum.sharedInstance.getPhotoAlbumSize() > 0 {
             
             if writer.isReadyForData == false {
@@ -67,7 +67,7 @@ class TimeLapseBuilder {
             autoreleasepool {
                 let image = PhotoAlbum.sharedInstance.imageArray.removeFirst()
                 
-                let presentationTime = CMTimeMultiply(frameDuration, Int32(self.frameNum))
+				let presentationTime = CMTimeMultiply(frameDuration, multiplier: Int32(self.frameNum))
                 let success = videoWriter.addImage(image: image, withPresentationTime: presentationTime)
                 if success == false {
                     fatalError("addImage() failed")
@@ -212,7 +212,7 @@ private class VideoWriter {
             fatalError("startWriting() failed")
         }
         
-        self.videoWriter.startSession(atSourceTime: kCMTimeZero)
+		self.videoWriter.startSession(atSourceTime: CMTime.zero)
         
         precondition(self.pixelBufferAdaptor.pixelBufferPool != nil, "nil pixelBufferPool")
 //        }
