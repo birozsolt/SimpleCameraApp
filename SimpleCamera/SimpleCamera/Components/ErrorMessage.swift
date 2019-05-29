@@ -30,8 +30,8 @@ class ErrorMessage: NSObject {
         if Platform.isSimulator {
             print(message)
         } else {
-            let alert = UIAlertController(title: title.description(), message: message.description(), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: LocalizedKeys.okButton.description(), style: .default, handler: nil))
+            let alert = UIAlertController(title: title.localized, message: message.localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: LocalizedKeys.okButton.localized, style: .default, handler: nil))
             gNavigationViewController?.topViewController?.present(alert, animated: true, completion: nil)
         }
     }

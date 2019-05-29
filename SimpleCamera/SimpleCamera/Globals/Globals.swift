@@ -9,4 +9,4 @@
 import UIKit
 
 ///NavigationViewController reference of the project.
-var gNavigationViewController : UINavigationController?
+var gNavigationViewController: UINavigationController?

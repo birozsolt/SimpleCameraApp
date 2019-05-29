@@ -21,13 +21,13 @@ class OrientationViewController: UIViewController {
     ///The view that the *OrientationViewController* manages.
     let orientationView = OrientationView(frame: CGRect.zero)
     
-    //MARK: - View Lifecycle
+    // MARK: - View Lifecycle
     
     override func loadView() {
         view = orientationView
     }
     
-    //MARK: - Motion controll functions
+    // MARK: - Motion controll functions
     
     /**
      If the device-motion service is available on the device,
@@ -36,32 +36,31 @@ class OrientationViewController: UIViewController {
      Calculates the reference orientation, which is the device current orientation.
      */
     func startMotionUpdate() {
-        if (motionManager.isDeviceMotionAvailable && !motionManager.isDeviceMotionActive) {
+        if motionManager.isDeviceMotionAvailable && !motionManager.isDeviceMotionActive {
             motionManager.deviceMotionUpdateInterval = 0.1
             let myFrame = CMAttitudeReferenceFrame.xArbitraryZVertical
             guard CMMotionManager.availableAttitudeReferenceFrames().contains(myFrame) else {
                 ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.referenceFrameError)
                 return
             }
-            motionManager.startDeviceMotionUpdates(using: myFrame, to: motionQueue, withHandler:
-                { [unowned self] (motionData, error) in
-                    if error == nil {
-                        guard let data = motionData else {
-                            print("No motion Data")
-                            return
-                        }
-                        self.motionRefresh(deviceMotion: data)
-                    } else {
-                        print(error ?? "Some Error")
-                    }
-            })
+			motionManager.startDeviceMotionUpdates(using: myFrame, to: motionQueue, withHandler: { [unowned self] (motionData, error) in
+				if error == nil {
+					guard let data = motionData else {
+						print("No motion Data")
+						return
+					}
+					self.motionRefresh(deviceMotion: data)
+				} else {
+					print(error ?? "Some Error")
+				}
+			})
         } else {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.motionServiceError)
         }
     }
     
     /// If the application is receiving updates from the device-motion service, then it stops device-motion updates.
-    func stopMotionUpdate(){
+    func stopMotionUpdate() {
         if motionManager.isDeviceMotionActive {
             motionManager.stopDeviceMotionUpdates()
         }

@@ -10,10 +10,10 @@ import UIKit
 
 class ProgressHUD: NSObject {
     
-    private var backgroundView: UIView!
-    private var activityIndicator: UIActivityIndicatorView!
-    private var progressView : UIProgressView!
-    private var progressLabel : UILabel!
+    private var backgroundView: UIView
+    private var activityIndicator: UIActivityIndicatorView
+    private var progressView: UIProgressView
+    private var progressLabel: UILabel
     
     // MARK: - Object Lifecycle
     
@@ -40,22 +40,16 @@ class ProgressHUD: NSObject {
         progressLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         progressLabel.textColor = .white
     }
-    
-    deinit {
-        backgroundView = nil
-        activityIndicator = nil
-        progressView = nil
-        progressLabel = nil
-    }
+
     // MARK: - Methods
     
     /// Set the progress view to selected progress
-    func setProgress(_ progress: Float, animated: Bool){
+    func setProgress(_ progress: Float, animated: Bool) {
         progressView.setProgress(progress, animated: animated)
     }
     
     /// Set the progress label text to *text*
-    func setTextLabel(_ text : String){
+    func setTextLabel(_ text: String) {
         progressLabel.text = text
     }
     

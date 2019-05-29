@@ -10,9 +10,9 @@ import AVFoundation
 import Floaty
 
 /// CameraView protocol used for implementing button actions.
-protocol CameraViewProtocol {
+protocol CameraViewProtocol: class {
     /// Capture button handler touch handler function.
-    func captureButtonTapped(motionData : MotionData)
+    func captureButtonTapped(motionData: MotionData)
     
     /// Camera switch button touch handler function.
     func toggleCameraButtonTapped()
@@ -24,9 +24,9 @@ protocol CameraViewProtocol {
 /// UIView class for setting the camera screen view
 class CameraView: UIView {
     /// CameraViewProtocol delegate variable.
-    var delegate: CameraViewProtocol?
+    weak var delegate: CameraViewProtocol?
     
-    //MARK: - View variables
+    // MARK: - View variables
     
     /// This variable contains the videoPreview layer, where the camera is showed.
     var videoPreviewView = UIView()
@@ -46,7 +46,7 @@ class CameraView: UIView {
     ///The settings of the video.
     fileprivate let settings = RenderSettings()
     
-    //MARK: - Button variables
+    // MARK: - Button variables
     
     /// The capture button variable.
 	fileprivate var captureButton = UIButton(type: .custom)
@@ -60,7 +60,7 @@ class CameraView: UIView {
     ///The capture device flash mode.
     fileprivate var flashMode = AVCaptureDevice.FlashMode.off
     
-    //MARK: - Object Lifecycle
+    // MARK: - Object Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -79,11 +79,10 @@ class CameraView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Setup funcions for views
+    // MARK: - Setup funcions for views
     
     /// It setting up camera screen views.
-    private func setupViews(){
-        
+    private func setupViews() {
         videoPreviewView.autoPinEdgesToSuperviewEdges()
         videoPreviewView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addFocusPreview)))
         
@@ -121,7 +120,7 @@ class CameraView: UIView {
     }
     
     /// It setting up settings button.
-    private func setupFloatingSettings(){
+    private func setupFloatingSettings() {
         floatingSettingsButton.autoCloseOnTap = false
         floatingSettingsButton.openAnimationType = .fade
         floatingSettingsButton.animationSpeed = 0.01
@@ -141,18 +140,18 @@ class CameraView: UIView {
     }
     
     /// It setting up the orientation view.
-    private func setupOrientationView(){
+    private func setupOrientationView() {
         orientationViewController.view.autoCenterInSuperview()
         orientationViewController.view.isHidden = true
     }
     
-    //MARK: - Button image changer functions
+    // MARK: - Button image changer functions
     
     /**
      It change the camera switch button image.
      - parameter image: Change camera switch button to *image*.
      */
-    private func changeCameraImage(to image: UIImage){
+    private func changeCameraImage(to image: UIImage) {
         toggleCameraButton.setImage(image, for: .normal)
     }
     
@@ -160,21 +159,21 @@ class CameraView: UIView {
      It animate the camera switch button image.
      - parameter image: The result image after the animation finished.
      */
-    func flipCameraSwitchButton(to image: UIImage){
+    func flipCameraSwitchButton(to image: UIImage) {
         UIView.transition(with: toggleCameraButton,
                           duration: 0.3,
 						  options: .transitionFlipFromLeft,
                           animations: nil,
-                          completion: { (finished) -> Void in
+                          completion: { _ -> Void in
                             self.changeCameraImage(to: image)
         })
     }
     
     /// Methode for moving the focus preview
-    @objc func moveFocusePreview(gesture: UIPanGestureRecognizer){
+    @objc func moveFocusePreview(gesture: UIPanGestureRecognizer) {
         gesture.minimumNumberOfTouches = 1
         gesture.maximumNumberOfTouches = 1
-        var velocityX : CGFloat = 0
+        var velocityX: CGFloat = 0
         let gestureLocation = gesture.location(in: videoPreviewView)
         if gesture.state == .ended {
             velocityX = gesture.velocity(in: videoPreviewView).x * 0.4
@@ -184,7 +183,8 @@ class CameraView: UIView {
         
         UIView.animate(withDuration: TimeInterval(animationDuration), delay: 0, options: .curveLinear, animations: {
             
-            if gestureLocation.x >= 60 && gestureLocation.y >= 60 && gestureLocation.x <= self.videoPreviewView.frame.size.width - 60 && gestureLocation.y <= self.videoPreviewView.frame.size.height - 60 {
+            if gestureLocation.x >= 60 && gestureLocation.y >= 60 && gestureLocation.x <=
+				self.videoPreviewView.frame.size.width - 60 && gestureLocation.y <= self.videoPreviewView.frame.size.height - 60 {
                 self.focusPreview.center = gestureLocation
             }
             
@@ -226,7 +226,7 @@ class CameraView: UIView {
      It is called after touching the camera switch button.
      - Implemented in the class which adopted *CameraViewProtocol*.
      */
-    @objc func toggleCamera(){
+    @objc func toggleCamera() {
         delegate?.toggleCameraButtonTapped()
     }
     
@@ -244,20 +244,20 @@ extension CameraView: FloatyDelegate {
     /**
      It is called after touching the Flash Mode button.
      */
-    fileprivate func flashHandler(_ item: FloatyItem) -> Void {
-        switch self.flashMode {
-        case .on:
-            self.flashMode = .off
-            item.titleColor = .lightGray
-            item.icon = #imageLiteral(resourceName: "FlashOff")
-        case .auto:
-            self.flashMode = .on
-            item.titleColor = .white
-            item.icon = #imageLiteral(resourceName: "FlashOn")
-        case .off:
-            self.flashMode = .auto
-            item.titleColor = .white
-            item.icon = #imageLiteral(resourceName: "FlashAuto")
+    fileprivate func flashHandler(_ item: FloatyItem) {
+		switch self.flashMode {
+		case .on:
+			self.flashMode = .off
+			item.titleColor = .lightGray
+			item.icon = #imageLiteral(resourceName: "FlashOff")
+		case .auto:
+			self.flashMode = .on
+			item.titleColor = .white
+			item.icon = #imageLiteral(resourceName: "FlashOn")
+		case .off:
+			self.flashMode = .auto
+			item.titleColor = .white
+			item.icon = #imageLiteral(resourceName: "FlashAuto")
 		@unknown default:
 			self.flashMode = .auto
 			item.titleColor = .white
@@ -277,13 +277,13 @@ extension CameraView: FloatyDelegate {
         let settings = AVCapturePhotoSettings()
         
         if camera.hasFlash {
-            switch self.flashMode {
-            case .auto:
-                settings.flashMode = .auto
-            case .off:
-                settings.flashMode = .off
-            case .on:
-                settings.flashMode = .on
+			switch self.flashMode {
+			case .auto:
+				settings.flashMode = .auto
+			case .off:
+				settings.flashMode = .off
+			case .on:
+				settings.flashMode = .on
 			@unknown default:
 				settings.flashMode = .off
 			}
@@ -294,7 +294,7 @@ extension CameraView: FloatyDelegate {
     /**
      It is called after touching the Onion Effect button.
      */
-    fileprivate func onionEffectHandler(_ item: FloatyItem) -> Void {
+    fileprivate func onionEffectHandler(_ item: FloatyItem) {
         if onionEffectLayer.isHidden {
             item.icon = #imageLiteral(resourceName: "OnionSkinOn")
             item.itemBackgroundColor = .lightGray
@@ -314,7 +314,7 @@ extension CameraView: FloatyDelegate {
     /**
      It is called after touching the Orientation Assist button.
      */
-    fileprivate func orientationHandler(_ item: FloatyItem) -> Void {
+    fileprivate func orientationHandler(_ item: FloatyItem) {
         if item.icon == #imageLiteral(resourceName: "OrientationOff") {
             orientationViewController.startMotionUpdate()
             orientationViewController.view.isHidden = false
@@ -334,7 +334,7 @@ extension CameraView: FloatyDelegate {
     /**
      It is called after touching the Time Lapse Builder button.
      */
-    fileprivate func timeLapseHandler(_ item: FloatyItem) -> Void {
+    fileprivate func timeLapseHandler(_ item: FloatyItem) {
         guard !Platform.isSimulator, PhotoAlbum.sharedInstance.getPhotoAlbumSize() > 1 else {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.timeLapseBuildError)
             return
@@ -348,11 +348,10 @@ extension CameraView: FloatyDelegate {
         }
         
         let timeLapseBuilder = TimeLapseBuilder(renderSettings: settings)
-        timeLapseBuilder.render(
-            {(progress: Progress) in
+        timeLapseBuilder.render({ progress in
                 let progressPercentage = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
                 progressHUD.setProgress(progressPercentage, animated: true)
-        },  completion: {
+        }, completion: {
             progressHUD.dismiss()
             self.onionEffectLayer.isHidden = true
             self.onionEffectLayer.image = nil
@@ -363,7 +362,7 @@ extension CameraView: FloatyDelegate {
     /**
      It is called after touching the Video Player button.
      */
-    fileprivate func videoPlayerHandler(_ item: FloatyItem) -> Void {
+    fileprivate func videoPlayerHandler(_ item: FloatyItem) {
         guard let videoUrl = settings.outputURL, !Platform.isSimulator else {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.videoPlayerError)
             return
@@ -380,7 +379,7 @@ extension CameraView: FloatyDelegate {
     /**
      It is called after touching the Video stabilizer button.
      */
-    fileprivate func videoStabilizer(_ item: FloatyItem) -> Void {
+    fileprivate func videoStabilizer(_ item: FloatyItem) {
         guard let videoUrl = settings.outputURL, !Platform.isSimulator else {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.videoStabilizerError)
             return

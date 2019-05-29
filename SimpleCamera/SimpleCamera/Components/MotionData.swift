@@ -23,71 +23,45 @@ class MotionData: NSObject {
     var yaw: CGFloat = 0
     
     // Total and average roll, pitch, yaw values of captured images
-    var totalRoll : CGFloat{
-        set{
-            self.totalRoll += newValue
-        }
-        get{
-            return self.totalRoll
-        }
+	var averageRoll: CGFloat = 0
+	var averageYaw: CGFloat = 0
+	var averagePitch: CGFloat = 0
+	
+    var totalRoll: CGFloat {
+		didSet {
+			self.totalRoll = oldValue + totalRoll
+		}
     }
-    
-    var averageRoll : CGFloat{
-        get{
-            return self.averageRoll
-        }
-        set{
-            self.averageRoll = newValue
-        }
+	
+    var totalPitch: CGFloat {
+		didSet {
+			self.totalPitch = oldValue + totalPitch
+		}
     }
-    
-    var totalPitch : CGFloat{
-        set{
-            self.totalPitch += newValue
-        }
-        get{
-            return self.totalPitch
-        }
-    }
-    
-    var averagePitch : CGFloat{
-        get{
-            return self.averagePitch
-        }
-        set{
-            self.averagePitch = newValue
-        }
-    }
-    
-    var totalYaw : CGFloat{
-        set{
-            self.totalYaw += newValue
-        }
-        get{
-            return self.totalYaw
-        }
-    }
-    
-    var averageYaw : CGFloat{
-        get{
-            return self.averageYaw
-        }
-        set{
-            self.averageYaw = newValue
-        }
+
+    var totalYaw: CGFloat {
+		didSet {
+			self.totalYaw = oldValue + totalYaw
+		}
     }
     
     fileprivate override init() {
+		totalRoll = 0
+		totalPitch = 0
+		totalYaw = 0
         super.init()
     }
     
     fileprivate init(roll: CGFloat, pitch: CGFloat, yaw: CGFloat) {
+		totalRoll = 0
+		totalPitch = 0
+		totalYaw = 0
         self.roll = roll
         self.pitch = pitch
         self.yaw = yaw
     }
     
-    func getCurrentState() -> MotionData{
+    func getCurrentState() -> MotionData {
         return MotionData(roll: self.roll, pitch: self.pitch, yaw: self.yaw)
     }
     

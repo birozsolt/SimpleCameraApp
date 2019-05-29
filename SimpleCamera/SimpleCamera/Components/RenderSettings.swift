@@ -12,7 +12,7 @@ import AVFoundation
 struct RenderSettings {
     
     ///Size of the output video
-    var size : CGSize = CGSize(width: 1280, height: 720) // 1920x1080 // 1280x720 // 960x540
+    var size: CGSize = CGSize(width: 1280, height: 720) // 1920x1080 // 1280x720 // 960x540
     
     ///Frame per second in the output video
     var fps: Int32 = 18
@@ -21,10 +21,10 @@ struct RenderSettings {
     var avCodecKey = AVVideoCodecType.h264
     
     ///The file name as the video will be saved
-    var videoFilename = LocalizedKeys.videoName.description()
+    var videoFilename = LocalizedKeys.videoName.localized
     
     ///The file extension of saved video.
-    var videoFilenameExt = LocalizedKeys.videoExt.description()
+    var videoFilenameExt = LocalizedKeys.videoExt.localized
     
     ///The output URL where the video file will be saved
     var outputURL: URL? {
@@ -44,7 +44,7 @@ struct RenderSettings {
         // Using the CachesDirectory ensures the file won't be included in a backup of the app.
         let fileManager = FileManager.default
         if let tmpDirURL = try? fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true) {
-            return tmpDirURL.appendingPathComponent(LocalizedKeys.stabVideoName.description()).appendingPathExtension(videoFilenameExt)
+            return tmpDirURL.appendingPathComponent(LocalizedKeys.stabVideoName.localized).appendingPathExtension(videoFilenameExt)
         } else {
             return nil
         }

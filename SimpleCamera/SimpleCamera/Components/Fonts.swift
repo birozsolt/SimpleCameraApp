@@ -27,10 +27,10 @@ enum Fonts {
     func withSize(_ size: CGFloat) -> UIFont {
         switch self {
         case .light:
-            let font = UIFont(name: LocalizedKeys.lightFont.description(), size: size)
+            let font = UIFont(name: LocalizedKeys.lightFont.localized, size: size)
             return font ?? UIFont.systemFont(ofSize: size)
         case .bold:
-            let font = UIFont(name: LocalizedKeys.boldFont.description(), size: size)
+            let font = UIFont(name: LocalizedKeys.boldFont.localized, size: size)
             return font ?? UIFont.systemFont(ofSize: size)
         }
     }

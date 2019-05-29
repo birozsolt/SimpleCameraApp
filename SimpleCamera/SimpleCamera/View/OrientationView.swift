@@ -25,7 +25,7 @@ enum MarkerValue {
  - green: Green background.
  - orange: Orange background.
  */
-enum MarkerColor{
+enum MarkerColor {
     case green
     case orange
 }
@@ -51,7 +51,7 @@ class OrientationView: UIView {
     private var max = CGFloat()
     private var min = CGFloat()
     
-    //MARK: - Object Lifecycle
+    // MARK: - Object Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -72,11 +72,10 @@ class OrientationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Setup funcions for views
+    // MARK: - Setup funcions for views
     
     /// It setting up orientation view components.
-    private func setupViews(){
-        
+    private func setupViews() {
         backgroundView.autoPinEdgesToSuperviewEdges()
         backgroundView.backgroundColor = .clear
         backgroundView.alpha = 0.5
@@ -106,28 +105,28 @@ class OrientationView: UIView {
     }
     
     /// It setting up the vertical view components.
-    func setupViews(for verticalView: UIView){
+    func setupViews(for verticalView: UIView) {
         verticalView.autoSetDimensions(to: CGSize(width: 10, height: 90))
         verticalView.autoAlignAxis(toSuperviewAxis: .horizontal)
         verticalView.backgroundColor = .lightGray
     }
     
     /// It setting up the vertical marker view components.
-    func setupVerticalMarkerViews(for marker: UIView){
+    func setupVerticalMarkerViews(for marker: UIView) {
         marker.autoSetDimensions(to: CGSize(width: 10, height: 6))
         marker.autoCenterInSuperview()
         marker.backgroundColor = .orange
     }
     
     /// It setting up the horizontal marker view components.
-    func setupHorizontalMarkerViews(for marker: UIView){
+    func setupHorizontalMarkerViews(for marker: UIView) {
         marker.autoSetDimensions(to: CGSize(width: 10, height: 6))
         marker.autoAlignAxis(.horizontal, toSameAxisOf: self, withOffset: 0)
         marker.backgroundColor = .orange
     }
     
     /// It setting up the vertical view components.
-    func setupArcViews(for arcView: ArcView, startAngle: CGFloat, endAngle: CGFloat){
+    func setupArcViews(for arcView: ArcView, startAngle: CGFloat, endAngle: CGFloat) {
         arcView.autoSetDimensions(to: CGSize(width: 90, height: 90))
         arcView.autoAlignAxis(toSuperviewAxis: .horizontal)
         arcView.startAngle = startAngle
@@ -139,13 +138,13 @@ class OrientationView: UIView {
      Move the marker to the given of *angle*.
      - parameter angle: The marker tilt angle.
      */
-    func updateVerticalMarker(for angle : CGFloat){
+    func updateVerticalMarker(for angle: CGFloat) {
         var zoomAngle = angle / 2
         
         if zoomAngle > 90 {
             zoomAngle = 90
         } // stop at the end
-        if zoomAngle < 0{
+        if zoomAngle < 0 {
             zoomAngle = 0
         } // stop at the other end
         
@@ -173,7 +172,7 @@ class OrientationView: UIView {
         if zoomAngle > 34 {
             zoomAngle = 34
         } // stop at the end
-        if zoomAngle < -34{
+        if zoomAngle < -34 {
             zoomAngle = -34
         } // stop at the other end
         

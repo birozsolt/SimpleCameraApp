@@ -20,12 +20,12 @@ class VideoPlayerViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {return true}
     
     ///The path of the video for the *videoPlayer*.
-    fileprivate var videoUrl : URL?
+    fileprivate var videoUrl: URL?
     
-    //MARK: - Object Lifecycle
+    // MARK: - Object Lifecycle
     
     convenience init(videoUrl: URL) {
-        self.init(nibName:nil, bundle:nil)
+        self.init(nibName: nil, bundle: nil)
         self.videoUrl = videoUrl
     }
     
@@ -89,17 +89,17 @@ class VideoPlayerViewController: UIViewController {
         animatePlaybackImage()
     }
     
-    fileprivate func animatePlaybackImage(){
+    fileprivate func animatePlaybackImage() {
 		UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
             self.playbackImage.isHidden = false
             self.playbackImage.alpha = 0.0
             self.playbackImage.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
             
-        }) { (finished) in
+        }, completion: { _ in
             self.playbackImage.transform = CGAffineTransform.identity
             self.playbackImage.isHidden = true
             self.playbackImage.alpha = 1.0
-        }
+        })
     }
 }
 
@@ -107,27 +107,22 @@ class VideoPlayerViewController: UIViewController {
 extension VideoPlayerViewController {
     
     @objc func handleTapGestureRecognizer(_ gestureRecognizer: UITapGestureRecognizer) {
-        switch (self.player.playbackState.rawValue) {
+        switch self.player.playbackState.rawValue {
         case PlaybackState.stopped.rawValue:
             showPlaybackImage(image: #imageLiteral(resourceName: "PlayVideo"))
             player.playFromBeginning()
-            break
         case PlaybackState.paused.rawValue:
             showPlaybackImage(image: #imageLiteral(resourceName: "PlayVideo"))
             player.playFromCurrentTime()
-            break
         case PlaybackState.playing.rawValue:
             showPlaybackImage(image: #imageLiteral(resourceName: "PauseVideo"))
             player.pause()
-            break
         case PlaybackState.failed.rawValue:
             showPlaybackImage(image: #imageLiteral(resourceName: "PauseVideo"))
             player.pause()
-            break
         default:
             showPlaybackImage(image: #imageLiteral(resourceName: "PauseVideo"))
             player.pause()
-            break
         }
     }
 }

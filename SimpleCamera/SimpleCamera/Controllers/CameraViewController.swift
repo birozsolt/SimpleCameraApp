@@ -16,7 +16,7 @@ import Photos
  - front: Front camera.
  - rear: Rear camera.
  */
-fileprivate enum CameraPosition {
+private enum CameraPosition {
     case front
     case rear
 }
@@ -91,7 +91,7 @@ class CameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepare(completionHandler: { (error) in
+        prepare(completionHandler: { _ in
             do {
                 try self.displayPreview()
             } catch {
@@ -112,8 +112,8 @@ class CameraViewController: UIViewController {
         captureSession.stopRunning()
     }
     
-    //MARK: - Configuring camera for capture.
-    
+    // MARK: - Configuring camera for capture.
+	//swiftlint:disable function_body_length
     /**
      Prepare the the application to display the video preview.
      - parameter completionHandler: Returns `nil` if succes otherwise an error.
@@ -172,8 +172,7 @@ class CameraViewController: UIViewController {
                     throw CameraControllerError.inputsAreInvalid
                 }
                 currentCameraPosition = .front
-            }
-            else {
+            } else {
                 throw CameraControllerError.noCamerasAvailable
             }
         }
@@ -200,9 +199,7 @@ class CameraViewController: UIViewController {
                 try configureCaptureDevices()
                 try configureDeviceInputs()
                 try configurePhotoOutput()
-            }
-                
-            catch {
+            } catch {
                 DispatchQueue.main.async {
                     completionHandler(error)
                 }
@@ -215,8 +212,9 @@ class CameraViewController: UIViewController {
             }
         }
     }
+	//swiftlint:enable function_body_length
     
-    //MARK: - Display camera preview methode
+    // MARK: - Display camera preview methode
     
     /**
      Displays the video preview from capture session.
@@ -237,7 +235,7 @@ class CameraViewController: UIViewController {
         cameraView.videoPreviewView.layer.insertSublayer(videoPreviewLayer!, above: cameraView.videoPreviewView.layer)
     }
     
-    //MARK: - Camera Switch methodes
+    // MARK: - Camera Switch methodes
     
     /**
      Switch between front and rear cameras.
@@ -290,9 +288,7 @@ class CameraViewController: UIViewController {
                 
                 self.currentCameraPosition = .rear
                 captureDevice = rearCamera
-            }
-                
-            else { throw CameraControllerError.invalidOperation }
+            } else { throw CameraControllerError.invalidOperation }
         }
         
         switch currentCameraPosition {
@@ -312,7 +308,6 @@ class CameraViewController: UIViewController {
     }
 }
 
-
 // MARK: - CameraViewProtocol extension
 
 extension CameraViewController: CameraViewProtocol {
@@ -323,8 +318,7 @@ extension CameraViewController: CameraViewProtocol {
             self.captureImage()
         }
     }
-    
-    //swiftlint:disable force_cast
+	
     /**
      Capture an image from *captureSession*.
      - parameter completion: Returns the image if succes otherwise an error.
@@ -336,7 +330,7 @@ extension CameraViewController: CameraViewProtocol {
         guard captureSession.isRunning else { return }
         
         if isCameraAlreadySetUp {
-            if let videoConnection = photoOutput?.connection(with: AVMediaType.video){ /*(captureSession.outputs[0] as? AVCaptureStillImageOutput)?*/
+            if let videoConnection = photoOutput?.connection(with: AVMediaType.video) {
                 videoConnection.videoOrientation = AVCaptureVideoOrientation.portrait
                 let settings = cameraView.getFlashSettings()
                 photoOutput?.capturePhoto(with: settings, delegate: self)
@@ -350,8 +344,7 @@ extension CameraViewController: CameraViewProtocol {
         sessionQueue.async {
             do {
                 try self.switchCameras()
-            }
-            catch {
+            } catch {
                 ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
             }
         }
@@ -386,8 +379,7 @@ extension CameraViewController: CameraViewProtocol {
                 device.focusMode = .autoFocus
             }
             device.unlockForConfiguration()
-        }
-        catch {
+        } catch {
             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.noCamerasAvailable)
         }
         cameraView.focusPreview.isHidden = false

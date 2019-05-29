@@ -30,10 +30,10 @@ enum LocalizedKeys: String {
     case photoAlbumName
     case stabVideoName
     case videoStabilizerError
-    
-    func description() -> String {
-        switch self {
-        default: return NSLocalizedString(self.rawValue, tableName: nil, bundle: Bundle.main, value: "", comment: "")
-        }
-    }
+	
+	var localized: String {
+		switch self {
+		default: return NSLocalizedString(self.rawValue, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+		}
+	}
 }

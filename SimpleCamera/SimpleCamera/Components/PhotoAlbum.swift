@@ -9,9 +9,9 @@
 import Photos
 
 class PhotoAlbum: NSObject {
-    static let albumName = LocalizedKeys.photoAlbumName.description()
+    static let albumName = LocalizedKeys.photoAlbumName.localized
     static let sharedInstance = PhotoAlbum()
-    var imageArray = Array<UIImage>()
+    var imageArray = [UIImage]()
     
     private var assetCollection: PHAssetCollection!
     
@@ -24,7 +24,7 @@ class PhotoAlbum: NSObject {
         }
         
         if PHPhotoLibrary.authorizationStatus() != PHAuthorizationStatus.authorized {
-            PHPhotoLibrary.requestAuthorization({ (status: PHAuthorizationStatus) -> Void in
+            PHPhotoLibrary.requestAuthorization({ _ -> Void in
                 ()
             })
         }
@@ -48,14 +48,15 @@ class PhotoAlbum: NSObject {
     
     private func createAlbum() {
         PHPhotoLibrary.shared().performChanges({
-            PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: PhotoAlbum.albumName)   // create an asset collection with the album name
-        }) { success, error in
+			// create an asset collection with the album name
+            PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: PhotoAlbum.albumName)
+        }, completionHandler: { success, _ in
             if success {
                 self.assetCollection = self.fetchAssetCollectionForAlbum()
             } else {
                 ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.albumCreateError)
             }
-        }
+        })
     }
     
     private func fetchAssetCollectionForAlbum() -> PHAssetCollection! {
@@ -101,11 +102,11 @@ class PhotoAlbum: NSObject {
             let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection)
             let enumeration: NSArray = [assetPlaceHolder!]
             albumChangeRequest!.addAssets(enumeration)
-        }) { success, error in
+        }, completionHandler: { success, _ in
             if !success {
                 ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.photoSaveError)
             }
-        }
+        })
     }
     
     /**
@@ -117,34 +118,39 @@ class PhotoAlbum: NSObject {
             let options = PHFetchOptions()
             let imageToDelete = PHAsset.fetchAssets(with: options) //PHAsset.fetchAssets(withALAssetURLs: [fileURL], options: nil)
             PHAssetChangeRequest.deleteAssets(imageToDelete)
-        }, completionHandler: {success, error in
+        }, completionHandler: {success, _ in
             if !success {
                 ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.albumCreateError)
             }
         })
     }
     
-    func getPhotoFromAlbum(){
+    func getPhotoFromAlbum() {
         if assetCollection == nil {
             print("Asset collection not found.") // if there was an error upstream, skip the save
         }
         
         let photoAssets = PHAsset.fetchAssets(in: assetCollection, options: nil)
         let manager = PHCachingImageManager()
-        photoAssets.enumerateObjects { (object, idx, stop) -> Void in
+        photoAssets.enumerateObjects { (object, _, _) -> Void in
                 let asset = object
                 
                 let initialRequestOptions = PHImageRequestOptions()
                 initialRequestOptions.isSynchronous = true
                 initialRequestOptions.deliveryMode = .fastFormat
                 
-                manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: initialRequestOptions, resultHandler: { (image, info) in
+                manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize,
+									 contentMode: .default, options: initialRequestOptions,
+									 resultHandler: { (image, _) in
                     if let unWrappedImage = image {
                         self.imageArray.append(unWrappedImage)
                     }
                     PHPhotoLibrary.shared().performChanges({
-                        PHAssetChangeRequest.deleteAssets(asset as! NSFastEnumeration)
-                    }, completionHandler: {success, error in
+						guard let asset = asset as? NSFastEnumeration else {
+							return
+						}
+                        PHAssetChangeRequest.deleteAssets(asset)
+                    }, completionHandler: {success, _ in
                         if !success {
                             ErrorMessage.sharedInstance.show(LocalizedKeys.titleError, message: LocalizedKeys.albumCreateError)
                         }

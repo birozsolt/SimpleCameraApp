@@ -12,14 +12,14 @@ import UIKit
 class HomeViewController: UIViewController {
     
     ///The *CameraViewController* instance for opening the camera screen.
-    fileprivate var cameraViewController : CameraViewController!
+    fileprivate var cameraViewController: CameraViewController!
     
     ///The view that the *HomeViewController* manages.
     var homeView = HomeView(frame: CGRect.zero)
     
     override var prefersStatusBarHidden: Bool {return true}
     
-    //MARK: - View Lifecycle
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +38,9 @@ class HomeViewController: UIViewController {
     }
 }
 
-//MARK: - HomeViewProtocol
+// MARK: - HomeViewProtocol
 
-extension HomeViewController : HomeViewProtocol{
+extension HomeViewController: HomeViewProtocol {
     
     /**
      Open *CameraViewController* after tapped.

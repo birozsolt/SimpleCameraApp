@@ -18,7 +18,7 @@ class ArcView: UIView {
 class LeftArcView: ArcView {
 
     override func draw(_ rect: CGRect) {
-        let arcCenter = CGPoint(x: bounds.width + 45 , y: bounds.height / 2)
+        let arcCenter = CGPoint(x: bounds.width + 45, y: bounds.height / 2)
         let radius = bounds.width
         let path = UIBezierPath(arcCenter: arcCenter,
                                 radius: radius - arcWidth,
@@ -35,7 +35,7 @@ class LeftArcView: ArcView {
 class RightArcView: ArcView {
     
     override func draw(_ rect: CGRect) {
-        let arcCenter = CGPoint(x: bounds.width - 135 , y: bounds.height / 2)
+        let arcCenter = CGPoint(x: bounds.width - 135, y: bounds.height / 2)
         let radius = bounds.width
         let path = UIBezierPath(arcCenter: arcCenter,
                                 radius: radius - arcWidth,

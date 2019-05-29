@@ -8,7 +8,7 @@
 
 import UIKit
 
-//MARK: CGFloat extension
+// MARK: - CGFloat extension
 
 extension CGFloat {
     /**
@@ -26,7 +26,7 @@ extension CGFloat {
     }
 }
 
-//MARK: UIView extension
+// MARK: - UIView extension
 
 extension UIView {
     /**
@@ -67,24 +67,24 @@ extension UIView {
     }
 }
 
-//MARK: UIImage extension
+// MARK: - UIImage extension
 
 extension UIImage {
     /**
      Private struct for storing device motion information with image
      */
-    private struct Motion{
-        static var motionData : MotionData = MotionData.shared.getCurrentState()
+    private struct Motion {
+        static var motionData: MotionData = MotionData.shared.getCurrentState()
     }
     
     /**
      Public variable for setting and getting motion information of the UIImage
      */
     var motionData: MotionData? {
-        get{
+        get {
             return objc_getAssociatedObject(self, &Motion.motionData) as? MotionData
         }
-        set{
+        set {
             if let unwrappedValue = newValue {
                 objc_setAssociatedObject(self, &Motion.motionData, unwrappedValue as MotionData, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }

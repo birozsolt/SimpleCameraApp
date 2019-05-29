@@ -9,7 +9,7 @@
 import UIKit
 
 /// HomeView protocol used for implementing button actions.
-protocol HomeViewProtocol {
+protocol HomeViewProtocol: class {
     func cameraButtonTapped()
 }
 
@@ -17,19 +17,19 @@ protocol HomeViewProtocol {
 class HomeView: UIView {
     
     /// HomeViewProtocol delegate variable.
-    var delegate : HomeViewProtocol?
+    weak var delegate: HomeViewProtocol?
     
-    //MARK: - View variables
+    // MARK: - View variables
     
     /// The background view of the *HomeView*.
     private var backgroundView = UIImageView()
     
-    //MARK: - Button variables
+    // MARK: - Button variables
     
     /// The camera button variable.
 	private var cameraButton = UIButton(type: .custom)
     
-    //MARK: - Object Lifecycle
+    // MARK: - Object Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,10 +46,10 @@ class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Setup funcion for view
+    // MARK: - Setup funcion for view
     
     /// It setting up home screen views.
-    private func setupViews(){
+    private func setupViews() {
         backgroundView.autoPinEdgesToSuperviewEdges()
         backgroundView.backgroundColor = UIColor.darkGray
         
@@ -60,11 +60,11 @@ class HomeView: UIView {
         cameraButton.addTarget(self, action: #selector(startCamera), for: .touchUpInside)
         cameraButton.backgroundColor = UIColor.black
         cameraButton.setTitleColor(UIColor.white, for: .normal)
-        cameraButton.setTitle(LocalizedKeys.camera.description(), for: .normal)
+        cameraButton.setTitle(LocalizedKeys.camera.localized, for: .normal)
         cameraButton.titleLabel?.font = Fonts.bold.withSize(30)
     }
     
-    //MARK: - Button touch handler function
+    // MARK: - Button touch handler function
     
     /**
      It is called after touching the camera button.
