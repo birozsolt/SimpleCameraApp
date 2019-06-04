@@ -65,13 +65,15 @@ class TimeLapseBuilder {
                 return false
             }
             autoreleasepool {
-                let image = PhotoAlbum.sharedInstance.imageArray.removeFirst()
-                
-				let presentationTime = CMTimeMultiply(frameDuration, multiplier: Int32(self.frameNum))
-                let success = videoWriter.addImage(image: image, withPresentationTime: presentationTime)
-                if success == false {
-                    fatalError("addImage() failed")
-                }
+				if !PhotoAlbum.sharedInstance.imageArray.isEmpty {
+					let image = PhotoAlbum.sharedInstance.imageArray.removeFirst()
+					
+					let presentationTime = CMTimeMultiply(frameDuration, multiplier: Int32(self.frameNum))
+					let success = videoWriter.addImage(image: image, withPresentationTime: presentationTime)
+					if success == false {
+						fatalError("addImage() failed")
+					}
+				}
             }
             self.currentProgress.completedUnitCount = Int64(self.frameNum)
             self.frameNum += 1
